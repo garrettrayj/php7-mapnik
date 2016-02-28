@@ -1,0 +1,50 @@
+### Mac OS X
+.DS_Store
+._*
+
+### IntelliJ
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dataSources.xml
+.idea/sqlDataSources.xml
+atlassian-ide-plugin.xml
+
+### Atom
+tags
+
+## phpize
+.deps
+*.lo
+*.la
+.libs
+acinclude.m4
+aclocal.m4
+autom4te.cache
+build
+config.guess
+config.h
+config.h.in
+config.log
+config.nice
+config.status
+config.sub
+configure
+configure.in
+include
+install-sh
+libtool
+ltmain.sh
+Makefile
+Makefile.fragments
+Makefile.global
+Makefile.objects
+missing
+mkinstalldirs
+modules
+run-tests.php
+tests/*/*.diff
+tests/*/*.out
+tests/*/*.php
+tests/*/*.exp
+tests/*/*.log
+tests/*/*.sh

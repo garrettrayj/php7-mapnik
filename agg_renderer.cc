@@ -50,11 +50,11 @@ PHP_METHOD(AggRenderer, __construct)
         &image_zval,
         php_mapnik_image_ce) == SUCCESS
     ) {
-        php_mapnik_map_object* map_obj = Z_PHP_MAPNIK_MAP_P(map_zval);
-        mapnik::Map* map = map_obj->map;
+        php_mapnik_map_object *map_obj = Z_PHP_MAPNIK_MAP_P(map_zval);
+        mapnik::Map *map = map_obj->map;
 
-        php_mapnik_image_object* image_obj = Z_PHP_MAPNIK_IMAGE_P(image_zval);
-        mapnik::image_rgba8* image = image_obj->image;
+        php_mapnik_image_object *image_obj = Z_PHP_MAPNIK_IMAGE_P(image_zval);
+        mapnik::image_rgba8 *image = image_obj->image;
 
         agg_renderer = new mapnik::agg_renderer<mapnik::image_rgba8>(*map, *image);
     } else {

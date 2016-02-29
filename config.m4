@@ -46,7 +46,7 @@ if test "$PHP_MAPNIK" != "no"; then
     dnl Finally, tell the build system about the extension and what files are needed
     PHP_NEW_EXTENSION(
         mapnik,
-        mapnik.cc exception.cc box2d.cc map.cc image.cc agg_renderer.cc datasource_cache.cc,
+        mapnik.cc exception.cc box2d.cc map.cc image.cc agg_renderer.cc datasource_cache.cc projection.cc proj_transform.cc,
         $ext_shared,
         $CPP_FLAGS
     )

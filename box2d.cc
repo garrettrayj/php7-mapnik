@@ -57,8 +57,46 @@ PHP_METHOD(Box2D, __construct)
     obj->box2d = box2d;
 }
 
+PHP_METHOD(Box2D, minX)
+{
+    php_mapnik_box2d_object *obj;
+    obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
+
+    RETURN_DOUBLE(obj->box2d->minx());
+}
+
+PHP_METHOD(Box2D, minY)
+{
+    php_mapnik_box2d_object *obj;
+    obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
+
+    RETURN_DOUBLE(obj->box2d->miny());
+}
+
+PHP_METHOD(Box2D, maxX)
+{
+    php_mapnik_box2d_object *obj;
+    obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
+
+    RETURN_DOUBLE(obj->box2d->maxx());
+}
+
+PHP_METHOD(Box2D, maxY)
+{
+    php_mapnik_box2d_object *obj;
+    obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
+
+    RETURN_DOUBLE(obj->box2d->maxy());
+}
+
+// Register methods
+
 zend_function_entry php_mapnik_box2d_methods[] = {
     PHP_ME(Box2D, __construct, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(Box2D, minX, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(Box2D, minY, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(Box2D, maxX, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(Box2D, maxY, NULL, ZEND_ACC_PUBLIC)
     { NULL, NULL, NULL }
 };
 

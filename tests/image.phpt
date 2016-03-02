@@ -19,19 +19,6 @@ $map->zoomAll();
 $image = new \Mapnik\Image(640, 480);
 print ($image instanceof \Mapnik\Image);
 
-// Assert that trying to save an unpainted image throws an exception
-try {
-    $image->saveToFile($imageFile);
-} catch (\Exception $e) {
-    print ($e instanceof \Mapnik\Exception);
-}
-
-try {
-    $output = $image->saveToString();
-} catch (\Exception $e) {
-    print ($e instanceof \Mapnik\Exception);
-}
-
 // Give the image some data
 $renderer = new \Mapnik\AggRenderer($map, $image);
 $renderer->apply();
@@ -48,4 +35,4 @@ print ($phpImageResource != false);
 
 ?>
 --EXPECT--
-11111
+111

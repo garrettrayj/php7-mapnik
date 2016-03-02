@@ -71,10 +71,6 @@ PHP_METHOD(Image, saveToFile)
     }
 
     obj = Z_PHP_MAPNIK_IMAGE_P(getThis());
-    if (!obj->image->painted()) {
-        php_mapnik_throw_exception("Mapnik image has not been painted.");
-        RETURN_FALSE;
-    }
 
     try {
         std::string file_str(file->val, file->len);
@@ -99,10 +95,6 @@ PHP_METHOD(Image, saveToString)
     std::string image_str;
 
     obj = Z_PHP_MAPNIK_IMAGE_P(getThis());
-    if (!obj->image->painted()) {
-        php_mapnik_throw_exception("Mapnik image has not been painted.");
-        RETURN_FALSE;
-    }
 
     try {
         image_str = mapnik::save_to_string(*obj->image, "png");

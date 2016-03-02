@@ -3,12 +3,9 @@
         <Rule>
             <TextSymbolizer
                 placement="point"
-                size="50"
+                size="100"
                 face-name="DejaVu Sans Condensed Bold"
                 fill="white"
-                halo-fill="slategray"
-                halo-radius="2"
-                halo-comp-op="darken"
                 horizontal-alignment="right"
             >
                 [title]

@@ -7,6 +7,8 @@
 #include "image.h"
 #include "agg_renderer.h"
 #include "datasource_cache.h"
+#include "projection.h"
+#include "proj_transform.h"
 
 PHP_MINIT_FUNCTION(mapnik)
 {
@@ -16,6 +18,8 @@ PHP_MINIT_FUNCTION(mapnik)
     php_mapnik_image_startup(INIT_FUNC_ARGS_PASSTHRU);
     php_mapnik_agg_renderer_startup(INIT_FUNC_ARGS_PASSTHRU);
     php_mapnik_datasource_cache_startup(INIT_FUNC_ARGS_PASSTHRU);
+    php_mapnik_projection_startup(INIT_FUNC_ARGS_PASSTHRU);
+    php_mapnik_proj_transform_startup(INIT_FUNC_ARGS_PASSTHRU);
 
     return SUCCESS;
 }

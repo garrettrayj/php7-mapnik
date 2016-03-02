@@ -1,14 +1,18 @@
 <component name="ProjectDictionaryState">
   <dictionary name="garrett">
     <words>
+      <w>ctor</w>
       <w>datasource</w>
       <w>datasources</w>
       <w>dtor</w>
       <w>ecalloc</w>
       <w>efree</w>
+      <w>emalloc</w>
       <w>mapnik</w>
+      <w>maxx</w>
       <w>minit</w>
       <w>passthru</w>
+      <w>proj</w>
       <w>skipif</w>
       <w>stringl</w>
       <w>tsrmls</w>

@@ -6,6 +6,7 @@
 #include <mapnik/config_error.hpp>
 #include <mapnik/load_map.hpp>
 #include <mapnik/map.hpp>
+#include <mapnik/projection.hpp>
 
 zend_class_entry *php_mapnik_map_ce;
 zend_object_handlers php_mapnik_map_object_handlers;
@@ -108,6 +109,9 @@ PHP_METHOD(Map, loadXmlString)
     } catch (const mapnik::config_error & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;
+    } catch (const mapnik::proj_init_error & ex) {
+        php_mapnik_throw_exception(ex.what());
+        RETURN_FALSE;
     } catch (const std::exception & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;
@@ -144,6 +148,9 @@ PHP_METHOD(Map, loadXmlFile)
         map = obj->map;
         mapnik::load_map(*map, filename_str, strict, base_path_str);
     } catch (const mapnik::config_error & ex) {
+        php_mapnik_throw_exception(ex.what());
+        RETURN_FALSE;
+    } catch (const mapnik::proj_init_error & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;
     } catch (const std::exception & ex) {

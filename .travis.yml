@@ -1,4 +1,4 @@
-language: c
+language: c++
 
 os:
   - osx
@@ -12,20 +12,20 @@ compiler:
   - clang
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update                         ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install homebrew/php/php70 mapnik  ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew unlink boost; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install boost --with-icu4c --HEAD; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install homebrew/php/php70 mapnik; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y -qq update; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install python-software-properties; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository -y ppa:ondrej/php; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-add-repository -y ppa:mapnik/nightly-trunk; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y update; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y purge php5-fpm; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install php7.0-cli php7.0-common libapache2-mod-php7.0 php7.0 php7.0-mysql php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-bz2; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install libmapnik-dev; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install file php7.0-cli php7.0 php7.0-common php7.0-gd php7.0-dev; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install libmapnik=3.0.0* mapnik-utils=3.0.0* libmapnik-dev=3.0.0*; fi
 
 script:
   - phpize
   - ./configure --with-mapnik
   - make test
-
-#notifications:
-#  webhooks: https://coveralls.io/webhook?repo_token=$COVERALLS_TOKEN

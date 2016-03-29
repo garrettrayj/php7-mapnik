@@ -3,7 +3,6 @@
 #include "box2d.h"
 #include "map.h"
 #include <mapnik/box2d.hpp>
-#include <mapnik/config_error.hpp>
 #include <mapnik/load_map.hpp>
 #include <mapnik/map.hpp>
 #include <mapnik/projection.hpp>
@@ -106,7 +105,7 @@ PHP_METHOD(Map, loadXmlString)
         obj = Z_PHP_MAPNIK_MAP_P(getThis());
         map = obj->map;
         mapnik::load_map_string(*map, xml_str, strict, base_path_str);
-    } catch (const mapnik::config_error & ex) {
+    } catch (const std::runtime_error & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;
     } catch (const mapnik::proj_init_error & ex) {
@@ -147,7 +146,7 @@ PHP_METHOD(Map, loadXmlFile)
         obj = Z_PHP_MAPNIK_MAP_P(getThis());
         map = obj->map;
         mapnik::load_map(*map, filename_str, strict, base_path_str);
-    } catch (const mapnik::config_error & ex) {
+    } catch (const std::runtime_error & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;
     } catch (const mapnik::proj_init_error & ex) {

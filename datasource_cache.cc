@@ -3,7 +3,6 @@
 #include "datasource_cache.h"
 #include <boost/foreach.hpp>
 #include <mapnik/datasource_cache.hpp>
-#include <mapnik/config_error.hpp>
 
 zend_class_entry *php_mapnik_datasource_cache_ce;
 

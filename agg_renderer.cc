@@ -3,6 +3,7 @@
 #include "agg_renderer.h"
 #include "image.h"
 #include "map.h"
+#include <mapnik/datasource.hpp>
 #include <mapnik/image.hpp>
 
 zend_class_entry *php_mapnik_agg_renderer_ce;
@@ -75,7 +76,16 @@ PHP_METHOD(AggRenderer, apply)
 
     obj = Z_PHP_MAPNIK_AGG_RENDERER_P(getThis());
     agg_renderer = obj->agg_renderer;
-    agg_renderer->apply();
+
+    try {
+        agg_renderer->apply();
+    } catch (const mapnik::datasource_exception & ex) {
+        php_mapnik_throw_exception(ex.what());
+        RETURN_FALSE;
+    } catch (const std::runtime_error & ex) {
+        php_mapnik_throw_exception(ex.what());
+        RETURN_FALSE;
+    }
 
     RETURN_TRUE;
 }

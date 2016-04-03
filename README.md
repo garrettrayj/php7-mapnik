@@ -6,6 +6,8 @@ Introduction
 PHP7 Mapnik brings geospatial rendering to PHP via the powerful [Mapnik](http://mapnik.org/) XML API.
 It is ideal for building dynamic tile servers or livening up websites with custom static maps.
 
+[![Build Status](https://travis-ci.org/garrettrayj/php7-mapnik.svg?branch=master)](https://travis-ci.org/garrettrayj/php7-mapnik)
+
 Requirements
 ------------
 

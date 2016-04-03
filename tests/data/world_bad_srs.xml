@@ -6,7 +6,7 @@
         </Rule>
     </Style>
 
-    <Layer name="world" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs ">
+    <Layer name="world" srs="boogie woogie">
         <StyleName>world_style</StyleName>
         <Datasource>
             <Parameter name="type">shape</Parameter>

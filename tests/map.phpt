@@ -15,6 +15,15 @@ print \Mapnik\DatasourceCache::registerDatasources($configOutput[0]);
 $map = new \Mapnik\Map(640, 480);
 print ($map instanceof \Mapnik\Map);
 
+
+// Assert loading XML with bad projection throws exception
+$xml = file_get_contents($basePath . '/world_bad_srs.xml');
+try {
+    $map->loadXmlString($xml);
+} catch (\Exception $e) {
+    print ($e instanceof \Mapnik\Exception);
+}
+
 // Assert loading XML from string succeeds
 $xml = file_get_contents($basePath . '/world.xml');
 print $map->loadXmlString($xml, false, $basePath);
@@ -40,4 +49,4 @@ print $map->zoomToBox($box);
 
 ?>
 --EXPECT--
-11111111
+111111111

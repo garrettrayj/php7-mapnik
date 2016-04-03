@@ -1,3 +1,6 @@
+#include <string>
+#include <sstream>
+#include <iostream>
 #include "php.h"
 #include "exception.h"
 #include "datasource_cache.h"

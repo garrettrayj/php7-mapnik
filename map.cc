@@ -105,10 +105,10 @@ PHP_METHOD(Map, loadXmlString)
         obj = Z_PHP_MAPNIK_MAP_P(getThis());
         map = obj->map;
         mapnik::load_map_string(*map, xml_str, strict, base_path_str);
-    } catch (const std::runtime_error & ex) {
+    } catch (const mapnik::proj_init_error & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;
-    } catch (const mapnik::proj_init_error & ex) {
+    } catch (const std::runtime_error & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;
     } catch (const std::exception & ex) {
@@ -146,10 +146,10 @@ PHP_METHOD(Map, loadXmlFile)
         obj = Z_PHP_MAPNIK_MAP_P(getThis());
         map = obj->map;
         mapnik::load_map(*map, filename_str, strict, base_path_str);
-    } catch (const std::runtime_error & ex) {
+    } catch (const mapnik::proj_init_error & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;
-    } catch (const mapnik::proj_init_error & ex) {
+    } catch (const std::runtime_error & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;
     } catch (const std::exception & ex) {

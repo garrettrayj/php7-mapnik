@@ -13,6 +13,7 @@ Requirements
 
 * PHP 7.0.x
 * Mapnik 3.0.x
+* mapnik-config (available through ´sudo apt-get install libmapnik-dev´ on Ubuntu 16.04 Xenial)
 
 Installation
 ------------

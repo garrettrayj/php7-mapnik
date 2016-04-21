@@ -1,5 +1,7 @@
 --TEST--
 \Mapnik\Image
+--EXTENSIONS--
+gd
 --SKIPIF--
 <?php if (!extension_loaded("mapnik")) print "skip"; ?>
 --FILE--

@@ -13,7 +13,8 @@ Requirements
 
 * PHP 7.0.x
 * Mapnik 3.0.x
-* mapnik-config (available through `sudo apt-get install libmapnik-dev` on Ubuntu 16.04 Xenial)
+* mapnik-config
+    * Available through `sudo apt-get install libmapnik-dev` on Ubuntu 16.04 Xenial
 
 Installation
 ------------
@@ -22,7 +23,17 @@ Installation
     phpize
     ./configure --with-mapnik
     make test
-    echo "extension=`pwd`/modules/mapnik.so" | sudo tee -a /etc/php.ini
+    make install
+    echo "extension=mapnik.so" > /etc/php.d/mapnik.ini
+
+Note: Your PHP configuration directory may be different depending on OS and PHP settings.
+
+Tile Server Example
+-------------------
+
+    ./example/run.sh
+
+Point your web browser to [http://localhost:8000/](http://localhost:8000/)
 
 Usage
 -----

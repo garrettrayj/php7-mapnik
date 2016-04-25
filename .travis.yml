@@ -11,6 +11,9 @@ compiler:
     - gcc
     - clang
 
+env:
+    - REPORT_EXIT_STATUS=1
+
 before_install:
 #    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
 #    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install icu4c; fi

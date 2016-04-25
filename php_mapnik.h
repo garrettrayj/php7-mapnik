@@ -1,6 +1,6 @@
 #ifndef PHP_MAPNIK_H
 #define PHP_MAPNIK_H 1
-#define PHP_MAPNIK_VERSION "0.1.1"
+#define PHP_MAPNIK_VERSION "1"
 #define PHP_MAPNIK_EXTENSION_NAME "mapnik"
 
 #include <config.h>

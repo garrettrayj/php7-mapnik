@@ -30,7 +30,7 @@ before_install:
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y update; fi
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y purge php5-fpm; fi
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install file php7.0-cli php7.0 php7.0-common php7.0-gd php7.0-dev; fi
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install libmapnik mapnik-utils libmapnik-dev; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install libmapnik libmapnik-dev mapnik-doc mapnik-input-plugin-ogr mapnik-utils ; fi
 
 script:
     - phpize

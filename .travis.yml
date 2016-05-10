@@ -37,5 +37,8 @@ script:
     - ./configure --with-mapnik
     - make test
 
+after_success:
+    - tail -n 1000 tests/*.log
+
 after_failure:
     - tail -n 1000 tests/*.log

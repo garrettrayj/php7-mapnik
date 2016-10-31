@@ -59,12 +59,14 @@ PHP_METHOD(Image, saveToFile)
 {
     php_mapnik_image_object *obj;
     zend_string *file;
+    zend_string *format = zend_string_init("png", sizeof("png")-1, 0);;
 
     if (::zend_parse_parameters_ex(
         ZEND_PARSE_PARAMS_QUIET,
         ZEND_NUM_ARGS() TSRMLS_CC,
-        "S",
-        &file) == FAILURE
+        "S|S",
+        &file,
+        &format) == FAILURE
     ) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Image::saveToFile");
         RETURN_FALSE;
@@ -74,7 +76,8 @@ PHP_METHOD(Image, saveToFile)
 
     try {
         std::string file_str(file->val, file->len);
-        mapnik::save_to_file(*obj->image, file_str, "png");
+        std::string format_str(format->val, format->len);
+        mapnik::save_to_file(*obj->image, file_str, format_str);
     } catch (const mapnik::image_writer_exception & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;
@@ -92,12 +95,24 @@ PHP_METHOD(Image, saveToFile)
 PHP_METHOD(Image, saveToString)
 {
     php_mapnik_image_object *obj;
+    zend_string *format = zend_string_init("png", sizeof("png")-1, 0);
     std::string image_str;
+
+    if (::zend_parse_parameters_ex(
+        ZEND_PARSE_PARAMS_QUIET,
+        ZEND_NUM_ARGS() TSRMLS_CC,
+        "|S",
+        &format) == FAILURE
+    ) {
+        php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Image::saveToFile");
+        RETURN_FALSE;
+    }
 
     obj = Z_PHP_MAPNIK_IMAGE_P(getThis());
 
     try {
-        image_str = mapnik::save_to_string(*obj->image, "png");
+        std::string format_str(format->val, format->len);
+        image_str = mapnik::save_to_string(*obj->image, format_str);
     } catch (const mapnik::image_writer_exception & ex) {
         php_mapnik_throw_exception(ex.what());
         RETURN_FALSE;

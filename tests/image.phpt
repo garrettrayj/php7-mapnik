@@ -8,7 +8,6 @@ gd
 <?php
 
 // Setup
-$imageFile = sys_get_temp_dir() . '/image-test.png';
 $configOutput = [];
 exec('mapnik-config --input-plugins', $configOutput);
 \Mapnik\DatasourceCache::registerDatasources($configOutput[0]);
@@ -26,15 +25,33 @@ $renderer = new \Mapnik\AggRenderer($map, $image);
 $renderer->apply();
 
 // Assert saving rendered image to file
+$imageFile = sys_get_temp_dir() . '/image-test.png';
 $image->saveToFile($imageFile);
 print file_exists($imageFile);
 unlink($imageFile);
 
+// Assert saving rendered JPEG image file
+$imageFile = sys_get_temp_dir() . '/image-test.jpg';
+$image->saveToFile($imageFile);
+print file_exists($imageFile);
+unlink($imageFile);
+
+// Assert saving rendered JPEG image with explicit format
+$imageFile = sys_get_temp_dir() . '/image-test';
+$image->saveToFile($imageFile, "jpeg");
+print file_exists($imageFile);
+unlink($imageFile);
+
 // Assert image can be saved to string
-$output = $image->saveToString('png');
+$output = $image->saveToString();
+$phpImageResource = imagecreatefromstring($output);
+print ($phpImageResource != false);
+
+// Assert image can be saved to string when format is provided
+$output = $image->saveToString('jpeg');
 $phpImageResource = imagecreatefromstring($output);
 print ($phpImageResource != false);
 
 ?>
 --EXPECT--
-111
+111111

@@ -69,10 +69,6 @@ Usage
     // Save PNG image
     $image->saveToFile('my_awesome_map.png');
 
-Developer Notes
----------------
-
-* Do NOT compile Boost with C++11. On Mac at least, you'll have a bad time with missing symbols.
 
 License
 -------

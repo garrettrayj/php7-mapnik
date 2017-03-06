@@ -12,6 +12,9 @@ Requirements
 ------------
 
 * PHP 7.0.x
+   * php7.0-gd 
+   * php7.0-dev
+   * Available through `sudo apt-get install php-dev php-gd` on Ubuntu 16.04 Xenial
 * Mapnik 3.0.x
 * mapnik-config
     * Available through `sudo apt-get install libmapnik-dev` on Ubuntu 16.04 Xenial

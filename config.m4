@@ -34,6 +34,7 @@ if test "$PHP_MAPNIK" != "no"; then
 
         dnl Add the necessary include dirs
         PHP_EVAL_INCLINE($MAPNIK_INCLUDES)
+        PHP_EVAL_INCLINE($ICU4C_FLAGS)
 
         dnl Add the necessary libraries and library dirs
         PHP_EVAL_LIBLINE($MAPNIK_LIBS, MAPNIK_SHARED_LIBADD)

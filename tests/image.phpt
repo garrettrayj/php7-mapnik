@@ -25,21 +25,24 @@ $renderer = new \Mapnik\AggRenderer($map, $image);
 $renderer->apply();
 
 // Assert saving rendered image to file
-$imageFile = sys_get_temp_dir() . '/image-test.png';
+$imageFile = sys_get_temp_dir() . 'image-test.png';
 $image->saveToFile($imageFile);
-print file_exists($imageFile);
+$phpImageResource = imagecreatefrompng($imageFile);
+print ($phpImageResource != false);
 unlink($imageFile);
 
 // Assert saving rendered JPEG image file
-$imageFile = sys_get_temp_dir() . '/image-test.jpg';
-$image->saveToFile($imageFile);
-print file_exists($imageFile);
+$imageFile = sys_get_temp_dir() . 'image-test.jpg';
+$image->saveToFile($imageFile, 'jpeg');
+$phpImageResource = imagecreatefromjpeg($imageFile);
+print ($phpImageResource != false);
 unlink($imageFile);
 
 // Assert saving rendered JPEG image with explicit format
 $imageFile = sys_get_temp_dir() . '/image-test';
-$image->saveToFile($imageFile, "jpeg");
-print file_exists($imageFile);
+$image->saveToFile($imageFile, "jpeg70");
+$phpImageResource = imagecreatefromjpeg($imageFile);
+print ($phpImageResource != false);
 unlink($imageFile);
 
 // Assert image can be saved to string
@@ -51,6 +54,7 @@ print ($phpImageResource != false);
 $output = $image->saveToString('jpeg');
 $phpImageResource = imagecreatefromstring($output);
 print ($phpImageResource != false);
+
 
 ?>
 --EXPECT--

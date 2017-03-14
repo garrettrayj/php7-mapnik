@@ -59,7 +59,7 @@ PHP_METHOD(Image, saveToFile)
 {
     php_mapnik_image_object *obj;
     zend_string *file;
-    zend_string *format = zend_string_init("png", sizeof("png")-1, 0);;
+    zend_string *format = zend_string_init("png", sizeof("png") - 1, 1);
 
     if (::zend_parse_parameters_ex(
         ZEND_PARSE_PARAMS_QUIET,
@@ -73,10 +73,10 @@ PHP_METHOD(Image, saveToFile)
     }
 
     obj = Z_PHP_MAPNIK_IMAGE_P(getThis());
+    std::string file_str(file->val, file->len);
+    std::string format_str(format->val, format->len);
 
     try {
-        std::string file_str(file->val, file->len);
-        std::string format_str(format->val, format->len);
         mapnik::save_to_file(*obj->image, file_str, format_str);
     } catch (const mapnik::image_writer_exception & ex) {
         php_mapnik_throw_exception(ex.what());
@@ -95,7 +95,7 @@ PHP_METHOD(Image, saveToFile)
 PHP_METHOD(Image, saveToString)
 {
     php_mapnik_image_object *obj;
-    zend_string *format = zend_string_init("png", sizeof("png")-1, 0);
+    zend_string *format = zend_string_init("png", sizeof("png") - 1, 1);
     std::string image_str;
 
     if (::zend_parse_parameters_ex(

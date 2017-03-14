@@ -289,6 +289,149 @@ PHP_METHOD(Map, registerFonts)
     RETURN_FALSE;
 }
 
+PHP_METHOD(Map, getBasePath)
+{
+    php_mapnik_map_object *obj;
+    std::string base_path;
+
+    obj = Z_PHP_MAPNIK_MAP_P(getThis());
+
+    base_path = obj->map->base_path();
+
+    RETURN_STRINGL(base_path.c_str(), base_path.size());
+}
+
+/*
+PHP_METHOD(Map, setBasePath)
+{
+
+}
+
+PHP_METHOD(Map, getWidth)
+{
+
+}
+
+PHP_METHOD(Map, setWidth)
+{
+
+}
+
+PHP_METHOD(Map, getHeight)
+{
+
+}
+
+PHP_METHOD(Map, setHeight)
+{
+
+}
+
+PHP_METHOD(Map, resize)
+{
+
+}
+
+PHP_METHOD(Map, getSRS)
+{
+
+}
+
+PHP_METHOD(Map, setSRS)
+{
+
+}
+
+PHP_METHOD(Map, getBackgroundImage)
+{
+
+}
+
+PHP_METHOD(Map, setBackgroundImage)
+{
+
+}
+
+PHP_METHOD(Map, getBackgroundImageOpacity)
+{
+
+}
+
+PHP_METHOD(Map, setBackgroundImageOpacity)
+{
+
+}
+
+PHP_METHOD(Map, getMaximumExtent)
+{
+
+}
+
+PHP_METHOD(Map, setMaximumExtent)
+{
+
+}
+
+PHP_METHOD(Map, resetMaximumExtent)
+{
+
+}
+
+PHP_METHOD(Map, getCurrentExtent)
+{
+
+}
+
+PHP_METHOD(Map, getBufferSize)
+{
+
+}
+
+PHP_METHOD(Map, setBufferSize)
+{
+
+}
+
+PHP_METHOD(Map, getBufferedExtent)
+{
+
+}
+
+PHP_METHOD(Map, getScale)
+{
+
+}
+
+PHP_METHOD(Map, getScaleDenominator)
+{
+
+}
+
+PHP_METHOD(Map, countLayers)
+{
+
+}
+
+PHP_METHOD(Map, removeStyle)
+{
+
+}
+
+PHP_METHOD(Map, removeAll)
+{
+
+}
+
+PHP_METHOD(Map, getAspectFixMode)
+{
+
+}
+
+PHP_METHOD(Map, setAspectFixMode)
+{
+
+}
+*/
 
 // Register methods
 
@@ -302,6 +445,7 @@ zend_function_entry php_mapnik_map_methods[] = {
     PHP_ME(Map, panAndZoom, NULL, ZEND_ACC_PUBLIC)
     PHP_ME(Map, zoomToBox, NULL, ZEND_ACC_PUBLIC)
     PHP_ME(Map, registerFonts, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(Map, getBasePath, NULL, ZEND_ACC_PUBLIC)
     {NULL, NULL, NULL}
 };
 

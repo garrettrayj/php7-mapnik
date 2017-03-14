@@ -47,6 +47,11 @@ print $map->panAndZoom(20, 20, 4);
 $box = new \Mapnik\Box2D(-180, -90, 180, 90);
 print $map->zoomToBox($box);
 
+// Assert getBasePath
+$basePath = $map->getBasePath();
+print ($basePath === __DIR__ . '/data');
+
+
 ?>
 --EXPECT--
-111111111
+1111111111

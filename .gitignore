@@ -48,3 +48,5 @@ tests/*/*.php
 tests/*/*.exp
 tests/*/*.log
 tests/*/*.sh
+!tests/util/*
+!tests/data/*

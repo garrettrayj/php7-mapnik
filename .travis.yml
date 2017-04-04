@@ -5,15 +5,22 @@ php:
     - 7.0
     - 7.1
     - nightly
-env: CC=gcc
+env:
+    global:
+        - REPORT_EXIT_STATUS=1
+    matrix:
+        - CC=gcc
+
 matrix:
     allow_failures:
         - php: nightly
     include:
         - php: 7.0
-          env: CC=clang
+          env:
+              - CC=clang
         - php: 7.1
-          env: CC=clang
+          env:
+              - CC=clang
 
 os:
     - linux
@@ -26,12 +33,6 @@ addons:
 compiler:
     - gcc
     - clang
-
-# Mapnik doesn't have a stable 3.0.x release in PPA. Nightly has problems with input plugins.
-# I don't want to build Mapnik from source here for time and hassle reasons... so I'm cheating.
-#
-#env:
-#    - REPORT_EXIT_STATUS=1
 
 before_install:
 #    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi

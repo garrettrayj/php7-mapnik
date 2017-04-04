@@ -25,14 +25,14 @@ $renderer = new \Mapnik\AggRenderer($map, $image);
 $renderer->apply();
 
 // Assert saving rendered image to file
-$imageFile = sys_get_temp_dir() . 'image-test.png';
+$imageFile = sys_get_temp_dir() . '/image-test.png';
 $image->saveToFile($imageFile);
 $phpImageResource = imagecreatefrompng($imageFile);
 print ($phpImageResource != false);
 unlink($imageFile);
 
 // Assert saving rendered JPEG image file
-$imageFile = sys_get_temp_dir() . 'image-test.jpg';
+$imageFile = sys_get_temp_dir() . '/image-test.jpg';
 $image->saveToFile($imageFile, 'jpeg');
 $phpImageResource = imagecreatefromjpeg($imageFile);
 print ($phpImageResource != false);

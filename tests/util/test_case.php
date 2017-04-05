@@ -1,5 +1,4 @@
 <?php
-
 class MapnikTestCase
 {
     public function __construct()

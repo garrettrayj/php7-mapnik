@@ -5,17 +5,28 @@
 --FILE--
 <?php
 
-// Assert bad parameters throw exception
-try {
-    $projection = new \Mapnik\Projection("bad dog");
-} catch (\Exception $e) {
-    print ($e instanceof \Mapnik\Exception);
+require_once('util/test_case.php');
+
+class ProjectionTest extends MapnikTestCase
+{
+    public function testConstructor()
+    {
+        try {
+            $projection = new \Mapnik\Projection("foo bar");
+        } catch (\Exception $e) {
+
+        }
+        assert(
+            '$e instanceof \Mapnik\Exception',
+            'Instantiating \Mapnik\Projection with bad parameters did not throw exception.'
+        );
+
+        $projection = new \Mapnik\Projection("+init=epsg:4326");
+        assert('$projection instanceof \Mapnik\Projection', 'Instantiating \Mapnik\Projection failed.');
+    }
 }
 
-// Assert correct instantiation
-$projection = new \Mapnik\Projection("+init=epsg:4326");
-print ($projection instanceof \Mapnik\Projection);
+new ProjectionTest();
 
 ?>
 --EXPECT--
-11

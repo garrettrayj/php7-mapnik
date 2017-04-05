@@ -5,19 +5,28 @@
 --FILE--
 <?php
 
-// Assert no plugins registered at start
-$plugins = \Mapnik\DatasourceCache::getPluginNames();
-print (count($plugins) === 0);
+require_once('util/test_case.php');
 
-// Assert successful registration of datasource plugins
-$configOutput = [];
-exec('mapnik-config --input-plugins', $configOutput);
-print \Mapnik\DatasourceCache::registerDatasources($configOutput[0]);
+class DatasourceCacheTest extends MapnikTestCase
+{
+    public function testGetPluginNamesEmpty()
+    {
+        $plugins = \Mapnik\DatasourceCache::getPluginNames();
+        assert('count($plugins) === 0', 'DatasourceCache cache plugins not empty even though register was not called.');
+    }
 
-// Assert that we have plugins now
-$plugins = \Mapnik\DatasourceCache::getPluginNames();
-print (count($plugins) > 0);
+    public function testRegisterDatasources()
+    {
+        $configOutput = [];
+        exec('mapnik-config --input-plugins', $configOutput);
+        \Mapnik\DatasourceCache::registerDatasources($configOutput[0]);
+        $plugins = \Mapnik\DatasourceCache::getPluginNames();
+
+        assert('count($plugins) > 0', 'No plugins after registering directory with DatasourceCache.');
+    }
+}
+
+new DatasourceCacheTest();
 
 ?>
 --EXPECT--
-111

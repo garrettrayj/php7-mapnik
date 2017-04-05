@@ -5,7 +5,7 @@
 --FILE--
 <?php
 
-require_once('test_case.php');
+require_once('util/test_case.php');
 
 class MapTest extends MapnikTestCase
 {
@@ -35,11 +35,11 @@ class MapTest extends MapnikTestCase
         }
         assert(
             '$e instanceof \Mapnik\Exception',
-            'Instantiating Mapnik::Map with bad arguments did not throw exception.'
+            'Instantiating \Mapnik\Map with bad arguments did not throw exception.'
         );
 
         $map = new \Mapnik\Map(640, 480);
-        assert('$map instanceof \Mapnik\Map', 'Instantiating Mapnik::Map failed.');
+        assert('$map instanceof \Mapnik\Map', 'Instantiating \Mapnik\Map failed.');
     }
 
     public function testLoadXmlString()
@@ -91,7 +91,7 @@ class MapTest extends MapnikTestCase
                 floor($extent->minX()) === -160.0 && floor($extent->minY()) === -110.0 && 
                 floor($extent->maxX()) === -100.0 && floor($extent->maxY()) === -50.0
             ',
-            'Map zoom failed.'
+            'Map->zoom() failed.'
         );
     }
 
@@ -108,7 +108,7 @@ class MapTest extends MapnikTestCase
                 $extent->minX() === -140.0 && $extent->minY() === -90.0 && 
                 $extent->maxX() === -120.0 && $extent->maxY() === -70.0
             ',
-            'Map zoomAll failed.'
+            'Map->zoomAll() failed.'
         );
     }
 
@@ -126,7 +126,7 @@ class MapTest extends MapnikTestCase
                 floor($extent->minX()) === -151.0 && floor($extent->minY()) === -83.0 && 
                 floor($extent->maxX()) === -131.0 && floor($extent->maxY()) === -63.0
             ',
-            'Map pan failed.'
+            'Map->pan() failed.'
         );
     }
 
@@ -145,7 +145,7 @@ class MapTest extends MapnikTestCase
                 floor($extent->minX()) === -161.0 && floor($extent->minY()) === -93.0 && 
                 floor($extent->maxX()) === -121.0 && floor($extent->maxY()) === -53.0
             ',
-            'Map panAndZoom failed.'
+            'Map->panAndZoom() failed.'
         );
     }
 
@@ -161,33 +161,33 @@ class MapTest extends MapnikTestCase
                 $extent->minX() === -140.0 && $extent->minY() === -90.0 && 
                 $extent->maxX() === -120.0 && $extent->maxY() === -70.0
             ',
-            'Map zoomToBox failed.'
+            'Map->zoomToBox() failed.'
         );
     }
 
     public function testGetBasePath()
     {
         $basePath = $this->exampleMap->getBasePath();
-        assert('$basePath === __DIR__ . "/data"', "Map getBaseBath returned wrong path.");
+        assert('$basePath === __DIR__ . "/data"', "Map->getBaseBath() returned wrong path.");
     }
 
     public function testSetBasePath()
     {
         $this->exampleMap->setBasePath(__DIR__);
         $basePath = $this->exampleMap->getBasePath();
-        assert('$basePath === __DIR__', "Map setBasePath failed.");
+        assert('$basePath === __DIR__', "Map->setBasePath() failed.");
     }
 
 
     public function testGetWidth()
     {
-        assert('$this->exampleMap->getWidth() === 640', 'Map getWidth returned incorrect value.');
+        assert('$this->exampleMap->getWidth() === 640', 'Map->getWidth() returned incorrect value.');
     }
 
     public function testSetWidth()
     {
         $this->exampleMap->setWidth(1024);
-        assert('$this->exampleMap->getWidth() === 1024', 'Map setWidth failed');
+        assert('$this->exampleMap->getWidth() === 1024', 'Map->setWidth() failed');
 
         try {
             $this->exampleMap->setWidth('foo');
@@ -196,19 +196,19 @@ class MapTest extends MapnikTestCase
         }
         assert(
             '$e instanceof \Mapnik\Exception',
-            'Calling Map setWidth with bad argument did not throw Mapnik exception.'
+            'Calling Map->setWidth() with bad argument did not throw Mapnik exception.'
         );
     }
 
     public function testGetHeight()
     {
-        assert('$this->exampleMap->getHeight() === 480', 'Map getHeight returned incorrect value.');
+        assert('$this->exampleMap->getHeight() === 480', 'Map->getHeight() returned incorrect value.');
     }
 
     public function testSetHeight()
     {
         $this->exampleMap->setHeight(768);
-        assert('$this->exampleMap->getHeight() === 768', 'Map setHeight failed');
+        assert('$this->exampleMap->getHeight() === 768', 'Map->setHeight() failed');
 
         try {
             $this->exampleMap->setHeight('foo');
@@ -217,7 +217,7 @@ class MapTest extends MapnikTestCase
         }
         assert(
             '$e instanceof \Mapnik\Exception',
-            'Calling Map setHeight with bad argument did not throw Mapnik exception.'
+            'Calling Map->setHeight() with bad argument did not throw Mapnik exception.'
         );
     }
 
@@ -234,7 +234,7 @@ class MapTest extends MapnikTestCase
         }
         assert(
             '$e instanceof \Mapnik\Exception',
-            'Calling Map resize with bad arguments did not throw Mapnik exception.'
+            'Calling Map->resize() with bad arguments did not throw Mapnik exception.'
         );
     }
 
@@ -242,30 +242,30 @@ class MapTest extends MapnikTestCase
     {
         assert(
             '$this->exampleMap->getSrs() === "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"',
-            'Map getSrs returned invalid SRS'
+            'Map->getSrs() returned invalid SRS'
         );
     }
 
     public function testSetSrs()
     {
         $this->exampleMap->setSrs('EPSG:3857');
-        assert('$this->exampleMap->getSrs() === "EPSG:3857"', 'Map setSrs failed');
+        assert('$this->exampleMap->getSrs() === "EPSG:3857"', 'Map->setSrs() failed');
     }
 
     public function testGetBackgroundImage()
     {
-        assert('$this->exampleMap->getBackgroundImage() === null', 'Map getBackgroundImage failed.');
+        assert('$this->exampleMap->getBackgroundImage() === null', 'Map->getBackgroundImage() failed.');
     }
 
     public function testSetBackgroundImage()
     {
         $this->exampleMap->setBackgroundImage('foo');
-        assert('$this->exampleMap->getBackgroundImage() === "foo"', 'Map getBackgroundImage failed.');
+        assert('$this->exampleMap->getBackgroundImage() === "foo"', 'Map->getBackgroundImage() failed.');
     }
 
     public function testGetBackgroundImageOpacity()
     {
-        assert('$this->exampleMap->getBackgroundImageOpacity() === 1.0', 'Map getBackgroundImageOpacity failed.');
+        assert('$this->exampleMap->getBackgroundImageOpacity() === 1.0', 'Map->getBackgroundImageOpacity() failed.');
     }
 
     public function testSetGetBackgroundImageOpacity()
@@ -273,19 +273,19 @@ class MapTest extends MapnikTestCase
         $this->exampleMap->setBackgroundImageOpacity(0.5);
         assert(
             '$this->exampleMap->getBackgroundImageOpacity() === 0.5',
-            'Map setBackgroundImageOpacity failed with float.'
+            'Map->setBackgroundImageOpacity() failed with float.'
         );
 
         $this->exampleMap->setBackgroundImageOpacity(1);
         assert(
             '$this->exampleMap->getBackgroundImageOpacity() === 1.0',
-            'Map setBackgroundImageOpacity failed with integer.'
+            'Map->setBackgroundImageOpacity() failed with integer.'
         );
     }
 
     public function testGetMaximumExtent()
     {
-        assert('$this->exampleMap->getMaximumExtent() === null', 'Map getMaximumExtent failed.');
+        assert('$this->exampleMap->getMaximumExtent() === null', 'Map->getMaximumExtent() failed.');
     }
 
     public function testSetMaximumExtent()
@@ -298,7 +298,7 @@ class MapTest extends MapnikTestCase
                 $extent->minX() === -140.0 && $extent->minY() === -90.0 && 
                 $extent->maxX() === -120.0 && $extent->maxY() === -70.0
             ',
-            'Map setMaximumExtent failed.'
+            'Map->setMaximumExtent() failed.'
         );
     }
 
@@ -310,7 +310,7 @@ class MapTest extends MapnikTestCase
         $extent = $this->exampleMap->getMaximumExtent();
         assert(
             '$extent === null',
-            'Map resetMaximumExtent failed.'
+            'Map->resetMaximumExtent() failed.'
         );
     }
 
@@ -322,20 +322,20 @@ class MapTest extends MapnikTestCase
                 floor($extent->minX()) === -180.0 && floor($extent->minY()) === -139.0 && 
                 floor($extent->maxX()) === 180.0 && floor($extent->maxY()) === 131.0
             ',
-            'Map getCurrentExtent failed.'
+            'Map->getCurrentExtent() failed.'
         );
     }
 
     public function testGetBufferSize()
     {
         $buffer = $this->exampleMap->getBufferSize();
-        assert('$buffer === 0', 'Map getBufferSize failed.');
+        assert('$buffer === 0', 'Map->getBufferSize() failed.');
     }
 
     public function testSetBufferSize()
     {
         $this->exampleMap->setBufferSize(10);
-        assert('$this->exampleMap->getBufferSize() === 10', 'Map setBufferSize failed.');
+        assert('$this->exampleMap->getBufferSize() === 10', 'Map->setBufferSize() failed.');
     }
 
     public function testGetBufferedExtent()
@@ -346,7 +346,7 @@ class MapTest extends MapnikTestCase
                 floor($extent->minX()) === -180.0 && floor($extent->minY()) === -139.0 && 
                 floor($extent->maxX()) === 180.0 && floor($extent->maxY()) === 131.0
             ',
-            'Map getBufferedExtent failed.'
+            'Map->getBufferedExtent() failed.'
         );
 
         $this->exampleMap->setBufferSize(10);
@@ -357,42 +357,42 @@ class MapTest extends MapnikTestCase
                 floor($extent->minX()) === -186.0 && floor($extent->minY()) === -144.0 && 
                 floor($extent->maxX()) === 185.0 && floor($extent->maxY()) === 137.0
             ',
-            'Map getBufferedExtent failed.'
+            'Map->getBufferedExtent() failed.'
         );
     }
 
     public function testGetScale()
     {
-        assert('(float) sprintf("%.2f", $this->exampleMap->getScale()) === 0.56', 'Map getScale failed.');
+        assert('(float) sprintf("%.2f", $this->exampleMap->getScale()) === 0.56', 'Map->getScale() failed.');
     }
 
     public function testGetScaleDenominator()
     {
         assert(
             '(float) sprintf("%.2f", $this->exampleMap->getScaleDenominator()) === 223632905.61',
-            'Map getScaleDenominator failed.'
+            'Map->getScaleDenominator() failed.'
         );
     }
 
     public function testCountLayers()
     {
-        assert('$this->exampleMap->countLayers() === 1', 'Map countLayers failed.');
+        assert('$this->exampleMap->countLayers() === 1', 'Map->countLayers() failed.');
     }
 
     public function testRemoveStyle()
     {
-        assert('$this->exampleMap->removeStyle("world_style") === null', 'Map removeStyle failed.');
+        assert('$this->exampleMap->removeStyle("world_style") === null', 'Map->removeStyle() failed.');
     }
 
     public function testRemoveAll()
     {
         $this->exampleMap->removeAll();
-        assert('$this->exampleMap->countLayers() === 0', 'Map removeAll failed.');
+        assert('$this->exampleMap->countLayers() === 0', 'Map->removeAll() failed.');
     }
 
     public function testGetAspectFixMode()
     {
-        assert('$this->exampleMap->getAspectFixMode() === \Mapnik\Map::GROW_BBOX', 'Map getAspectFixMode failed.');
+        assert('$this->exampleMap->getAspectFixMode() === \Mapnik\Map::GROW_BBOX', 'Map->getAspectFixMode() failed.');
     }
 
     public function testSetAspectFixMode()
@@ -400,55 +400,55 @@ class MapTest extends MapnikTestCase
         $this->exampleMap->setAspectFixMode(\Mapnik\Map::GROW_CANVAS);
         assert(
             '$this->exampleMap->getAspectFixMode() === \Mapnik\Map::GROW_CANVAS',
-            'Map setAspectFixMode GROW_CANVAS failed.'
+            'Map->setAspectFixMode() GROW_CANVAS failed.'
         );
 
         $this->exampleMap->setAspectFixMode(\Mapnik\Map::SHRINK_BBOX);
         assert(
             '$this->exampleMap->getAspectFixMode() === \Mapnik\Map::SHRINK_BBOX',
-            'Map setAspectFixMode SHRINK_BBOX failed.'
+            'Map->setAspectFixMode() SHRINK_BBOX failed.'
         );
 
         $this->exampleMap->setAspectFixMode(\Mapnik\Map::SHRINK_CANVAS);
         assert(
             '$this->exampleMap->getAspectFixMode() === \Mapnik\Map::SHRINK_CANVAS',
-            'Map setAspectFixMode SHRINK_CANVAS failed.'
+            'Map->setAspectFixMode() SHRINK_CANVAS failed.'
         );
 
         $this->exampleMap->setAspectFixMode(\Mapnik\Map::ADJUST_BBOX_WIDTH);
         assert(
             '$this->exampleMap->getAspectFixMode() === \Mapnik\Map::ADJUST_BBOX_WIDTH',
-            'Map setAspectFixMode ADJUST_BBOX_WIDTH failed.'
+            'Map->setAspectFixMode() ADJUST_BBOX_WIDTH failed.'
         );
 
         $this->exampleMap->setAspectFixMode(\Mapnik\Map::ADJUST_BBOX_HEIGHT);
         assert(
             '$this->exampleMap->getAspectFixMode() === \Mapnik\Map::ADJUST_BBOX_HEIGHT',
-            'Map setAspectFixMode ADJUST_BBOX_HEIGHT failed.'
+            'Map->setAspectFixMode() ADJUST_BBOX_HEIGHT failed.'
         );
 
         $this->exampleMap->setAspectFixMode(\Mapnik\Map::ADJUST_CANVAS_WIDTH);
         assert(
             '$this->exampleMap->getAspectFixMode() === \Mapnik\Map::ADJUST_CANVAS_WIDTH',
-            'Map setAspectFixMode ADJUST_CANVAS_WIDTH failed.'
+            'Map->setAspectFixMode() ADJUST_CANVAS_WIDTH failed.'
         );
 
         $this->exampleMap->setAspectFixMode(\Mapnik\Map::ADJUST_CANVAS_HEIGHT);
         assert(
             '$this->exampleMap->getAspectFixMode() === \Mapnik\Map::ADJUST_CANVAS_HEIGHT',
-            'Map setAspectFixMode ADJUST_CANVAS_HEIGHT failed.'
+            'Map->setAspectFixMode() ADJUST_CANVAS_HEIGHT failed.'
         );
 
         $this->exampleMap->setAspectFixMode(\Mapnik\Map::RESPECT);
         assert(
             '$this->exampleMap->getAspectFixMode() === \Mapnik\Map::RESPECT',
-            'Map setAspectFixMode RESPECT failed.'
+            'Map->setAspectFixMode() RESPECT failed.'
         );
 
         $this->exampleMap->setAspectFixMode(\Mapnik\Map::GROW_BBOX);
         assert(
             '$this->exampleMap->getAspectFixMode() === \Mapnik\Map::GROW_BBOX',
-            'Map setAspectFixMode GROW_BBOX failed.'
+            'Map->setAspectFixMode() GROW_BBOX failed.'
         );
 
         try {

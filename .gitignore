@@ -45,7 +45,7 @@ tests/*/*.php
 tests/*/*.exp
 tests/*/*.log
 tests/*/*.sh
-!tests/test_case.php
+!tests/util/*
 !tests/data/*
 
 ### Composer

@@ -7,30 +7,44 @@ Header Graphic
 
 // Just a fun test to give the project a header graphic...
 
-$pluginConfigOutput = [];
-exec('mapnik-config --input-plugins', $pluginConfigOutput);
-\Mapnik\DatasourceCache::registerDatasources($pluginConfigOutput[0]);
+require_once('util/test_case.php');
 
-$map = new \Mapnik\Map(1280, 320);
+class HeaderGraphicTest extends MapnikTestCase
+{
+    public function testMakeHeaderGraphic()
+    {
+        $pluginConfigOutput = [];
+        exec('mapnik-config --input-plugins', $pluginConfigOutput);
+        \Mapnik\DatasourceCache::registerDatasources($pluginConfigOutput[0]);
 
-$fontConfigOutput = [];
-exec('mapnik-config --fonts', $fontConfigOutput);
-$map->registerFonts($fontConfigOutput[0]);
+        // Travis build machine does not have CSV plugin due to incompatible Boost version.
+        // Just return early if CSV isn't available.
+        if (!in_array('csv', \Mapnik\DatasourceCache::getPluginNames())) return;
 
-$basePath = realpath(dirname(__FILE__) . '/data');
-$map->loadXmlFile($basePath . '/header_graphic.xml', false, $basePath);
+        $map = new \Mapnik\Map(1280, 320);
 
-$box = new \Mapnik\Box2D(-134, -25, 174, 67);
-$map->zoomToBox($box);
+        $fontConfigOutput = [];
+        exec('mapnik-config --fonts', $fontConfigOutput);
+        $map->registerFonts($fontConfigOutput[0]);
 
-$image = new \Mapnik\Image(1280, 320);
-$renderer = new \Mapnik\AggRenderer($map, $image);
-$renderer->apply();
+        $basePath = realpath(__DIR__ . '/data');
+        $map->loadXmlFile($basePath . '/header_graphic.xml', false, $basePath);
 
-$imageFile = realpath(dirname(__FILE__) . '/../') . '/header_graphic.png';
-$image->saveToFile($imageFile);
-print file_exists($imageFile);
+        $box = new \Mapnik\Box2D(-134, -25, 174, 67);
+        $map->zoomToBox($box);
+
+        $image = new \Mapnik\Image(1280, 320);
+        $renderer = new \Mapnik\AggRenderer($map, $image);
+        $renderer->apply();
+
+        $imageFile = realpath(__DIR__ . '/../') . '/header_graphic.png';
+        $image->saveToFile($imageFile);
+
+        assert('file_exists($imageFile) === true', 'Header graphic does not exist.');
+    }
+}
+
+new HeaderGraphicTest();
 
 ?>
 --EXPECT--
-1

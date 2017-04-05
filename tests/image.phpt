@@ -7,55 +7,85 @@ gd
 --FILE--
 <?php
 
-// Setup
-$configOutput = [];
-exec('mapnik-config --input-plugins', $configOutput);
-\Mapnik\DatasourceCache::registerDatasources($configOutput[0]);
-$map = new \Mapnik\Map(640, 480);
-$basePath = realpath(dirname(__FILE__) . '/data');
-$map->loadXmlFile($basePath . '/world.xml', false, $basePath);
-$map->zoomAll();
+require_once('util/test_case.php');
 
-// Assert Image instantiation
-$image = new \Mapnik\Image(640, 480);
-print ($image instanceof \Mapnik\Image);
+class ImageTest extends MapnikTestCase
+{
+    private $basePath;
 
-// Give the image some data
-$renderer = new \Mapnik\AggRenderer($map, $image);
-$renderer->apply();
+    private $exampleMap;
 
-// Assert saving rendered image to file
-$imageFile = sys_get_temp_dir() . '/image-test.png';
-$image->saveToFile($imageFile);
-$phpImageResource = imagecreatefrompng($imageFile);
-print ($phpImageResource != false);
-unlink($imageFile);
+    public function setup()
+    {
+        $configOutput = [];
+        exec('mapnik-config --input-plugins', $configOutput);
+        \Mapnik\DatasourceCache::registerDatasources($configOutput[0]);
 
-// Assert saving rendered JPEG image file
-$imageFile = sys_get_temp_dir() . '/image-test.jpg';
-$image->saveToFile($imageFile, 'jpeg');
-$phpImageResource = imagecreatefromjpeg($imageFile);
-print ($phpImageResource != false);
-unlink($imageFile);
+        $this->basePath = realpath(__DIR__ . '/data');
 
-// Assert saving rendered JPEG image with explicit format
-$imageFile = sys_get_temp_dir() . '/image-test';
-$image->saveToFile($imageFile, "jpeg70");
-$phpImageResource = imagecreatefromjpeg($imageFile);
-print ($phpImageResource != false);
-unlink($imageFile);
+        $this->exampleMap = new \Mapnik\Map(640, 480);
+        $this->exampleMap->loadXmlFile($this->basePath . "/world.xml", false, $this->basePath);
+        $this->exampleMap->zoomAll();
+    }
 
-// Assert image can be saved to string
-$output = $image->saveToString();
-$phpImageResource = imagecreatefromstring($output);
-print ($phpImageResource != false);
+    public function testConstructor()
+    {
+        $image = new \Mapnik\Image(640, 480);
+        assert('$image instanceof \Mapnik\Image', '\Mapnik\Image instantiation failed.');
+    }
 
-// Assert image can be saved to string when format is provided
-$output = $image->saveToString('jpeg');
-$phpImageResource = imagecreatefromstring($output);
-print ($phpImageResource != false);
+    public function testSaveToFile()
+    {
+        $image = new \Mapnik\Image(640, 480);
+        $renderer = new \Mapnik\AggRenderer($this->exampleMap, $image);
+        $renderer->apply();
 
+        $imageFile = sys_get_temp_dir() . '/image-test.png';
+        $image->saveToFile($imageFile);
+        $phpImageResource = imagecreatefrompng($imageFile);
+
+        assert('$phpImageResource != false', 'Image->saveToFile() failed.');
+        unlink($imageFile);
+    }
+
+    public function testSaveToFileWithFormat()
+    {
+        $image = new \Mapnik\Image(640, 480);
+        $renderer = new \Mapnik\AggRenderer($this->exampleMap, $image);
+        $renderer->apply();
+
+        $imageFile = sys_get_temp_dir() . '/image-test';
+        $image->saveToFile($imageFile, 'jpeg70');
+        $phpImageResource = imagecreatefromjpeg($imageFile);
+
+        assert('$phpImageResource != false', 'Image->saveToFile() with format failed.');
+        unlink($imageFile);
+    }
+
+    public function testSaveToString()
+    {
+        $image = new \Mapnik\Image(640, 480);
+        $renderer = new \Mapnik\AggRenderer($this->exampleMap, $image);
+        $renderer->apply();
+
+        $output = $image->saveToString();
+        $phpImageResource = imagecreatefromstring($output);
+        assert('$phpImageResource != false', 'Image->saveToString() failed.');
+    }
+
+    public function testSaveToStringWithFormat()
+    {
+        $image = new \Mapnik\Image(640, 480);
+        $renderer = new \Mapnik\AggRenderer($this->exampleMap, $image);
+        $renderer->apply();
+
+        $output = $image->saveToString('jpeg');
+        $phpImageResource = imagecreatefromstring($output);
+        assert('$phpImageResource != false', 'Image->saveToString() with format failed.');
+    }
+}
+
+new ImageTest();
 
 ?>
 --EXPECT--
-111111

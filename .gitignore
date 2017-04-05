@@ -9,10 +9,7 @@
 .idea/sqlDataSources.xml
 atlassian-ide-plugin.xml
 
-### Atom
-tags
-
-## phpize
+### phpize
 .deps
 *.lo
 *.la
@@ -48,5 +45,11 @@ tests/*/*.php
 tests/*/*.exp
 tests/*/*.log
 tests/*/*.sh
-!tests/util/*
+!tests/test_case.php
 !tests/data/*
+
+### Composer
+vendor
+
+### Docs
+docs/cache

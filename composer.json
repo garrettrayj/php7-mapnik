@@ -1,0 +1,8 @@
+{
+    "require": {
+        "sami/sami": "^4.0"
+    },
+    "scripts": {
+        "generate-docs": "vendor/bin/sami.php update sami.php"
+    }
+}

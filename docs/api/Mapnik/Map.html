@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Mapnik\Map | PHP7 Mapnik API</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Mapnik_Map" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">PHP7 Mapnik API</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../Mapnik.html">Mapnik</a></li>
+    
+                <li>Map</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Map
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Map</strong>        (<a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Class Map</p>                    </div>
+    
+    
+            <h2>Constants</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td>GROW_BBOX</td>
+                <td class="last">
+                    <p><em>Grow the width or height of the specified geo bbox to fill the map size. Default behaviour.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>GROW_CANVAS</td>
+                <td class="last">
+                    <p><em>Grow the width or height of the map to accommodate the specified geo bbox.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SHRINK_BBOX</td>
+                <td class="last">
+                    <p><em>Shrink the width or height of the specified geo bounding box to fill the map size.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SHRINK_CANVAS</td>
+                <td class="last">
+                    <p><em>Shrink the width or height of the map to accommodate the specified geo bounding box.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>ADJUST_BBOX_WIDTH</td>
+                <td class="last">
+                    <p><em>Adjust the width of the specified geo bounding box, leave height and map size unchanged.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>ADJUST_BBOX_HEIGHT</td>
+                <td class="last">
+                    <p><em>Adjust the height of the specified geo bounding box, leave width and map size unchanged.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>ADJUST_CANVAS_WIDTH</td>
+                <td class="last">
+                    <p><em>Adjust the width of the map, leave height and geo bounding box unchanged.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>ADJUST_CANVAS_HEIGHT</td>
+                <td class="last">
+                    <p><em>Adjust the height of the map, leave width and geo bounding box unchanged.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>RESPECT</td>
+                <td class="last">
+                    <p><em>Do nothing, leave map and geo bounding box unchanged.</em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(int $width = 400, int $height = 400, string $srs = &#039;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&#039;)
+        
+                                            <p>Map constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadXmlString">loadXmlString</a>(string $xml)
+        
+                                            <p>Load map XML from string.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadXmlFile">loadXmlFile</a>(string $file, bool $strict, string $basePath)
+        
+                                            <p>Load XML map file.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_zoom">zoom</a>(float $zoom)
+        
+                                            <p>Zoom in or out by a given factor. Positive number zooms in, negative number zooms out.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_zoomAll">zoomAll</a>()
+        
+                                            <p>Set the geographical extent of the map to the combined extents of all active layers.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_pan">pan</a>(int $x, int $y)
+        
+                                            <p>Set the Map center to x,y location in the coordinates of the pixmap or map surface.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_panAndZoom">panAndZoom</a>(int $x, int $y, float $zoom)
+        
+                                            <p>Set Map center to x,y location and zoom in or out.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_zoomToBox">zoomToBox</a>(<a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a> $box)
+        
+                                            <p>Set the geographical extent of the map to Mapnik Box2D envelope.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_registerFonts">registerFonts</a>(string $path)
+        
+                                            <p>Set path to search for fonts used in map.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBasePath">getBasePath</a>()
+        
+                                            <p>Get base path used for loading map assets.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setBasePath">setBasePath</a>(string $path)
+        
+                                            <p>Set base path used for loading map assets.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getWidth">getWidth</a>()
+        
+                                            <p>Get canvas width.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setWidth">setWidth</a>(int $width)
+        
+                                            <p>Set canvas width.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHeight">getHeight</a>()
+        
+                                            <p>Get canvas height.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setHeight">setHeight</a>(int $height)
+        
+                                            <p>Set canvas height.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_resize">resize</a>(int $width, int $height)
+        
+                                            <p>Resize the canvas to given height and width.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSrs">getSrs</a>()
+        
+                                            <p>Get spatial reference system.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSrs">setSrs</a>(string $srs)
+        
+                                            <p>Set spatial reference system.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBackgroundImage">getBackgroundImage</a>()
+        
+                                            <p>Get path to background image.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setBackgroundImage">setBackgroundImage</a>(string $file)
+        
+                                            <p>Set path to background image.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBackgroundImageOpacity">getBackgroundImageOpacity</a>()
+        
+                                            <p>Get background image opacity. 0 is transparent, 1 is opaque.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setBackgroundImageOpacity">setBackgroundImageOpacity</a>(float $opacity)
+        
+                                            <p>Set background image opacity. 0 is transparent, 1 is opaque.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMaximumExtent">getMaximumExtent</a>()
+        
+                                            <p>Get maximum extent of projected map.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMaximumExtent">setMaximumExtent</a>(<a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a> $box)
+        
+                                            <p>Set maximum extent of projected map.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_resetMaximumExtent">resetMaximumExtent</a>()
+        
+                                            <p>Reset maximum extent.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCurrentExtent">getCurrentExtent</a>()
+        
+                                            <p>Get current extent of projected map.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBufferSize">getBufferSize</a>()
+        
+                                            <p>Get map bounds buffer size.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setBufferSize">setBufferSize</a>(int $bufferSize)
+        
+                                            <p>Set map bounds buffer. Used by placement detector to help avoid cutting labels.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBufferedExtent">getBufferedExtent</a>()
+        
+                                            <p>Get extent of map with buffer applied.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getScale">getScale</a>()
+        
+                                            <p>Get map scale.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getScaleDenominator">getScaleDenominator</a>()
+        
+                                            <p>Get scale denominator.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_countLayers">countLayers</a>()
+        
+                                            <p>Count number of map layers.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_removeStyle">removeStyle</a>(string $styleName)
+        
+                                            <p>Remove a style.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_removeAll">removeAll</a>()
+        
+                                            <p>Remove all styles and layers.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAspectFixMode">getAspectFixMode</a>()
+        
+                                            <p>Get aspect fix mode.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAspectFixMode">setAspectFixMode</a>(int $aspectFixMode)
+        
+                                            <p>Set aspect fix mode. See Map constants for valid values.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L84">line 84</a></div>
+        <code>                    
+    <strong>__construct</strong>(int $width = 400, int $height = 400, string $srs = &#039;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Map constructor.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$width</td>
+                <td>Map canvas width</td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$height</td>
+                <td>Map canvas height</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$srs</td>
+                <td>Spatial reference system</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadXmlString">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L96">line 96</a></div>
+        <code>                    
+    <strong>loadXmlString</strong>(string $xml)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Load map XML from string.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$xml</td>
+                <td>Mapnik XML</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>https://github.com/mapnik/mapnik/blob/master/include/mapnik/load_map.hpp</td>
+                <td>Mapnik C++ include</td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadXmlFile">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L106">line 106</a></div>
+        <code>                    
+    <strong>loadXmlFile</strong>(string $file, bool $strict, string $basePath)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Load XML map file.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$file</td>
+                <td>Path to Mapnik XML file</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$strict</td>
+                <td>Enable or disable strict map parsing</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$basePath</td>
+                <td>Path to directory with map assets</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>https://github.com/mapnik/mapnik/blob/master/include/mapnik/load_map.hpp</td>
+                <td>Mapnik C++ include</td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_zoom">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L113">line 113</a></div>
+        <code>                    
+    <strong>zoom</strong>(float $zoom)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Zoom in or out by a given factor. Positive number zooms in, negative number zooms out.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>float</td>
+                <td>$zoom</td>
+                <td>Zoom factor</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_zoomAll">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L118">line 118</a></div>
+        <code>                    
+    <strong>zoomAll</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set the geographical extent of the map to the combined extents of all active layers.</p>                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_pan">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L126">line 126</a></div>
+        <code>                    
+    <strong>pan</strong>(int $x, int $y)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set the Map center to x,y location in the coordinates of the pixmap or map surface.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$x</td>
+                <td>Horizontal coordinate</td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$y</td>
+                <td>Vertical coordinate</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_panAndZoom">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L135">line 135</a></div>
+        <code>                    
+    <strong>panAndZoom</strong>(int $x, int $y, float $zoom)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set Map center to x,y location and zoom in or out.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$x</td>
+                <td>Horizontal coordinate</td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$y</td>
+                <td>Vertical coordinate</td>
+            </tr>
+                    <tr>
+                <td>float</td>
+                <td>$zoom</td>
+                <td>Zoom factor</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_zoomToBox">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L143">line 143</a></div>
+        <code>                    
+    <strong>zoomToBox</strong>(<a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a> $box)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set the geographical extent of the map to Mapnik Box2D envelope.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a></td>
+                <td>$box</td>
+                <td>Bounding box</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>\Mapnik\Box2D</td>
+                <td>Bounding box object</td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_registerFonts">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L150">line 150</a></div>
+        <code>                    
+    <strong>registerFonts</strong>(string $path)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set path to search for fonts used in map.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$path</td>
+                <td>Fonts path</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBasePath">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L157">line 157</a></div>
+        <code>                    string
+    <strong>getBasePath</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get base path used for loading map assets.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>Base path</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setBasePath">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L164">line 164</a></div>
+        <code>                    
+    <strong>setBasePath</strong>(string $path)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set base path used for loading map assets.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$path</td>
+                <td>Base path</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getWidth">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L171">line 171</a></div>
+        <code>                    int
+    <strong>getWidth</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get canvas width.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>Map width</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setWidth">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L178">line 178</a></div>
+        <code>                    
+    <strong>setWidth</strong>(int $width)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set canvas width.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$width</td>
+                <td>Map width</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHeight">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L185">line 185</a></div>
+        <code>                    int
+    <strong>getHeight</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get canvas height.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>Map height</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setHeight">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L192">line 192</a></div>
+        <code>                    
+    <strong>setHeight</strong>(int $height)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set canvas height.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$height</td>
+                <td>Map height</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_resize">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L200">line 200</a></div>
+        <code>                    
+    <strong>resize</strong>(int $width, int $height)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Resize the canvas to given height and width.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$width</td>
+                <td>Map width</td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$height</td>
+                <td>Map height</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSrs">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L208">line 208</a></div>
+        <code>                    string
+    <strong>getSrs</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get spatial reference system.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>proj.4 projection</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>http://proj4.org</td>
+                <td>proj.4 documentation</td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSrs">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L217">line 217</a></div>
+        <code>                    
+    <strong>setSrs</strong>(string $srs)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set spatial reference system.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$srs</td>
+                <td>proj.4 projection</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>http://proj4.org</td>
+                <td>proj.4 documentation</td>
+            </tr>
+                    <tr>
+                <td>http://spatialreference.org</td>
+                <td>Spatial reference system repository</td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBackgroundImage">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L224">line 224</a></div>
+        <code>                    string
+    <strong>getBackgroundImage</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get path to background image.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>Image path</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setBackgroundImage">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L231">line 231</a></div>
+        <code>                    
+    <strong>setBackgroundImage</strong>(string $file)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set path to background image.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$file</td>
+                <td>Image path</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBackgroundImageOpacity">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L238">line 238</a></div>
+        <code>                    float
+    <strong>getBackgroundImageOpacity</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get background image opacity. 0 is transparent, 1 is opaque.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td>Opacity</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setBackgroundImageOpacity">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L245">line 245</a></div>
+        <code>                    
+    <strong>setBackgroundImageOpacity</strong>(float $opacity)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set background image opacity. 0 is transparent, 1 is opaque.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>float</td>
+                <td>$opacity</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMaximumExtent">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L253">line 253</a></div>
+        <code>                    <a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a>
+    <strong>getMaximumExtent</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get maximum extent of projected map.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a></td>
+            <td>Maximum extent</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>https://github.com/mapnik/mapnik/wiki/BoundsClipping</td>
+                <td>Mapnik bounds clipping documentation</td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMaximumExtent">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L261">line 261</a></div>
+        <code>                    
+    <strong>setMaximumExtent</strong>(<a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a> $box)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set maximum extent of projected map.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a></td>
+                <td>$box</td>
+                <td>Maximum extent</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>https://github.com/mapnik/mapnik/wiki/BoundsClipping</td>
+                <td>Mapnik bounds clipping documentation</td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_resetMaximumExtent">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L266">line 266</a></div>
+        <code>                    
+    <strong>resetMaximumExtent</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Reset maximum extent.</p>                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCurrentExtent">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L273">line 273</a></div>
+        <code>                    <a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a>
+    <strong>getCurrentExtent</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get current extent of projected map.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a></td>
+            <td>Current extent</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBufferSize">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L280">line 280</a></div>
+        <code>                    int
+    <strong>getBufferSize</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get map bounds buffer size.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>Buffer pixels</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setBufferSize">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L287">line 287</a></div>
+        <code>                    
+    <strong>setBufferSize</strong>(int $bufferSize)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set map bounds buffer. Used by placement detector to help avoid cutting labels.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$bufferSize</td>
+                <td>Buffer pixels</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBufferedExtent">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L294">line 294</a></div>
+        <code>                    <a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a>
+    <strong>getBufferedExtent</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get extent of map with buffer applied.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a></td>
+            <td>Buffered extent</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getScale">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L302">line 302</a></div>
+        <code>                    float
+    <strong>getScale</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get map scale.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>https://github.com/mapnik/mapnik/wiki/ScaleAndPpi</td>
+                <td>Mapnik scale and scale denominators documentation</td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getScaleDenominator">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L310">line 310</a></div>
+        <code>                    float
+    <strong>getScaleDenominator</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get scale denominator.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>https://github.com/mapnik/mapnik/wiki/ScaleAndPpi</td>
+                <td>Mapnik scale and scale denominators documentation</td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_countLayers">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L317">line 317</a></div>
+        <code>                    int
+    <strong>countLayers</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Count number of map layers.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_removeStyle">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L324">line 324</a></div>
+        <code>                    
+    <strong>removeStyle</strong>(string $styleName)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Remove a style.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$styleName</td>
+                <td>Style name</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_removeAll">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L329">line 329</a></div>
+        <code>                    
+    <strong>removeAll</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Remove all styles and layers.</p>                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAspectFixMode">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L337">line 337</a></div>
+        <code>                    int
+    <strong>getAspectFixMode</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get aspect fix mode.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>https://github.com/mapnik/mapnik/wiki/Aspect-Fix-Mode</td>
+                <td>Mapnik aspect fix mode documentation</td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAspectFixMode">
+        <div class="location">at         <a href="https://github.com/garrettrayj/php7-mapnik/blob/master/docs/prototypes/Mapnik/Map.php#L354">line 354</a></div>
+        <code>                    
+    <strong>setAspectFixMode</strong>(int $aspectFixMode)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set aspect fix mode. See Map constants for valid values.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$aspectFixMode</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>https://github.com/mapnik/mapnik/wiki/Aspect-Fix-Mode</td>
+                <td>Mapnik aspect fix mode documentation</td>
+            </tr>
+                    <tr>
+                <td>\Mapnik\Map::GROW_BBOX</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>\Mapnik\Map::GROW_CANVAS</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>\Mapnik\Map::SHRINK_BBOX</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>\Mapnik\Map::SHRINK_CANVAS</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>\Mapnik\Map::ADJUST_BBOX_WIDTH</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>\Mapnik\Map::ADJUST_BBOX_HEIGHT</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>\Mapnik\Map::ADJUST_CANVAS_WIDTH</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>\Mapnik\Map::ADJUST_CANVAS_HEIGHT</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>\Mapnik\Map::RESPECT</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

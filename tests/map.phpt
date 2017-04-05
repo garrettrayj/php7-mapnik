@@ -5,7 +5,7 @@
 --FILE--
 <?php
 
-require_once('util/test_case.php');
+require_once('test_case.php');
 
 class MapTest extends MapnikTestCase
 {

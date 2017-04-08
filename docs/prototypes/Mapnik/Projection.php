@@ -3,8 +3,6 @@
 namespace Mapnik;
 
 /**
- * Class Projection
- *
  * Represents a spatial reference system. Used in conjunction with ProjTransform to project bounding boxes.
  *
  * @package Mapnik

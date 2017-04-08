@@ -3,8 +3,6 @@
 namespace Mapnik;
 
 /**
- * Class Box2D
- *
  * @package Mapnik
  * @see https://github.com/mapnik/mapnik/blob/master/include/mapnik/geometry/box2d.hpp C++ box2d include
  */

@@ -3,8 +3,6 @@
 namespace Mapnik;
 
 /**
- * Class Image
- *
  * @package Mapnik
  */
 class Image

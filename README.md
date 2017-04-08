@@ -6,10 +6,16 @@ PHP7 Mapnik
 Introduction
 ------------
 
-PHP7 Mapnik brings geospatial rendering to PHP via the powerful [Mapnik](http://mapnik.org/) XML API.
-It is ideal for building dynamic tile servers or livening up websites with custom static maps.
+PHP7 Mapnik is an extension that enables geospatial rendering with [Mapnik](http://mapnik.org/).
+Create tile generation scripts, dynamic tile services, or static maps with Mapnik XML and PHP.
+
+* [API Documentation](http://garrettrayj.github.io/php7-mapnik/api/)
+* [Mapnik on GitHub](https://github.com/mapnik/mapnik)
+* [Mapnik XML Config Reference](https://github.com/mapnik/mapnik/wiki/XMLConfigReference)
 
 [![Build Status](https://travis-ci.org/garrettrayj/php7-mapnik.svg?branch=master)](https://travis-ci.org/garrettrayj/php7-mapnik)
+
+
 
 Requirements
 ------------
@@ -25,7 +31,7 @@ Requirements
 Installation
 ------------
 
-    # git clone ... && cd php7-mapnik
+    git clone https://github.com/garrettrayj/php7-mapnik.git && cd php7-mapnik
     phpize
     ./configure --with-mapnik
     make test
@@ -37,40 +43,44 @@ Note: Your PHP configuration directory may be different depending on OS and PHP 
 Tile Server Example
 -------------------
 
+Run the example...
+
     ./example/run.sh
 
-Point your web browser to [http://localhost:8000/](http://localhost:8000/)
+...then visit [http://localhost:8000/](http://localhost:8000/)
 
 Usage
 -----
 
-    <?php
+See the [API Documentation](http://garrettrayj.github.io/php7-mapnik/api/) for the complete breakdown of available functionality.
 
-    // Register datasource plugins
-    $pluginConfigOutput = [];
-    exec('mapnik-config --input-plugins', $pluginConfigOutput);
-    \Mapnik\DatasourceCache::registerDatasources($pluginConfigOutput[0]);
+```php
+<?php
 
-    // Create map
-    $map = new \Mapnik\Map(640, 480);
+// Register datasource plugins
+// Use `mapnik-config --input-plugins` to get input plugin directory
+\Mapnik\DatasourceCache::registerDatasources('/usr/local/lib/mapnik/input');
 
-    // Register fonts
-    $fontConfigOutput = [];
-    exec('mapnik-config --fonts', $fontConfigOutput);
-    $map->registerFonts($fontConfigOutput[0]);
+// Create map
+$map = new \Mapnik\Map(640, 480);
 
-    // Load Mapnik XML
-    $map->loadXmlFile('my_awesome_map.xml', false, $basePath);
+// Register fonts
+// Use `mapnik-config --fonts` to get Mapnik fonts directory
+$map->registerFonts('/usr/local/lib/mapnik/fonts');
 
-    // Situate the map within the viewport
-    $map->zoomAll();
+// Load Mapnik XML
+$map->loadXmlFile('my_awesome_map.xml', false, $basePath);
 
-    // Create image
-    $image = new \Mapnik\Image(640, 480);
+// Situate map content within canvas
+$map->zoomAll();
 
-    // Render
-    $renderer = new \Mapnik\AggRenderer($map, $image);
-    $renderer->apply();
+// Create image
+$image = new \Mapnik\Image(640, 480);
 
-    // Save PNG image
-    $image->saveToFile('my_awesome_map.png');
+// Render
+$renderer = new \Mapnik\AggRenderer($map, $image);
+$renderer->apply();
+
+// Save PNG image file
+$image->saveToFile('my_awesome_map.png');
+```

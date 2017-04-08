@@ -20,29 +20,29 @@ window.projectVersion = 'master';
                     
             {"type": "Namespace", "link": "Mapnik.html", "name": "Mapnik", "doc": "Namespace Mapnik"},
             
-            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/AggRenderer.html", "name": "Mapnik\\AggRenderer", "doc": "&quot;Class AggRenderer&quot;"},
+            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/AggRenderer.html", "name": "Mapnik\\AggRenderer", "doc": "&quot;&quot;"},
                                                         {"type": "Method", "fromName": "Mapnik\\AggRenderer", "fromLink": "Mapnik/AggRenderer.html", "link": "Mapnik/AggRenderer.html#method___construct", "name": "Mapnik\\AggRenderer::__construct", "doc": "&quot;AggRenderer constructor.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\AggRenderer", "fromLink": "Mapnik/AggRenderer.html", "link": "Mapnik/AggRenderer.html#method_apply", "name": "Mapnik\\AggRenderer::apply", "doc": "&quot;Render\/paint image from Map configuration.&quot;"},
             
-            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/Box2D.html", "name": "Mapnik\\Box2D", "doc": "&quot;Class Box2D&quot;"},
+            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/Box2D.html", "name": "Mapnik\\Box2D", "doc": "&quot;&quot;"},
                                                         {"type": "Method", "fromName": "Mapnik\\Box2D", "fromLink": "Mapnik/Box2D.html", "link": "Mapnik/Box2D.html#method___construct", "name": "Mapnik\\Box2D::__construct", "doc": "&quot;Box2D constructor.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\Box2D", "fromLink": "Mapnik/Box2D.html", "link": "Mapnik/Box2D.html#method_minX", "name": "Mapnik\\Box2D::minX", "doc": "&quot;Get east boundary of envelope.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\Box2D", "fromLink": "Mapnik/Box2D.html", "link": "Mapnik/Box2D.html#method_minY", "name": "Mapnik\\Box2D::minY", "doc": "&quot;Get north boundary of envelope.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\Box2D", "fromLink": "Mapnik/Box2D.html", "link": "Mapnik/Box2D.html#method_maxX", "name": "Mapnik\\Box2D::maxX", "doc": "&quot;Get west boundary of envelope.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\Box2D", "fromLink": "Mapnik/Box2D.html", "link": "Mapnik/Box2D.html#method_maxY", "name": "Mapnik\\Box2D::maxY", "doc": "&quot;Get south boundary of envelope.&quot;"},
             
-            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/DatasourceCache.html", "name": "Mapnik\\DatasourceCache", "doc": "&quot;Class DatasourceCache&quot;"},
+            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/DatasourceCache.html", "name": "Mapnik\\DatasourceCache", "doc": "&quot;&quot;"},
                                                         {"type": "Method", "fromName": "Mapnik\\DatasourceCache", "fromLink": "Mapnik/DatasourceCache.html", "link": "Mapnik/DatasourceCache.html#method_registerDatasources", "name": "Mapnik\\DatasourceCache::registerDatasources", "doc": "&quot;Register datasource input plugins.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\DatasourceCache", "fromLink": "Mapnik/DatasourceCache.html", "link": "Mapnik/DatasourceCache.html#method_getPluginNames", "name": "Mapnik\\DatasourceCache::getPluginNames", "doc": "&quot;Get array of registered input plugins.&quot;"},
             
-            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/Exception.html", "name": "Mapnik\\Exception", "doc": "&quot;Class Exception&quot;"},
+            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/Exception.html", "name": "Mapnik\\Exception", "doc": "&quot;&quot;"},
                     
-            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/Image.html", "name": "Mapnik\\Image", "doc": "&quot;Class Image&quot;"},
+            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/Image.html", "name": "Mapnik\\Image", "doc": "&quot;&quot;"},
                                                         {"type": "Method", "fromName": "Mapnik\\Image", "fromLink": "Mapnik/Image.html", "link": "Mapnik/Image.html#method___construct", "name": "Mapnik\\Image::__construct", "doc": "&quot;Image constructor.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\Image", "fromLink": "Mapnik/Image.html", "link": "Mapnik/Image.html#method_saveToFile", "name": "Mapnik\\Image::saveToFile", "doc": "&quot;Save image to a file.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\Image", "fromLink": "Mapnik/Image.html", "link": "Mapnik/Image.html#method_saveToString", "name": "Mapnik\\Image::saveToString", "doc": "&quot;Save image to a string.&quot;"},
             
-            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/Map.html", "name": "Mapnik\\Map", "doc": "&quot;Class Map&quot;"},
+            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/Map.html", "name": "Mapnik\\Map", "doc": "&quot;&quot;"},
                                                         {"type": "Method", "fromName": "Mapnik\\Map", "fromLink": "Mapnik/Map.html", "link": "Mapnik/Map.html#method___construct", "name": "Mapnik\\Map::__construct", "doc": "&quot;Map constructor.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\Map", "fromLink": "Mapnik/Map.html", "link": "Mapnik/Map.html#method_loadXmlString", "name": "Mapnik\\Map::loadXmlString", "doc": "&quot;Load map XML from string.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\Map", "fromLink": "Mapnik/Map.html", "link": "Mapnik/Map.html#method_loadXmlFile", "name": "Mapnik\\Map::loadXmlFile", "doc": "&quot;Load XML map file.&quot;"},
@@ -80,12 +80,12 @@ window.projectVersion = 'master';
                     {"type": "Method", "fromName": "Mapnik\\Map", "fromLink": "Mapnik/Map.html", "link": "Mapnik/Map.html#method_getAspectFixMode", "name": "Mapnik\\Map::getAspectFixMode", "doc": "&quot;Get aspect fix mode.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\Map", "fromLink": "Mapnik/Map.html", "link": "Mapnik/Map.html#method_setAspectFixMode", "name": "Mapnik\\Map::setAspectFixMode", "doc": "&quot;Set aspect fix mode. See Map constants for valid values.&quot;"},
             
-            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/ProjTransform.html", "name": "Mapnik\\ProjTransform", "doc": "&quot;Class ProjTransform&quot;"},
+            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/ProjTransform.html", "name": "Mapnik\\ProjTransform", "doc": "&quot;Re-project Box2D objects.&quot;"},
                                                         {"type": "Method", "fromName": "Mapnik\\ProjTransform", "fromLink": "Mapnik/ProjTransform.html", "link": "Mapnik/ProjTransform.html#method___construct", "name": "Mapnik\\ProjTransform::__construct", "doc": "&quot;ProjTransform constructor.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\ProjTransform", "fromLink": "Mapnik/ProjTransform.html", "link": "Mapnik/ProjTransform.html#method_forward", "name": "Mapnik\\ProjTransform::forward", "doc": "&quot;Transform box from source to destination projection.&quot;"},
                     {"type": "Method", "fromName": "Mapnik\\ProjTransform", "fromLink": "Mapnik/ProjTransform.html", "link": "Mapnik/ProjTransform.html#method_backward", "name": "Mapnik\\ProjTransform::backward", "doc": "&quot;Transform box from destination to source projection.&quot;"},
             
-            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/Projection.html", "name": "Mapnik\\Projection", "doc": "&quot;Class Projection&quot;"},
+            {"type": "Class", "fromName": "Mapnik", "fromLink": "Mapnik.html", "link": "Mapnik/Projection.html", "name": "Mapnik\\Projection", "doc": "&quot;Represents a spatial reference system. Used in conjunction with ProjTransform to project bounding boxes.&quot;"},
                                                         {"type": "Method", "fromName": "Mapnik\\Projection", "fromLink": "Mapnik/Projection.html", "link": "Mapnik/Projection.html#method___construct", "name": "Mapnik\\Projection::__construct", "doc": "&quot;Projection constructor.&quot;"},
             
             

@@ -3,8 +3,6 @@
 namespace Mapnik;
 
 /**
- * Class ProjTransform
- *
  * Re-project Box2D objects.
  *
  * @package Mapnik

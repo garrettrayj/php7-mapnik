@@ -3,8 +3,6 @@
 namespace Mapnik;
 
 /**
- * Class DatasourceCache
- *
  * @package Mapnik
  * @see https://github.com/mapnik/mapnik/blob/master/include/mapnik/datasource_cache.hpp C++ datasource_cache include
  */

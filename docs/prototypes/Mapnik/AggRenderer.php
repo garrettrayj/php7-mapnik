@@ -3,8 +3,6 @@
 namespace Mapnik;
 
 /**
- * Class AggRenderer
- *
  * @package Mapnik
  * @see https://github.com/mapnik/mapnik/blob/master/include/mapnik/agg_renderer.hpp C++ agg_renderer include
  * @see https://github.com/mapnik/mapnik/wiki/MapnikRenderers Mapnik renderers documentation

@@ -14,9 +14,9 @@ class Box2D
      * Box2D constructor.
      *
      * @param float $minX East
-     * @param float $minY North
+     * @param float $minY South
      * @param float $maxX West
-     * @param float $maxY South
+     * @param float $maxY North
      */
     public function __construct(float $minX, float $minY, float $maxX, float $maxY) {}
 
@@ -30,7 +30,7 @@ class Box2D
     /**
      * Get north boundary of envelope.
      *
-     * @return float North
+     * @return float South
      */
     public function minY(): float {}
 
@@ -44,7 +44,7 @@ class Box2D
     /**
      * Get south boundary of envelope.
      *
-     * @return float South
+     * @return float North
      */
     public function maxY(): float {}
 }

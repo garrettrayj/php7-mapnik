@@ -1,0 +1,46 @@
+body {
+    align-items: center;
+    background: url('docs_index_background.png') center center;
+    background-size: cover;
+    display: flex;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    justify-content: center;
+}
+
+main {
+    color: white;
+    text-align: center;
+}
+
+main > header > h1 {
+    font-size: 4.4rem;
+    margin: 0 0 0.5rem;
+}
+
+main > header > p {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+#main-nav > ul {
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+#main-nav > ul > li {
+    display: inline-block;
+}
+
+#main-nav > ul > li a {
+    background: #efefef;
+    color: slateblue;
+    display: block;
+    font-size: 1.5rem;
+    padding: 0.75rem 1.25rem;
+    text-decoration: none;
+}
+
+#main-nav > ul > li a:hover {
+    background: white;
+}

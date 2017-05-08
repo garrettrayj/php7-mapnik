@@ -15,6 +15,7 @@ void php_mapnik_agg_renderer_free_storage(zend_object *object TSRMLS_DC)
 {
     php_mapnik_agg_renderer_object *obj;
     obj = php_mapnik_agg_renderer_fetch_object(object);
+    delete obj->agg_renderer;
     zend_object_std_dtor(object TSRMLS_DC);
 }
 
@@ -60,10 +61,7 @@ PHP_METHOD(AggRenderer, __construct)
         agg_renderer = new mapnik::agg_renderer<mapnik::image_rgba8>(*map, *image);
     } else {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\AggRenderer::__construct");
-        RETURN_FALSE;
     }
-
-    assert(agg_renderer != NULL);
 
     obj = Z_PHP_MAPNIK_AGG_RENDERER_P(getThis());
     obj->agg_renderer = agg_renderer;
@@ -71,20 +69,19 @@ PHP_METHOD(AggRenderer, __construct)
 
 PHP_METHOD(AggRenderer, apply)
 {
-    struct php_mapnik_agg_renderer_object *obj;
+    struct php_mapnik_agg_renderer_object *obj = Z_PHP_MAPNIK_AGG_RENDERER_P(getThis());
     mapnik::agg_renderer<mapnik::image_rgba8> *agg_renderer;
 
-    obj = Z_PHP_MAPNIK_AGG_RENDERER_P(getThis());
     agg_renderer = obj->agg_renderer;
 
     try {
         agg_renderer->apply();
     } catch (const mapnik::datasource_exception & ex) {
         php_mapnik_throw_exception(ex.what());
-        RETURN_FALSE;
+        return;
     } catch (const std::runtime_error & ex) {
         php_mapnik_throw_exception(ex.what());
-        RETURN_FALSE;
+        return;
     }
 
     RETURN_TRUE;

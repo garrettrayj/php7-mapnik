@@ -12,6 +12,7 @@ void php_mapnik_box2d_free_storage(zend_object *object TSRMLS_DC)
 {
     php_mapnik_box2d_object *obj;
     obj = php_mapnik_box2d_fetch_object(object);
+    delete obj->box2d;
     zend_object_std_dtor(object TSRMLS_DC);
 }
 
@@ -33,7 +34,7 @@ zend_object * php_mapnik_box2d_new(zend_class_entry *ce TSRMLS_DC) {
 PHP_METHOD(Box2D, __construct)
 {
     php_mapnik_box2d_object *obj;
-    mapnik::box2d<double> *box2d;
+    mapnik::box2d<double> *box2d = NULL;
     double minX, minY, maxX, maxY;
 
     if (ZEND_NUM_ARGS() == 0) {
@@ -50,7 +51,6 @@ PHP_METHOD(Box2D, __construct)
         box2d = new mapnik::box2d<double>(minX, minY, maxX, maxY);
     } else {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Box2D::__construct");
-        RETURN_FALSE;
     }
 
     obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
@@ -59,32 +59,28 @@ PHP_METHOD(Box2D, __construct)
 
 PHP_METHOD(Box2D, minX)
 {
-    php_mapnik_box2d_object *obj;
-    obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
+    php_mapnik_box2d_object *obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
 
     RETURN_DOUBLE(obj->box2d->minx());
 }
 
 PHP_METHOD(Box2D, minY)
 {
-    php_mapnik_box2d_object *obj;
-    obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
+    php_mapnik_box2d_object *obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
 
     RETURN_DOUBLE(obj->box2d->miny());
 }
 
 PHP_METHOD(Box2D, maxX)
 {
-    php_mapnik_box2d_object *obj;
-    obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
+    php_mapnik_box2d_object *obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
 
     RETURN_DOUBLE(obj->box2d->maxx());
 }
 
 PHP_METHOD(Box2D, maxY)
 {
-    php_mapnik_box2d_object *obj;
-    obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
+    php_mapnik_box2d_object *obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
 
     RETURN_DOUBLE(obj->box2d->maxy());
 }

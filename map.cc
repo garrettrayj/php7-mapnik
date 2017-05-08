@@ -16,6 +16,7 @@ void php_mapnik_map_free_storage(zend_object *object TSRMLS_DC)
 {
     php_mapnik_map_object *obj;
     obj = php_mapnik_map_fetch_object(object);
+    delete obj->map;
     zend_object_std_dtor(object TSRMLS_DC);
 }
 
@@ -38,7 +39,7 @@ zend_object * php_mapnik_map_new(zend_class_entry *ce TSRMLS_DC)
 PHP_METHOD(Map, __construct)
 {
     php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
-    mapnik::Map* map;
+    mapnik::Map* map = NULL;
 
     long width, height;
     zend_string *srs;
@@ -150,6 +151,7 @@ PHP_METHOD(Map, zoom)
 
     if (::zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "d", &zoom) == FAILURE) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::zoom");
+        return;
     }
 
     obj->map->zoom(zoom);
@@ -169,6 +171,7 @@ PHP_METHOD(Map, pan)
 
     if (::zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ll", &x, &y) == FAILURE) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::pan");
+        return;
     }
 
     obj->map->pan(x, y);
@@ -182,6 +185,7 @@ PHP_METHOD(Map, panAndZoom)
 
     if (::zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "lld", &x, &y, &zoom) == FAILURE) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::panAndZoom");
+        return;
     }
 
     obj->map->pan_and_zoom(x, y, zoom);
@@ -203,6 +207,7 @@ PHP_METHOD(Map, zoomToBox)
         php_mapnik_box2d_ce) == FAILURE
     ) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::zoomToBox");
+        return;
     }
 
     box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
@@ -227,8 +232,10 @@ PHP_METHOD(Map, registerFonts)
         fonts_registered = obj->map->register_fonts(path_str);
     } catch (const std::exception & ex) {
         php_mapnik_throw_exception(ex.what());
+        return;
     } catch (...) {
         php_mapnik_throw_exception("Unknown exception thrown while registering font path.");
+        return;
     }
 
     if (fonts_registered) {
@@ -257,6 +264,7 @@ PHP_METHOD(Map, setBasePath)
         &path) == FAILURE
     ) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::setBaseBath");
+        return;
     }
 
     obj->map->set_base_path(path->val);
@@ -276,6 +284,7 @@ PHP_METHOD(Map, setWidth)
 
     if (::zend_parse_parameters_ex(ZEND_PARSE_PARAMS_QUIET, ZEND_NUM_ARGS() TSRMLS_CC, "l", &width) == FAILURE) {
         php_mapnik_throw_exception("Wrong argument passed to \\Mapnik\\Map::setWidth");
+        return;
     }
 
     obj->map->set_width(width);
@@ -295,6 +304,7 @@ PHP_METHOD(Map, setHeight)
 
     if (::zend_parse_parameters_ex(ZEND_PARSE_PARAMS_QUIET, ZEND_NUM_ARGS() TSRMLS_CC, "l", &height) == FAILURE) {
         php_mapnik_throw_exception("Wrong argument passed to \\Mapnik\\Map::setHeight");
+        return;
     }
 
     obj->map->set_height(height);
@@ -314,6 +324,7 @@ PHP_METHOD(Map, resize)
         &height) == FAILURE
     ) {
         php_mapnik_throw_exception("Wrong argument passed to \\Mapnik\\Map::resize");
+        return;
     }
 
     obj->map->resize(width, height);
@@ -333,6 +344,7 @@ PHP_METHOD(Map, setSrs)
 
     if (::zend_parse_parameters_ex(ZEND_PARSE_PARAMS_QUIET, ZEND_NUM_ARGS() TSRMLS_CC, "S", &srs) == FAILURE) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::setSrs");
+        return;
     }
 
     obj->map->set_srs(srs->val);
@@ -360,6 +372,7 @@ PHP_METHOD(Map, setBackgroundImage)
         &image_filename) == FAILURE
     ) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::setBackgroundImage");
+        return;
     }
 
     obj->map->set_background_image(image_filename->val);
@@ -380,6 +393,7 @@ PHP_METHOD(Map, setBackgroundImageOpacity)
 
     if (::zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "d", &opacity) == FAILURE) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::setBackgroundImageOpacity");
+        return;
     }
 
     obj->map->set_background_image_opacity(opacity);
@@ -445,6 +459,7 @@ PHP_METHOD(Map, setMaximumExtent)
         php_mapnik_box2d_ce) == FAILURE
     ) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::setMaximumExtent");
+        return;
     }
 
     php_mapnik_box2d_object *box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
@@ -515,6 +530,7 @@ PHP_METHOD(Map, setBufferSize)
 
     if (::zend_parse_parameters_ex(ZEND_PARSE_PARAMS_QUIET, ZEND_NUM_ARGS() TSRMLS_CC, "l", &buffer_size) == FAILURE) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::setBufferSize");
+        return;
     }
 
     obj->map->set_buffer_size(buffer_size);
@@ -590,6 +606,7 @@ PHP_METHOD(Map, removeStyle)
 
     if (::zend_parse_parameters_ex(ZEND_PARSE_PARAMS_QUIET, ZEND_NUM_ARGS() TSRMLS_CC, "S", &style) == FAILURE) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::removeStyle");
+        return;
     }
 
     obj->map->remove_style(style->val);
@@ -619,10 +636,12 @@ PHP_METHOD(Map, setAspectFixMode)
         &aspect_fix_mode) == FAILURE
     ) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::setAspectFixMode");
+        return;
     }
 
     if (!(aspect_fix_mode >= mapnik::Map::GROW_BBOX && aspect_fix_mode <= mapnik::Map::RESPECT)) {
         php_mapnik_throw_exception("Invalid aspect fix mode.");
+        return;
     }
 
     obj->map->set_aspect_fix_mode(mapnik::Map::aspect_fix_mode(aspect_fix_mode));

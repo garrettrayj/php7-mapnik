@@ -17,7 +17,7 @@ PHP_METHOD(DatasourceCache, registerDatasources)
 
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "S", &path) == FAILURE) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\DatasourceCache::registerDatasources");
-        RETURN_FALSE;
+        return;
     }
 
     std::string path_str(path->val, path->len);

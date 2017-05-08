@@ -26,12 +26,20 @@ class AggRendererTest extends MapnikTestCase
         $this->exampleMap->zoomAll();
     }
 
-
     public function testConstructor()
     {
+        try {
+            $renderer = new \Mapnik\AggRenderer('foo');
+        } catch (\Exception $e) {
+
+        }
+        assert(
+            '$e instanceof \Mapnik\Exception',
+            'Instantiating \Mapnik\AggRenderer with bad arguments did not throw exception.'
+        );
+
         $image = new \Mapnik\Image(640, 480);
         $renderer = new \Mapnik\AggRenderer($this->exampleMap, $image);
-
         assert('$renderer instanceof \Mapnik\AggRenderer', 'Instantiating \Mapnik\AggRenderer failed.');
     }
 

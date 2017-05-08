@@ -30,6 +30,16 @@ class ImageTest extends MapnikTestCase
 
     public function testConstructor()
     {
+        try {
+            $image = new \Mapnik\Image('foo');
+        } catch (\Exception $e) {
+
+        }
+        assert(
+            '$e instanceof \Mapnik\Exception',
+            'Instantiating \Mapnik\Image with bad arguments did not throw exception.'
+        );
+
         $image = new \Mapnik\Image(640, 480);
         assert('$image instanceof \Mapnik\Image', '\Mapnik\Image instantiation failed.');
     }

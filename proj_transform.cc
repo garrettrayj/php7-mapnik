@@ -15,6 +15,7 @@ void php_mapnik_proj_transform_free_storage(zend_object *object TSRMLS_DC)
 {
     php_mapnik_proj_transform_object *obj;
     obj = php_mapnik_proj_transform_fetch_object(object);
+    delete obj->proj_transform;
     zend_object_std_dtor(object TSRMLS_DC);
 }
 
@@ -36,8 +37,9 @@ zend_object * php_mapnik_proj_transform_new(zend_class_entry *ce TSRMLS_DC) {
 
 PHP_METHOD(ProjTransform, __construct)
 {
-    php_mapnik_proj_transform_object *obj;
+    php_mapnik_proj_transform_object *obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
     mapnik::proj_transform* proj_transform = NULL;
+    obj->proj_transform = NULL;
 
     zval* source_zval;
     zval* destination_zval;
@@ -52,7 +54,7 @@ PHP_METHOD(ProjTransform, __construct)
         php_mapnik_projection_ce) == FAILURE
     ) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\ProjTransform::__construct");
-        RETURN_FALSE;
+        return;
     }
 
     php_mapnik_projection_object *source_obj = Z_PHP_MAPNIK_PROJECTION_P(source_zval);
@@ -62,14 +64,12 @@ PHP_METHOD(ProjTransform, __construct)
     mapnik::projection destination = *destination_obj->projection;
 
     proj_transform = new mapnik::proj_transform(source, destination);
-
-    obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
     obj->proj_transform = proj_transform;
 }
 
 PHP_METHOD(ProjTransform, forward)
 {
-    php_mapnik_proj_transform_object *obj;
+    php_mapnik_proj_transform_object *obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
 
     zval* box2d_zval;
 
@@ -81,13 +81,12 @@ PHP_METHOD(ProjTransform, forward)
         php_mapnik_box2d_ce) == FAILURE
     ) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\ProjTransform::forward");
-        RETURN_FALSE;
+        return;
     }
 
     php_mapnik_box2d_object *box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
     mapnik::box2d<double> *box2d = box2d_obj->box2d;
 
-    obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
     mapnik::proj_transform *proj_transform = obj->proj_transform;
 
     proj_transform->forward(*box2d);
@@ -141,7 +140,7 @@ PHP_METHOD(ProjTransform, forward)
 
 PHP_METHOD(ProjTransform, backward)
 {
-    php_mapnik_proj_transform_object *obj;
+    php_mapnik_proj_transform_object *obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
 
     zval* box2d_zval;
 
@@ -153,13 +152,12 @@ PHP_METHOD(ProjTransform, backward)
         php_mapnik_box2d_ce) == FAILURE
     ) {
         php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\ProjTransform::backward");
-        RETURN_FALSE;
+        return;
     }
 
     php_mapnik_box2d_object *box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
     mapnik::box2d<double> *box2d = box2d_obj->box2d;
 
-    obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
     mapnik::proj_transform *proj_transform = obj->proj_transform;
 
     proj_transform->backward(*box2d);

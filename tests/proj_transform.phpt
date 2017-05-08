@@ -11,6 +11,16 @@ class ProjTransformTest extends MapnikTestCase
 {
     public function testConstructor()
     {
+        try {
+            $projTransform = new \Mapnik\ProjTransform('foo', 'bar');
+        } catch (\Exception $e) {
+
+        }
+        assert(
+            '$e instanceof \Mapnik\Exception',
+            'Instantiating \Mapnik\ProjTransform with bad arguments did not throw exception.'
+        );
+
         $projTransform = new \Mapnik\ProjTransform(
             new \Mapnik\Projection("+init=epsg:4326"),
             new \Mapnik\Projection("+init=epsg:3857")

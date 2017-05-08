@@ -11,6 +11,16 @@ class Box2DTest extends MapnikTestCase
 {
     public function testConstructor()
     {
+        try {
+            $box2d = new \Mapnik\Box2D('foo');
+        } catch (\Exception $e) {
+
+        }
+        assert(
+            '$e instanceof \Mapnik\Exception',
+            'Instantiating \Mapnik\Box2D with bad arguments did not throw exception.'
+        );
+
         $box2d = new \Mapnik\Box2D(-180, -90, 180, 90);
         assert('$box2d instanceof \Mapnik\Box2D', 'Instantiating \Mapnik\Box2D failed.');
     }

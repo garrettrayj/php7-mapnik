@@ -6,7 +6,7 @@ PHP7 Mapnik
 Introduction
 ------------
 
-PHP7 Mapnik is an extension that enables geospatial rendering with [Mapnik](http://mapnik.org/).
+This project is an extension for PHP 7 that enables geospatial rendering with [Mapnik](http://mapnik.org/).
 Create tile generation scripts, dynamic tile services, or static maps with Mapnik XML and PHP.
 
 * [API Documentation](http://garrettrayj.github.io/php7-mapnik/api/)
@@ -16,16 +16,15 @@ Create tile generation scripts, dynamic tile services, or static maps with Mapni
 [![Build Status](https://travis-ci.org/garrettrayj/php7-mapnik.svg?branch=master)](https://travis-ci.org/garrettrayj/php7-mapnik)
 
 
-
 Requirements
 ------------
 
-* PHP 7.0.x
+* PHP >= 7.0
    * php7.0-gd 
    * php7.0-dev
    * Available through `sudo apt-get install php-dev php-gd` on Ubuntu 16.04 Xenial
 * Mapnik 3.0.x
-* mapnik-config
+    * mapnik-config
     * Available through `sudo apt-get install libmapnik-dev` on Ubuntu 16.04 Xenial
 
 Installation
@@ -51,8 +50,6 @@ Run the example...
 
 Usage
 -----
-
-See the [API Documentation](http://garrettrayj.github.io/php7-mapnik/api/) for the complete breakdown of available functionality.
 
 ```php
 <?php
@@ -84,3 +81,6 @@ $renderer->apply();
 // Save PNG image file
 $image->saveToFile('my_awesome_map.png');
 ```
+
+See the [API Documentation](http://garrettrayj.github.io/php7-mapnik/api/) for a complete list of
+available objects and methods.

@@ -17,12 +17,15 @@ class ProjectionTest extends MapnikTestCase
 
         }
         assert(
-            '$e instanceof \Mapnik\Exception',
+            $e instanceof \Mapnik\Exception,
             'Instantiating \Mapnik\Projection with bad parameters did not throw exception.'
         );
 
         $projection = new \Mapnik\Projection("+init=epsg:4326");
-        assert('$projection instanceof \Mapnik\Projection', 'Instantiating \Mapnik\Projection failed.');
+        assert($projection instanceof \Mapnik\Projection, 'Instantiating \Mapnik\Projection failed.');
+
+        $projection = new \Mapnik\Projection("+init=epsg:32638");
+        assert($projection instanceof \Mapnik\Projection, 'Instantiating \Mapnik\Projection failed.');
     }
 }
 

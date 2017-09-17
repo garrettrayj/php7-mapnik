@@ -17,36 +17,36 @@ class Box2DTest extends MapnikTestCase
 
         }
         assert(
-            '$e instanceof \Mapnik\Exception',
+            $e instanceof \Mapnik\Exception,
             'Instantiating \Mapnik\Box2D with bad arguments did not throw exception.'
         );
 
         $box2d = new \Mapnik\Box2D(-180, -90, 180, 90);
-        assert('$box2d instanceof \Mapnik\Box2D', 'Instantiating \Mapnik\Box2D failed.');
+        assert($box2d instanceof \Mapnik\Box2D, 'Instantiating \Mapnik\Box2D failed.');
     }
 
     public function testMinX()
     {
         $box2d = new \Mapnik\Box2D(-180, -90, 180, 90);
-        assert('$box2d->minX() === -180.0', 'Box2D->minX() failed.');
+        assert($box2d->minX() === -180.0, 'Box2D->minX() failed.');
     }
 
     public function testMinY()
     {
         $box2d = new \Mapnik\Box2D(-180, -90, 180, 90);
-        assert('$box2d->minY() === -90.0', 'Box2D->minY() failed.');
+        assert($box2d->minY() === -90.0, 'Box2D->minY() failed.');
     }
 
     public function testMaxX()
     {
         $box2d = new \Mapnik\Box2D(-180, -90, 180, 90);
-        assert('$box2d->maxX() === 180.0', 'Box2D->maxX() failed.');
+        assert($box2d->maxX() === 180.0, 'Box2D->maxX() failed.');
     }
 
     public function testMaxY()
     {
         $box2d = new \Mapnik\Box2D(-180, -90, 180, 90);
-        assert('$box2d->maxY() === 90.0', 'Box2D->maxY() failed.');
+        assert($box2d->maxY() === 90.0, 'Box2D->maxY() failed.');
     }
 }
 

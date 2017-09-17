@@ -113,7 +113,6 @@ PHP_METHOD(Map, loadXmlString)
 PHP_METHOD(Map, loadXmlFile)
 {
     php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
-    mapnik::Map *map;
 
     zend_string *filename, *base_path;
     bool strict = false;
@@ -219,7 +218,6 @@ PHP_METHOD(Map, zoomToBox)
 PHP_METHOD(Map, registerFonts)
 {
     php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
-    mapnik::Map *map;
     zend_string *path;
     bool fonts_registered = false;
 

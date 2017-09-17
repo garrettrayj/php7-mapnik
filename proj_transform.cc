@@ -58,12 +58,12 @@ PHP_METHOD(ProjTransform, __construct)
     }
 
     php_mapnik_projection_object *source_obj = Z_PHP_MAPNIK_PROJECTION_P(source_zval);
-    mapnik::projection source = *source_obj->projection;
+    mapnik::projection *source = new mapnik::projection(source_obj->projection->params());
 
     php_mapnik_projection_object *destination_obj = Z_PHP_MAPNIK_PROJECTION_P(destination_zval);
-    mapnik::projection destination = *destination_obj->projection;
+    mapnik::projection *destination = new mapnik::projection(destination_obj->projection->params());
 
-    proj_transform = new mapnik::proj_transform(source, destination);
+    proj_transform = new mapnik::proj_transform(*source, *destination);
     obj->proj_transform = proj_transform;
 }
 

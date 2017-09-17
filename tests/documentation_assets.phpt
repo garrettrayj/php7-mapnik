@@ -40,7 +40,7 @@ class DocumentationAssetsTest extends MapnikTestCase
         $imageFile = realpath(__DIR__ . '/../docs/assets') . '/header_graphic.png';
         $image->saveToFile($imageFile, 'png8');
 
-        assert('file_exists($imageFile) === true', 'Header graphic does not exist.');
+        assert(file_exists($imageFile) === true, 'Header graphic does not exist.');
     }
 
 
@@ -69,7 +69,7 @@ class DocumentationAssetsTest extends MapnikTestCase
         $imageFile = realpath(__DIR__ . '/../docs/assets') . '/docs_index_background.png';
         $image->saveToFile($imageFile, 'png8');
 
-        assert('file_exists($imageFile) === true', 'Docs index background does not exist.');
+        assert(file_exists($imageFile) === true, 'Docs index background does not exist.');
     }
 
 }

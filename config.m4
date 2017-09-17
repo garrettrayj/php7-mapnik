@@ -24,17 +24,14 @@ if test "$PHP_MAPNIK" != "no"; then
     if test -f "$MAPNIK_PATH" && test -x "$MAPNIK_PATH" && $MAPNIK_PATH --version > /dev/null 2>&1; then
         AC_MSG_RESULT([$MAPNIK_PATH])
         MAPNIK_LIB_NAME=`$MAPNIK_PATH --lib-name`
-        MAPNIK_INCLUDES=`$MAPNIK_PATH --includes`
-        MAPNIK_LIBS=`$MAPNIK_PATH --libs`
-        MAPNIK_FLAGS=`$MAPNIK_PATH --all-flags`
+        MAPNIK_INCLUDES=`$MAPNIK_PATH --includes --dep-includes`
+        MAPNIK_LIBS=`$MAPNIK_PATH --libs --dep-libs`
+        MAPNIK_FLAGS=`$MAPNIK_PATH --defines --cxxflags`
 
-        ICU4C_FLAGS='pkg-config --cflags icu-uc icu-io'
-
-        CPP_FLAGS="$CPP_FLAGS $MAPNIK_FLAGS $ICU4C_FLAGS"
+        CPPFLAGS="$CPPFLAGS $MAPNIK_FLAGS"
 
         dnl Add the necessary include dirs
         PHP_EVAL_INCLINE($MAPNIK_INCLUDES)
-        PHP_EVAL_INCLINE($ICU4C_FLAGS)
 
         dnl Add the necessary libraries and library dirs
         PHP_EVAL_LIBLINE($MAPNIK_LIBS, MAPNIK_SHARED_LIBADD)
@@ -49,7 +46,7 @@ if test "$PHP_MAPNIK" != "no"; then
         mapnik,
         mapnik.cc exception.cc box2d.cc map.cc image.cc agg_renderer.cc datasource_cache.cc projection.cc proj_transform.cc,
         $ext_shared,
-        $CPP_FLAGS
+        $CPPFLAGS
     )
     PHP_SUBST(MAPNIK_SHARED_LIBADD)
 fi

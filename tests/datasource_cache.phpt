@@ -12,7 +12,7 @@ class DatasourceCacheTest extends MapnikTestCase
     public function testGetPluginNamesEmpty()
     {
         $plugins = \Mapnik\DatasourceCache::getPluginNames();
-        assert('count($plugins) === 0', 'DatasourceCache cache plugins not empty even though register was not called.');
+        assert(count($plugins) === 0, 'DatasourceCache cache plugins not empty even though register was not called.');
     }
 
     public function testRegisterDatasources()
@@ -22,7 +22,7 @@ class DatasourceCacheTest extends MapnikTestCase
         \Mapnik\DatasourceCache::registerDatasources($configOutput[0]);
         $plugins = \Mapnik\DatasourceCache::getPluginNames();
 
-        assert('count($plugins) > 0', 'No plugins after registering directory with DatasourceCache.');
+        assert(count($plugins) > 0, 'No plugins after registering directory with DatasourceCache.');
     }
 }
 

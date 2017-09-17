@@ -36,12 +36,12 @@ class ImageTest extends MapnikTestCase
 
         }
         assert(
-            '$e instanceof \Mapnik\Exception',
+            $e instanceof \Mapnik\Exception,
             'Instantiating \Mapnik\Image with bad arguments did not throw exception.'
         );
 
         $image = new \Mapnik\Image(640, 480);
-        assert('$image instanceof \Mapnik\Image', '\Mapnik\Image instantiation failed.');
+        assert($image instanceof \Mapnik\Image, '\Mapnik\Image instantiation failed.');
     }
 
     public function testSaveToFile()
@@ -54,7 +54,7 @@ class ImageTest extends MapnikTestCase
         $image->saveToFile($imageFile);
         $phpImageResource = imagecreatefrompng($imageFile);
 
-        assert('$phpImageResource != false', 'Image->saveToFile() failed.');
+        assert($phpImageResource != false, 'Image->saveToFile() failed.');
         unlink($imageFile);
     }
 
@@ -68,7 +68,7 @@ class ImageTest extends MapnikTestCase
         $image->saveToFile($imageFile, 'jpeg70');
         $phpImageResource = imagecreatefromjpeg($imageFile);
 
-        assert('$phpImageResource != false', 'Image->saveToFile() with format failed.');
+        assert($phpImageResource != false, 'Image->saveToFile() with format failed.');
         unlink($imageFile);
     }
 
@@ -80,7 +80,7 @@ class ImageTest extends MapnikTestCase
 
         $output = $image->saveToString();
         $phpImageResource = imagecreatefromstring($output);
-        assert('$phpImageResource != false', 'Image->saveToString() failed.');
+        assert($phpImageResource != false, 'Image->saveToString() failed.');
     }
 
     public function testSaveToStringWithFormat()
@@ -91,7 +91,7 @@ class ImageTest extends MapnikTestCase
 
         $output = $image->saveToString('jpeg');
         $phpImageResource = imagecreatefromstring($output);
-        assert('$phpImageResource != false', 'Image->saveToString() with format failed.');
+        assert($phpImageResource != false, 'Image->saveToString() with format failed.');
     }
 }
 

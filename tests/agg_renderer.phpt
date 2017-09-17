@@ -34,13 +34,13 @@ class AggRendererTest extends MapnikTestCase
 
         }
         assert(
-            '$e instanceof \Mapnik\Exception',
+            $e instanceof \Mapnik\Exception,
             'Instantiating \Mapnik\AggRenderer with bad arguments did not throw exception.'
         );
 
         $image = new \Mapnik\Image(640, 480);
         $renderer = new \Mapnik\AggRenderer($this->exampleMap, $image);
-        assert('$renderer instanceof \Mapnik\AggRenderer', 'Instantiating \Mapnik\AggRenderer failed.');
+        assert($renderer instanceof \Mapnik\AggRenderer, 'Instantiating \Mapnik\AggRenderer failed.');
     }
 
     public function testApply()
@@ -48,7 +48,7 @@ class AggRendererTest extends MapnikTestCase
         $image = new \Mapnik\Image(640, 480);
         $renderer = new \Mapnik\AggRenderer($this->exampleMap, $image);
 
-        assert('$renderer->apply() === true', 'AggRenderer->apply() failed.');
+        assert($renderer->apply() === true, 'AggRenderer->apply() failed.');
     }
 }
 

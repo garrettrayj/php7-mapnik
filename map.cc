@@ -194,8 +194,6 @@ PHP_METHOD(Map, zoomToBox)
 {
     php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     php_mapnik_box2d_object *box2d_obj;
-    mapnik::box2d<double> *box2d;
-
     zval* box2d_zval;
 
     if (::zend_parse_parameters_ex(
@@ -210,8 +208,6 @@ PHP_METHOD(Map, zoomToBox)
     }
 
     box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
-    box2d = box2d_obj->box2d;
-
     obj->map->zoom_to_box(*box2d_obj->box2d);
 }
 

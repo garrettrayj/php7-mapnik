@@ -4,6 +4,7 @@ language: php
 php:
     - 7.0
     - 7.1
+    - 7.2
     - nightly
 env:
     global:
@@ -16,6 +17,9 @@ matrix:
         - php: nightly
     include:
         - php: 7.0
+          env:
+              - CC=clang
+        - php: 7.1
           env:
               - CC=clang
         - php: 7.1

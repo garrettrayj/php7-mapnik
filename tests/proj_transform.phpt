@@ -58,15 +58,11 @@ class ProjTransformTest extends MapnikTestCase
 
         $box2d = new \Mapnik\Box2D(-102, 35.500, -93, 36);
 
-        $box = $projTransform->forward($box2d);
-
-        $bounds = implode(
-            ',',
-            [$box->minX(), $box->minY(), $box->maxX(), $box->maxY()]
-        );
+        $forwardBox = $projTransform->forward($box2d);
 
         assert(
-            $bounds === "778149.57465738,206534.77597693,3456201.2327298,402092.40888926",
+            floor($forwardBox->minX()) === 778149.0 && floor($forwardBox->minY()) === 206534.0 &&
+            floor($forwardBox->maxX()) === 3456201.0 && floor($forwardBox->maxY()) === 402092.0,
             'ProjTransform->forward() with uncommon EPSG code failed'
         );
     }
@@ -99,19 +95,14 @@ class ProjTransformTest extends MapnikTestCase
 
         $box2d = new \Mapnik\Box2D(778149.57465738,206534.77597693,3456201.2327298,402092.40888926);
 
-        $box = $projTransform->backward($box2d);
-
-        $bounds = implode(
-            ',',
-            [$box->minX(), $box->minY(), $box->maxX(), $box->maxY()]
-        );
+        $backwardBox = $projTransform->backward($box2d);
 
         assert(
-            $bounds === "-102.02724319221,35.462161134449,-92.968368055673,36.036766364639",
+            floor($backwardBox->minX()) === -103.0 && floor($backwardBox->minY()) === 35.0 &&
+            floor($backwardBox->maxX()) === -93.0 && floor($backwardBox->maxY()) === 36.0,
             'ProjTransform->backward() with uncommon EPSG code failed'
         );
     }
-
 }
 
 new ProjTransformTest();

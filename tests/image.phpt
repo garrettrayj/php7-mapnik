@@ -3,7 +3,7 @@
 --EXTENSIONS--
 gd
 --SKIPIF--
-<?php if (!extension_loaded("mapnik")) print "skip"; ?>
+<?php if (!extension_loaded("mapnik") || !extension_loaded("gd")) print "skip"; ?>
 --FILE--
 <?php
 

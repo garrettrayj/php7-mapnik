@@ -1,12 +1,13 @@
 sudo: required
 dist: xenial
 language: php
+
 php:
     - '7.0'
     - '7.1'
     - '7.2'
     - '7.3'
-    - 'nightly'
+
 env:
     global:
         - REPORT_EXIT_STATUS=1
@@ -14,9 +15,6 @@ env:
         - CC=gcc
 
 matrix:
-    allow_failures:
-        -
-            php: nightly
     include:
         -
             php: '7.0'
@@ -30,7 +28,6 @@ matrix:
         -
             php: '7.3'
             env: [CC=clang]
-
 os:
     - linux
 
@@ -42,7 +39,6 @@ before_install:
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y -qq update; fi
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install python-software-properties; fi
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install libmapnik-dev mapnik-utils; fi
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install php-dev php-gd; fi
 
 script:
     - phpize

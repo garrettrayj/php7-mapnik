@@ -20,12 +20,11 @@ Requirements
 ------------
 
 * PHP >= 7.0
-   * php7.0-gd 
-   * php7.0-dev
-   * Available through `sudo apt-get install php-dev php-gd` on Ubuntu 16.04 Xenial
+   * Available through `brew intall php` on MacOS with Homebrew.
+   * Available through `sudo apt-get install php-dev php-gd` on Ubuntu 16.04 Xenial.
 * Mapnik 3.0.x
-    * mapnik-config
-    * Available through `sudo apt-get install libmapnik-dev` on Ubuntu 16.04 Xenial
+    * Available through `brew install mapnik` on MacOS with Homebrew.
+    * Available through `sudo apt-get install libmapnik-dev` on Ubuntu 16.04 Xenial.
 
 Installation
 ------------
@@ -37,7 +36,9 @@ Installation
     make install
     echo "extension=mapnik.so" > /etc/php.d/mapnik.ini
 
-Note: Your PHP configuration directory may be different depending on OS and PHP settings.
+Notes: 
+- The PHP configuration directory may differ from above. Run `php -i | grep "Scan this dir"` to find your system's location.
+- The ICU library path may need to be exported before building on MacOS. `export LDFLAGS="-L/usr/local/opt/icu4c/lib"`
 
 Tile Server Example
 -------------------

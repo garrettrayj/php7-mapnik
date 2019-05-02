@@ -4,27 +4,5 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="PHP" type="php">
-        <CLASSES>
-          <root url="file://$APPLICATION_HOME_DIR$/bin" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$APPLICATION_HOME_DIR$/bin" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="PHARS">
-        <CLASSES>
-          <root url="phar://$MODULE_DIR$/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="phar://$MODULE_DIR$/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
   </component>
 </module>

@@ -1,8 +1,8 @@
 #ifndef PHP_MAPNIK_MAP_H
 #define PHP_MAPNIK_MAP_H
 
+#include "php_mapnik.h"
 #include <mapnik/map.hpp>
-#include "php.h"
 
 extern zend_class_entry *php_mapnik_map_ce;
 

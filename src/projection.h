@@ -1,7 +1,7 @@
 #ifndef PHP_MAPNIK_PROJECTION_H
 #define PHP_MAPNIK_PROJECTION_H
 
-#include "php.h"
+#include "php_mapnik.h"
 #include <mapnik/projection.hpp>
 
 extern zend_class_entry *php_mapnik_projection_ce;

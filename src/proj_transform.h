@@ -1,7 +1,7 @@
 #ifndef PHP_MAPNIK_PROJ_TRANSFORM_H
 #define PHP_MAPNIK_PROJ_TRANSFORM_H
 
-#include "php.h"
+#include "php_mapnik.h"
 #include <mapnik/proj_transform.hpp>
 
 extern zend_class_entry *php_mapnik_proj_transform_ce;

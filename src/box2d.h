@@ -1,7 +1,7 @@
 #ifndef PHP_MAPNIK_BOX2D_H
 #define PHP_MAPNIK_BOX2D_H
 
-#include "php.h"
+#include "php_mapnik.h"
 #include <mapnik/map.hpp>
 
 extern zend_class_entry *php_mapnik_box2d_ce;

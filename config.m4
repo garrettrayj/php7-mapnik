@@ -46,7 +46,15 @@ if test "$PHP_MAPNIK" != "no"; then
     PHP_SUBST(MAPNIK_SHARED_LIBADD)
     PHP_NEW_EXTENSION(
         mapnik,
-        mapnik.cc exception.cc box2d.cc map.cc image.cc agg_renderer.cc datasource_cache.cc projection.cc proj_transform.cc,
+        php_mapnik.cc \
+        src/exception.cc \
+        src/box2d.cc \
+        src/map.cc \
+        src/image.cc \
+        src/agg_renderer.cc \
+        src/datasource_cache.cc \
+        src/projection.cc \
+        src/proj_transform.cc,
         $ext_shared,
         $CPPFLAGS
     )

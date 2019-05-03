@@ -1,6 +1,5 @@
-#include "php.h"
-#include "exception.h"
 #include "agg_renderer.h"
+#include "exception.h"
 #include "image.h"
 #include "map.h"
 #include <mapnik/datasource.hpp>

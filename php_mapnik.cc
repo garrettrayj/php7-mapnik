@@ -1,14 +1,12 @@
-#include "php.h"
-
 #include "php_mapnik.h"
-#include "exception.h"
-#include "box2d.h"
-#include "map.h"
-#include "image.h"
-#include "agg_renderer.h"
-#include "datasource_cache.h"
-#include "projection.h"
-#include "proj_transform.h"
+#include "src/exception.h"
+#include "src/box2d.h"
+#include "src/map.h"
+#include "src/image.h"
+#include "src/agg_renderer.h"
+#include "src/datasource_cache.h"
+#include "src/projection.h"
+#include "src/proj_transform.h"
 
 PHP_MINIT_FUNCTION(mapnik)
 {

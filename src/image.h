@@ -2,7 +2,7 @@
 #define PHP_MAPNIK_IMAGE_H
 
 
-#include "php.h"
+#include "php_mapnik.h"
 #include <mapnik/map.hpp>
 
 extern zend_class_entry *php_mapnik_image_ce;

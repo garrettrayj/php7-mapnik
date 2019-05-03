@@ -1,7 +1,7 @@
 #ifndef PHP_MAPNIK_AGG_RENDERER_H
 #define PHP_MAPNIK_AGG_RENDERER_H
 
-#include "php.h"
+#include "php_mapnik.h"
 #include <mapnik/agg_renderer.hpp>
 #include <mapnik/image.hpp>
 

@@ -5,8 +5,8 @@ dnl Check whether the extension is enabled at all
 if test "$PHP_MAPNIK" != "no"; then
 
     dnl Setup for C++
-    PHP_REQUIRE_CXX()
     AC_LANG_CPLUSPLUS
+    PHP_REQUIRE_CXX()
     PHP_ADD_LIBRARY(stdc++, 1, MAPNIK_SHARED_LIBADD)
     CPPFLAGS="$CPPFLAGS $INCLUDES -DHAVE_MAPNIK -std=c++11 -Wno-deprecated-register"
 
@@ -42,11 +42,13 @@ if test "$PHP_MAPNIK" != "no"; then
     fi
 
     dnl Finally, tell the build system about the extension and what files are needed
+
+    PHP_SUBST(MAPNIK_SHARED_LIBADD)
     PHP_NEW_EXTENSION(
         mapnik,
         mapnik.cc exception.cc box2d.cc map.cc image.cc agg_renderer.cc datasource_cache.cc projection.cc proj_transform.cc,
         $ext_shared,
         $CPPFLAGS
     )
-    PHP_SUBST(MAPNIK_SHARED_LIBADD)
+
 fi

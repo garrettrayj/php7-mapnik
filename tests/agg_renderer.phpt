@@ -30,12 +30,12 @@ class AggRendererTest extends MapnikTestCase
     {
         try {
             $renderer = new \Mapnik\AggRenderer('foo');
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
 
         }
         assert(
-            $e instanceof \Mapnik\Exception,
-            'Instantiating \Mapnik\AggRenderer with bad arguments did not throw exception.'
+            $e instanceof \ArgumentCountError,
+            'Instantiating \Mapnik\AggRenderer with wrong number of arguments did not throw error.'
         );
 
         $image = new \Mapnik\Image(640, 480);

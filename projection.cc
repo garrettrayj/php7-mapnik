@@ -32,6 +32,10 @@ zend_object * php_mapnik_projection_new(zend_class_entry *ce TSRMLS_DC) {
 
 // Class Methods
 
+ZEND_BEGIN_ARG_INFO_EX(argInfo_projection_construct, 0, 0, 1)
+    ZEND_ARG_INFO(0, parameters)
+ZEND_END_ARG_INFO()
+
 PHP_METHOD(Projection, __construct)
 {
     php_mapnik_projection_object *obj = Z_PHP_MAPNIK_PROJECTION_P(getThis());
@@ -39,14 +43,9 @@ PHP_METHOD(Projection, __construct)
 
     zend_string *parameters;
 
-    if (::zend_parse_parameters_ex(
-        ZEND_PARSE_PARAMS_QUIET,
-        ZEND_NUM_ARGS() TSRMLS_CC,
-        "S",
-        &parameters) == FAILURE
-    ) {
-        php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Projection::__construct");
-    }
+    ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
+        Z_PARAM_STR(parameters)
+    ZEND_PARSE_PARAMETERS_END();
 
     try {
         std::string params_str(parameters->val, parameters->len);
@@ -65,7 +64,7 @@ PHP_METHOD(Projection, __construct)
 // Register methods
 
 zend_function_entry php_mapnik_projection_methods[] = {
-    PHP_ME(Projection, __construct, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(Projection, __construct, argInfo_projection_construct, ZEND_ACC_PUBLIC)
     {NULL, NULL, NULL}
 };
 

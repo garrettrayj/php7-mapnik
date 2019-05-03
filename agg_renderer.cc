@@ -33,7 +33,12 @@ zend_object * php_mapnik_agg_renderer_new(zend_class_entry *ce TSRMLS_DC) {
     return &intern->std;
 }
 
-// Class Methods
+// Class Method: Mapnik\AggRenderer::__construct
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_aggRenderer_construct, 0, ZEND_RETURN_VALUE, 2)
+    ZEND_ARG_INFO(0, map)
+    ZEND_ARG_INFO(0, image)
+ZEND_END_ARG_INFO()
 
 PHP_METHOD(AggRenderer, __construct)
 {
@@ -43,29 +48,24 @@ PHP_METHOD(AggRenderer, __construct)
     zval* map_zval;
     zval* image_zval;
 
-    if (::zend_parse_parameters_ex(
-        ZEND_PARSE_PARAMS_QUIET,
-        ZEND_NUM_ARGS() TSRMLS_CC,
-        "OO",
-        &map_zval,
-        php_mapnik_map_ce,
-        &image_zval,
-        php_mapnik_image_ce) == SUCCESS
-    ) {
-        php_mapnik_map_object *map_obj = Z_PHP_MAPNIK_MAP_P(map_zval);
-        mapnik::Map *map = map_obj->map;
+    ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 2, 2)
+        Z_PARAM_OBJECT_OF_CLASS(map_zval, php_mapnik_map_ce)
+        Z_PARAM_OBJECT_OF_CLASS(image_zval, php_mapnik_image_ce)
+    ZEND_PARSE_PARAMETERS_END();
 
-        php_mapnik_image_object *image_obj = Z_PHP_MAPNIK_IMAGE_P(image_zval);
-        mapnik::image_rgba8 *image = image_obj->image;
+    php_mapnik_map_object *map_obj = Z_PHP_MAPNIK_MAP_P(map_zval);
+    mapnik::Map *map = map_obj->map;
 
-        agg_renderer = new mapnik::agg_renderer<mapnik::image_rgba8>(*map, *image);
-    } else {
-        php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\AggRenderer::__construct");
-    }
+    php_mapnik_image_object *image_obj = Z_PHP_MAPNIK_IMAGE_P(image_zval);
+    mapnik::image_rgba8 *image = image_obj->image;
+
+    agg_renderer = new mapnik::agg_renderer<mapnik::image_rgba8>(*map, *image);
 
     obj = Z_PHP_MAPNIK_AGG_RENDERER_P(getThis());
     obj->agg_renderer = agg_renderer;
 }
+
+// Class Method: Mapnik\AggRenderer::apply
 
 PHP_METHOD(AggRenderer, apply)
 {
@@ -90,7 +90,7 @@ PHP_METHOD(AggRenderer, apply)
 // Register methods
 
 zend_function_entry php_mapnik_agg_renderer_methods[] = {
-    PHP_ME(AggRenderer, __construct, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(AggRenderer, __construct, argInfo_aggRenderer_construct, ZEND_ACC_PUBLIC)
     PHP_ME(AggRenderer, apply, NULL, ZEND_ACC_PUBLIC)
     {NULL, NULL, NULL}
 };
@@ -103,6 +103,8 @@ void php_mapnik_agg_renderer_startup(INIT_FUNC_ARGS)
     INIT_NS_CLASS_ENTRY(ce, "Mapnik", "AggRenderer", php_mapnik_agg_renderer_methods);
     php_mapnik_agg_renderer_ce = zend_register_internal_class(&ce TSRMLS_CC);
     php_mapnik_agg_renderer_ce->create_object = php_mapnik_agg_renderer_new;
+
+
     
     memcpy(&php_mapnik_agg_renderer_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
     php_mapnik_agg_renderer_object_handlers.offset = XtOffsetOf(struct php_mapnik_agg_renderer_object, std);

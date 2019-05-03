@@ -38,6 +38,9 @@ zend_module_entry mapnik_module_entry = {
     STANDARD_MODULE_PROPERTIES
 };
 
+
 #ifdef COMPILE_DL_MAPNIK
-ZEND_GET_MODULE(mapnik)
+extern "C" {
+    ZEND_GET_MODULE(mapnik)
+}
 #endif

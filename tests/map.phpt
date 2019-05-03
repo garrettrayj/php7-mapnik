@@ -30,11 +30,11 @@ class MapTest extends MapnikTestCase
     {
         try {
             $map = new \Mapnik\Map('foo', 'bar');
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
 
         }
         assert(
-            $e instanceof \Mapnik\Exception,
+            $e instanceof \TypeError,
             'Instantiating \Mapnik\Map with bad arguments did not throw exception.'
         );
 
@@ -186,11 +186,11 @@ class MapTest extends MapnikTestCase
 
         try {
             $this->exampleMap->setWidth('foo');
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
 
         }
         assert(
-            $e instanceof \Mapnik\Exception,
+            $e instanceof \TypeError,
             'Calling Map->setWidth() with bad argument did not throw Mapnik exception.'
         );
     }
@@ -207,11 +207,11 @@ class MapTest extends MapnikTestCase
 
         try {
             $this->exampleMap->setHeight('foo');
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
 
         }
         assert(
-            $e instanceof \Mapnik\Exception,
+            $e instanceof \TypeError,
             'Calling Map->setHeight() with bad argument did not throw Mapnik exception.'
         );
     }
@@ -224,11 +224,11 @@ class MapTest extends MapnikTestCase
 
         try {
             $this->exampleMap->resize('foo', 'bar');
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
 
         }
         assert(
-            $e instanceof \Mapnik\Exception,
+            $e instanceof TypeError,
             'Calling Map->resize() with bad arguments did not throw Mapnik exception.'
         );
     }

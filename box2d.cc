@@ -29,7 +29,14 @@ zend_object * php_mapnik_box2d_new(zend_class_entry *ce TSRMLS_DC) {
     return &intern->std;
 }
 
-// Class methods
+// Class Method: Mapnik\Box2D::__construct
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_box2d_construct, 0, 0, 0)
+    ZEND_ARG_INFO(0, minX)
+    ZEND_ARG_INFO(0, minY)
+    ZEND_ARG_INFO(0, maxX)
+    ZEND_ARG_INFO(0, maxY)
+ZEND_END_ARG_INFO()
 
 PHP_METHOD(Box2D, __construct)
 {
@@ -39,23 +46,22 @@ PHP_METHOD(Box2D, __construct)
 
     if (ZEND_NUM_ARGS() == 0) {
         box2d = new mapnik::box2d<double>();
-    } else if (::zend_parse_parameters_ex(
-        ZEND_PARSE_PARAMS_QUIET,
-        ZEND_NUM_ARGS() TSRMLS_CC,
-        "dddd",
-        &minX,
-        &minY,
-        &maxX,
-        &maxY) == SUCCESS
-    ) {
-        box2d = new mapnik::box2d<double>(minX, minY, maxX, maxY);
     } else {
-        php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Box2D::__construct");
+        ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 4, 4)
+            Z_PARAM_DOUBLE(minX)
+            Z_PARAM_DOUBLE(minY)
+            Z_PARAM_DOUBLE(maxX)
+            Z_PARAM_DOUBLE(maxY)
+        ZEND_PARSE_PARAMETERS_END();
+
+        box2d = new mapnik::box2d<double>(minX, minY, maxX, maxY);
     }
 
     obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
     obj->box2d = box2d;
 }
+
+// Class Method: Mapnik\Box2D::minX
 
 PHP_METHOD(Box2D, minX)
 {
@@ -64,6 +70,8 @@ PHP_METHOD(Box2D, minX)
     RETURN_DOUBLE(obj->box2d->minx());
 }
 
+// Class Method: Mapnik\Box2D::minY
+
 PHP_METHOD(Box2D, minY)
 {
     php_mapnik_box2d_object *obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
@@ -71,12 +79,16 @@ PHP_METHOD(Box2D, minY)
     RETURN_DOUBLE(obj->box2d->miny());
 }
 
+// Class Method: Mapnik\Box2D::maxX
+
 PHP_METHOD(Box2D, maxX)
 {
     php_mapnik_box2d_object *obj = Z_PHP_MAPNIK_BOX2D_P(getThis());
 
     RETURN_DOUBLE(obj->box2d->maxx());
 }
+
+// Class Method: Mapnik\Box2D::maxY
 
 PHP_METHOD(Box2D, maxY)
 {
@@ -88,7 +100,7 @@ PHP_METHOD(Box2D, maxY)
 // Register methods
 
 zend_function_entry php_mapnik_box2d_methods[] = {
-    PHP_ME(Box2D, __construct, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(Box2D, __construct, argInfo_box2d_construct, ZEND_ACC_PUBLIC)
     PHP_ME(Box2D, minX, NULL, ZEND_ACC_PUBLIC)
     PHP_ME(Box2D, minY, NULL, ZEND_ACC_PUBLIC)
     PHP_ME(Box2D, maxX, NULL, ZEND_ACC_PUBLIC)

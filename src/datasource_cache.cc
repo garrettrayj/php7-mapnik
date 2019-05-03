@@ -19,7 +19,7 @@ PHP_METHOD(DatasourceCache, registerDatasources)
         Z_PARAM_STR(path)
     ZEND_PARSE_PARAMETERS_END();
 
-    std::string path_str(path->val, path->len);
+    std::string path_str(ZSTR_VAL(path), ZSTR_LEN(path));
     mapnik::datasource_cache::instance().register_datasources(path_str);
 
     RETURN_TRUE;

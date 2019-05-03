@@ -32,7 +32,7 @@ PHP_METHOD(Map, __construct)
         } else if (ZEND_NUM_ARGS() == 2) {
             map = new mapnik::Map(width, height);
         } else if (ZEND_NUM_ARGS() == 3) {
-            map = new mapnik::Map(width, height, srs->val);
+            map = new mapnik::Map(width, height, ZSTR_VAL(srs));
         } else {
             throw_mapnik_exception("Wrong arguments passed to \\Mapnik\\Map::__construct");
         }
@@ -60,8 +60,8 @@ PHP_METHOD(Map, loadXmlString)
     ZEND_PARSE_PARAMETERS_END();
 
     try {
-        std::string xml_str(xml->val, xml->len);
-        std::string base_path_str(base_path->val, base_path->len);
+        std::string xml_str(ZSTR_VAL(xml), ZSTR_LEN(xml));
+        std::string base_path_str(ZSTR_VAL(base_path), ZSTR_LEN(base_path));
         mapnik::load_map_string(*obj->map, xml_str, strict, base_path_str);
     } catch (const mapnik::proj_init_error & ex) {
         throw_mapnik_exception(ex.what());
@@ -89,8 +89,8 @@ PHP_METHOD(Map, loadXmlFile)
     ZEND_PARSE_PARAMETERS_END();
 
     try {
-        std::string filename_str(filename->val, filename->len);
-        std::string base_path_str(base_path->val, base_path->len);
+        std::string filename_str(ZSTR_VAL(filename), ZSTR_LEN(filename));
+        std::string base_path_str(ZSTR_VAL(base_path), ZSTR_LEN(base_path));
         mapnik::load_map(*obj->map, filename_str, strict, base_path_str);
     } catch (const mapnik::proj_init_error & ex) {
         throw_mapnik_exception(ex.what());
@@ -175,7 +175,7 @@ PHP_METHOD(Map, registerFonts)
     ZEND_PARSE_PARAMETERS_END();
 
     try {
-        std::string path_str(path->val, path->len);
+        std::string path_str(ZSTR_VAL(path), ZSTR_LEN(path));
         fonts_registered = obj->map->register_fonts(path_str);
     } catch (const std::exception & ex) {
         throw_mapnik_exception(ex.what());
@@ -208,7 +208,7 @@ PHP_METHOD(Map, setBasePath)
         Z_PARAM_STR(path)
     ZEND_PARSE_PARAMETERS_END();
 
-    obj->map->set_base_path(path->val);
+    obj->map->set_base_path(ZSTR_VAL(path));
 }
 
 PHP_METHOD(Map, getWidth)
@@ -278,7 +278,7 @@ PHP_METHOD(Map, setSrs)
         Z_PARAM_STR(srs)
     ZEND_PARSE_PARAMETERS_END();
 
-    obj->map->set_srs(srs->val);
+    obj->map->set_srs(ZSTR_VAL(srs));
 }
 
 PHP_METHOD(Map, getBackgroundImage)
@@ -300,7 +300,7 @@ PHP_METHOD(Map, setBackgroundImage)
         Z_PARAM_STR(image_filename)
     ZEND_PARSE_PARAMETERS_END();
 
-    obj->map->set_background_image(image_filename->val);
+    obj->map->set_background_image(ZSTR_VAL(image_filename));
 }
 
 PHP_METHOD(Map, getBackgroundImageOpacity)
@@ -524,7 +524,7 @@ PHP_METHOD(Map, removeStyle)
         return;
     }
 
-    obj->map->remove_style(style->val);
+    obj->map->remove_style(ZSTR_VAL(style));
 }
 
 PHP_METHOD(Map, removeAll)

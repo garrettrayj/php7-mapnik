@@ -18,6 +18,7 @@
       <w>stringl</w>
       <w>tsrmls</w>
       <w>zobj</w>
+      <w>zstr</w>
       <w>zval</w>
     </words>
   </dictionary>

@@ -19,7 +19,7 @@ PHP_METHOD(Projection, __construct)
     ZEND_PARSE_PARAMETERS_END();
 
     try {
-        std::string params_str(parameters->val, parameters->len);
+        std::string params_str(ZSTR_VAL(parameters), ZSTR_LEN(parameters));
         projection = new mapnik::projection(params_str);
     } catch (const mapnik::proj_init_error & ex) {
         throw_mapnik_exception(ex.what());

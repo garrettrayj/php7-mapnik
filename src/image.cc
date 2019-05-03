@@ -33,8 +33,8 @@ PHP_METHOD(Image, saveToFile)
         Z_PARAM_STR(format)
     ZEND_PARSE_PARAMETERS_END();
 
-    std::string file_str(file->val, file->len);
-    std::string format_str(format->val, format->len);
+    std::string file_str(ZSTR_VAL(file), ZSTR_LEN(file));
+    std::string format_str(ZSTR_VAL(format), ZSTR_LEN(format));
 
     try {
         mapnik::save_to_file(*obj->image, file_str, format_str);
@@ -64,7 +64,7 @@ PHP_METHOD(Image, saveToString)
     ZEND_PARSE_PARAMETERS_END();
 
     try {
-        std::string format_str(format->val, format->len);
+        std::string format_str(ZSTR_VAL(format), ZSTR_LEN(format));
         image_str = mapnik::save_to_string(*obj->image, format_str);
     } catch (const mapnik::image_writer_exception & ex) {
         throw_mapnik_exception(ex.what());

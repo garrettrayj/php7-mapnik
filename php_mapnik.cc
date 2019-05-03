@@ -10,11 +10,12 @@
 
 PHP_MINIT_FUNCTION(mapnik)
 {
+    init_agg_renderer(INIT_FUNC_ARGS_PASSTHRU);
+
     php_mapnik_exception_startup(INIT_FUNC_ARGS_PASSTHRU);
     php_mapnik_box2d_startup(INIT_FUNC_ARGS_PASSTHRU);
     php_mapnik_map_startup(INIT_FUNC_ARGS_PASSTHRU);
     php_mapnik_image_startup(INIT_FUNC_ARGS_PASSTHRU);
-    php_mapnik_agg_renderer_startup(INIT_FUNC_ARGS_PASSTHRU);
     php_mapnik_datasource_cache_startup(INIT_FUNC_ARGS_PASSTHRU);
     php_mapnik_projection_startup(INIT_FUNC_ARGS_PASSTHRU);
     php_mapnik_proj_transform_startup(INIT_FUNC_ARGS_PASSTHRU);

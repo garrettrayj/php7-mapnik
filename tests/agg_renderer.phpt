@@ -34,7 +34,7 @@ class AggRendererTest extends MapnikTestCase
 
         }
         assert(
-            $e instanceof \ArgumentCountError,
+            $e instanceof TypeError,
             'Instantiating \Mapnik\AggRenderer with wrong number of arguments did not throw error.'
         );
 

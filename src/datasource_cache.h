@@ -3,8 +3,8 @@
 
 #include "php_mapnik.h"
 
-extern zend_class_entry *php_mapnik_datasource_cache_ce;
+extern zend_class_entry *datasource_cache_ce;
 
-void php_mapnik_datasource_cache_startup(INIT_FUNC_ARGS);
+void datasource_cache_startup(INIT_FUNC_ARGS);
 
 #endif

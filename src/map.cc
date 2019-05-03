@@ -7,29 +7,29 @@
 #include <mapnik/map.hpp>
 #include <mapnik/projection.hpp>
 
-zend_class_entry *php_mapnik_map_ce;
-zend_object_handlers php_mapnik_map_object_handlers;
+zend_class_entry *map_ce;
+zend_object_handlers map_object_handlers;
 
 // PHP object handling
 
-void php_mapnik_map_free_storage(zend_object *object TSRMLS_DC)
+void map_free_storage(zend_object *object TSRMLS_DC)
 {
-    php_mapnik_map_object *obj;
-    obj = php_mapnik_map_fetch_object(object);
+    map_object *obj;
+    obj = map_fetch_object(object);
     delete obj->map;
     zend_object_std_dtor(object TSRMLS_DC);
 }
 
-zend_object * php_mapnik_map_new(zend_class_entry *ce TSRMLS_DC)
+zend_object * map_new(zend_class_entry *ce TSRMLS_DC)
 {
     // Allocate sizeof(custom) + sizeof(properties table requirements)
-    php_mapnik_map_object *intern;
-    intern = (php_mapnik_map_object*) ecalloc(1, sizeof(php_mapnik_map_object) + zend_object_properties_size(ce));
+    map_object *intern;
+    intern = (map_object*) ecalloc(1, sizeof(map_object) + zend_object_properties_size(ce));
 
     zend_object_std_init(&intern->std, ce TSRMLS_CC);
     object_properties_init(&intern->std, ce);
 
-    intern->std.handlers = &php_mapnik_map_object_handlers;
+    intern->std.handlers = &map_object_handlers;
 
     return &intern->std;
 }
@@ -44,7 +44,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, __construct)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     mapnik::Map* map = NULL;
 
     zend_long width, height;
@@ -65,12 +65,12 @@ PHP_METHOD(Map, __construct)
         } else if (ZEND_NUM_ARGS() == 3) {
             map = new mapnik::Map(width, height, srs->val);
         } else {
-            php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::__construct");
+            throw_mapnik_exception("Wrong arguments passed to \\Mapnik\\Map::__construct");
         }
     } catch (const std::exception & ex) {
-        php_mapnik_throw_exception(ex.what());
+        throw_mapnik_exception(ex.what());
     } catch ( ... ) {
-        php_mapnik_throw_exception("Unknown exception during Mapnik map instantiation.");
+        throw_mapnik_exception("Unknown exception during Mapnik map instantiation.");
     }
 
     obj->map = map;
@@ -86,7 +86,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, loadXmlString)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     zend_string *xml, *base_path;
     zend_bool strict = false;
@@ -103,13 +103,13 @@ PHP_METHOD(Map, loadXmlString)
         std::string base_path_str(base_path->val, base_path->len);
         mapnik::load_map_string(*obj->map, xml_str, strict, base_path_str);
     } catch (const mapnik::proj_init_error & ex) {
-        php_mapnik_throw_exception(ex.what());
+        throw_mapnik_exception(ex.what());
     } catch (const std::runtime_error & ex) {
-        php_mapnik_throw_exception(ex.what());
+        throw_mapnik_exception(ex.what());
     } catch (const std::exception & ex) {
-        php_mapnik_throw_exception(ex.what());
+        throw_mapnik_exception(ex.what());
     } catch (...) {
-        php_mapnik_throw_exception("Unknown exception thrown while loading XML string.");
+        throw_mapnik_exception("Unknown exception thrown while loading XML string.");
     }
 }
 
@@ -123,7 +123,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, loadXmlFile)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     zend_string *filename, *base_path;
     zend_bool strict = false;
@@ -140,13 +140,13 @@ PHP_METHOD(Map, loadXmlFile)
         std::string base_path_str(base_path->val, base_path->len);
         mapnik::load_map(*obj->map, filename_str, strict, base_path_str);
     } catch (const mapnik::proj_init_error & ex) {
-        php_mapnik_throw_exception(ex.what());
+        throw_mapnik_exception(ex.what());
     } catch (const std::runtime_error & ex) {
-        php_mapnik_throw_exception(ex.what());
+        throw_mapnik_exception(ex.what());
     } catch (const std::exception & ex) {
-        php_mapnik_throw_exception(ex.what());
+        throw_mapnik_exception(ex.what());
     } catch (...) {
-        php_mapnik_throw_exception("Unknown exception thrown while loading XML file.");
+        throw_mapnik_exception("Unknown exception thrown while loading XML file.");
     }
 }
 
@@ -158,7 +158,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, zoom)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     double zoom;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
@@ -172,7 +172,7 @@ PHP_METHOD(Map, zoom)
 
 PHP_METHOD(Map, zoomAll)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     obj->map->zoom_all();
 }
@@ -186,7 +186,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, pan)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_long x, y;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 2, 2)
@@ -207,7 +207,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, panAndZoom)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_long x, y;
     double zoom;
 
@@ -228,12 +228,12 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, zoomToBox)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
-    php_mapnik_box2d_object *box2d_obj;
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    box2d_object *box2d_obj;
     zval* box2d_zval;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
-        Z_PARAM_OBJECT_OF_CLASS(box2d_zval, php_mapnik_box2d_ce)
+        Z_PARAM_OBJECT_OF_CLASS(box2d_zval, box2d_ce)
     ZEND_PARSE_PARAMETERS_END();
 
     box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
@@ -248,7 +248,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, registerFonts)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_string *path;
     bool fonts_registered = false;
 
@@ -260,10 +260,10 @@ PHP_METHOD(Map, registerFonts)
         std::string path_str(path->val, path->len);
         fonts_registered = obj->map->register_fonts(path_str);
     } catch (const std::exception & ex) {
-        php_mapnik_throw_exception(ex.what());
+        throw_mapnik_exception(ex.what());
         return;
     } catch (...) {
-        php_mapnik_throw_exception("Unknown exception thrown while registering fonts path.");
+        throw_mapnik_exception("Unknown exception thrown while registering fonts path.");
         return;
     }
 
@@ -278,7 +278,7 @@ PHP_METHOD(Map, registerFonts)
 
 PHP_METHOD(Map, getBasePath)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     RETURN_STRING(obj->map->base_path().c_str());
 }
@@ -291,7 +291,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setBasePath)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_string *path;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
@@ -305,7 +305,7 @@ PHP_METHOD(Map, setBasePath)
 
 PHP_METHOD(Map, getWidth)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     RETURN_LONG(obj->map->width());
 }
@@ -318,7 +318,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setWidth)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_long width;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
@@ -332,7 +332,7 @@ PHP_METHOD(Map, setWidth)
 
 PHP_METHOD(Map, getHeight)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     RETURN_LONG(obj->map->height());
 }
@@ -345,7 +345,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setHeight)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_long height;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
@@ -364,7 +364,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, resize)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_long width, height;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 2, 2)
@@ -379,7 +379,7 @@ PHP_METHOD(Map, resize)
 
 PHP_METHOD(Map, getSrs)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     RETURN_STRING(obj->map->srs().c_str());
 }
@@ -392,7 +392,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setSrs)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_string *srs;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
@@ -406,7 +406,7 @@ PHP_METHOD(Map, setSrs)
 
 PHP_METHOD(Map, getBackgroundImage)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     boost::optional<std::string> background_image = obj->map->background_image();
 
     if (background_image) {
@@ -422,7 +422,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setBackgroundImage)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_string *image_filename;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
@@ -436,7 +436,7 @@ PHP_METHOD(Map, setBackgroundImage)
 
 PHP_METHOD(Map, getBackgroundImageOpacity)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     RETURN_DOUBLE(obj->map->background_image_opacity());
 }
@@ -449,7 +449,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setBackgroundImageOpacity)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     double opacity;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
@@ -463,12 +463,12 @@ PHP_METHOD(Map, setBackgroundImageOpacity)
 
 PHP_METHOD(Map, getMaximumExtent)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     boost::optional<mapnik::box2d<double>> maximum_extent = obj->map->maximum_extent();
 
     if (maximum_extent) {
         // Return Box2D object
-        object_init_ex(return_value, php_mapnik_box2d_ce);
+        object_init_ex(return_value, box2d_ce);
         zval ctor;
         ZVAL_STRING(&ctor, "__construct");
         zval dummy_return_value;
@@ -499,7 +499,7 @@ PHP_METHOD(Map, getMaximumExtent)
             4,
             args TSRMLS_CC) == FAILURE
         ) {
-            php_mapnik_throw_exception("Creating Box2D return value failed");
+            throw_mapnik_exception("Creating Box2D return value failed");
         }
 
         zval_ptr_dtor(&ctor);
@@ -516,14 +516,14 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setMaximumExtent)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zval* box2d_zval;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
-        Z_PARAM_OBJECT_OF_CLASS(box2d_zval, php_mapnik_box2d_ce)
+        Z_PARAM_OBJECT_OF_CLASS(box2d_zval, box2d_ce)
     ZEND_PARSE_PARAMETERS_END();
 
-    php_mapnik_box2d_object *box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
+    box2d_object *box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
     obj->map->set_maximum_extent(*box2d_obj->box2d);
 }
 
@@ -531,7 +531,7 @@ PHP_METHOD(Map, setMaximumExtent)
 
 PHP_METHOD(Map, resetMaximumExtent)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     obj->map->reset_maximum_extent();
 }
 
@@ -539,11 +539,11 @@ PHP_METHOD(Map, resetMaximumExtent)
 
 PHP_METHOD(Map, getCurrentExtent)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     mapnik::box2d<double> current_extent = obj->map->get_current_extent();
 
     // Return Box2D object
-    object_init_ex(return_value, php_mapnik_box2d_ce);
+    object_init_ex(return_value, box2d_ce);
     zval ctor;
     ZVAL_STRING(&ctor, "__construct");
     zval dummy_return_value;
@@ -574,7 +574,7 @@ PHP_METHOD(Map, getCurrentExtent)
         4,
         args TSRMLS_CC) == FAILURE
     ) {
-        php_mapnik_throw_exception("Creating Box2D return value failed");
+        throw_mapnik_exception("Creating Box2D return value failed");
     }
 
     zval_ptr_dtor(&ctor);
@@ -586,7 +586,7 @@ PHP_METHOD(Map, getCurrentExtent)
 
 PHP_METHOD(Map, getBufferSize)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     RETURN_LONG(obj->map->buffer_size());
 }
 
@@ -598,7 +598,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setBufferSize)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_long buffer_size;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
@@ -612,11 +612,11 @@ PHP_METHOD(Map, setBufferSize)
 
 PHP_METHOD(Map, getBufferedExtent)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     mapnik::box2d<double> buffered_extent = obj->map->get_buffered_extent();
 
     // Return Box2D object
-    object_init_ex(return_value, php_mapnik_box2d_ce);
+    object_init_ex(return_value, box2d_ce);
     zval ctor;
     ZVAL_STRING(&ctor, "__construct");
     zval dummy_return_value;
@@ -647,7 +647,7 @@ PHP_METHOD(Map, getBufferedExtent)
         4,
         args TSRMLS_CC) == FAILURE
     ) {
-        php_mapnik_throw_exception("Creating Box2D return value failed");
+        throw_mapnik_exception("Creating Box2D return value failed");
     }
 
     zval_ptr_dtor(&ctor);
@@ -659,7 +659,7 @@ PHP_METHOD(Map, getBufferedExtent)
 
 PHP_METHOD(Map, getScale)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     RETURN_DOUBLE(obj->map->scale());
 }
 
@@ -667,7 +667,7 @@ PHP_METHOD(Map, getScale)
 
 PHP_METHOD(Map, getScaleDenominator)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     RETURN_DOUBLE(obj->map->scale_denominator());
 }
 
@@ -675,7 +675,7 @@ PHP_METHOD(Map, getScaleDenominator)
 
 PHP_METHOD(Map, countLayers)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     RETURN_LONG(obj->map->layer_count());
 }
 
@@ -683,11 +683,11 @@ PHP_METHOD(Map, countLayers)
 
 PHP_METHOD(Map, removeStyle)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_string *style;
 
     if (::zend_parse_parameters_ex(ZEND_PARSE_PARAMS_QUIET, ZEND_NUM_ARGS() TSRMLS_CC, "S", &style) == FAILURE) {
-        php_mapnik_throw_exception("Wrong arguments passed to \\Mapnik\\Map::removeStyle");
+        throw_mapnik_exception("Wrong arguments passed to \\Mapnik\\Map::removeStyle");
         return;
     }
 
@@ -698,7 +698,7 @@ PHP_METHOD(Map, removeStyle)
 
 PHP_METHOD(Map, removeAll)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     obj->map->remove_all();
 }
 
@@ -706,7 +706,7 @@ PHP_METHOD(Map, removeAll)
 
 PHP_METHOD(Map, getAspectFixMode)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     RETURN_LONG(obj->map->get_aspect_fix_mode());
 }
 
@@ -718,7 +718,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setAspectFixMode)
 {
-    php_mapnik_map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
+    map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     zend_long aspect_fix_mode;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
@@ -726,7 +726,7 @@ PHP_METHOD(Map, setAspectFixMode)
     ZEND_PARSE_PARAMETERS_END();
 
     if (!(aspect_fix_mode >= mapnik::Map::GROW_BBOX && aspect_fix_mode <= mapnik::Map::RESPECT)) {
-        php_mapnik_throw_exception("Invalid aspect fix mode.");
+        throw_mapnik_exception("Invalid aspect fix mode.");
         return;
     }
 
@@ -735,7 +735,7 @@ PHP_METHOD(Map, setAspectFixMode)
 
 // Register methods
 
-zend_function_entry php_mapnik_map_methods[] = {
+zend_function_entry map_methods[] = {
     PHP_ME(Map, __construct, argInfo_map_construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
     PHP_ME(Map, loadXmlFile, argInfo_map_loadXmlFile, ZEND_ACC_PUBLIC)
     PHP_ME(Map, loadXmlString, argInfo_map_loadXmlString, ZEND_ACC_PUBLIC)
@@ -777,79 +777,79 @@ zend_function_entry php_mapnik_map_methods[] = {
 
 // Extension class startup
 
-void php_mapnik_map_startup(INIT_FUNC_ARGS)
+void map_startup(INIT_FUNC_ARGS)
 {
     zend_class_entry ce;
-    INIT_NS_CLASS_ENTRY(ce, "Mapnik", "Map", php_mapnik_map_methods);
+    INIT_NS_CLASS_ENTRY(ce, "Mapnik", "Map", map_methods);
 
-    php_mapnik_map_ce = zend_register_internal_class(&ce TSRMLS_CC);
-    php_mapnik_map_ce->create_object = php_mapnik_map_new;
+    map_ce = zend_register_internal_class(&ce TSRMLS_CC);
+    map_ce->create_object = map_new;
 
     zend_declare_class_constant_long(
-        php_mapnik_map_ce,
+        map_ce,
         "GROW_BBOX",
         sizeof("GROW_BBOX") - 1,
         mapnik::Map::GROW_BBOX TSRMLS_CC
     );
 
     zend_declare_class_constant_long(
-        php_mapnik_map_ce,
+        map_ce,
         "GROW_CANVAS",
         sizeof("GROW_CANVAS") - 1,
         mapnik::Map::GROW_CANVAS TSRMLS_CC
     );
 
     zend_declare_class_constant_long(
-        php_mapnik_map_ce,
+        map_ce,
         "SHRINK_BBOX",
         sizeof("SHRINK_BBOX") - 1,
         mapnik::Map::SHRINK_BBOX TSRMLS_CC
     );
 
     zend_declare_class_constant_long(
-        php_mapnik_map_ce,
+        map_ce,
         "SHRINK_CANVAS",
         sizeof("SHRINK_CANVAS") - 1,
         mapnik::Map::SHRINK_CANVAS TSRMLS_CC
     );
 
     zend_declare_class_constant_long(
-        php_mapnik_map_ce,
+        map_ce,
         "ADJUST_BBOX_WIDTH",
         sizeof("ADJUST_BBOX_WIDTH") - 1,
         mapnik::Map::ADJUST_BBOX_WIDTH TSRMLS_CC
     );
 
     zend_declare_class_constant_long(
-        php_mapnik_map_ce,
+        map_ce,
         "ADJUST_BBOX_HEIGHT",
         sizeof("ADJUST_BBOX_HEIGHT") - 1,
         mapnik::Map::ADJUST_BBOX_HEIGHT TSRMLS_CC
     );
 
     zend_declare_class_constant_long(
-        php_mapnik_map_ce,
+        map_ce,
         "ADJUST_CANVAS_WIDTH",
         sizeof("ADJUST_CANVAS_WIDTH") - 1,
         mapnik::Map::ADJUST_CANVAS_WIDTH TSRMLS_CC
     );
 
     zend_declare_class_constant_long(
-        php_mapnik_map_ce,
+        map_ce,
         "ADJUST_CANVAS_HEIGHT",
         sizeof("ADJUST_CANVAS_HEIGHT") - 1,
         mapnik::Map::ADJUST_CANVAS_HEIGHT TSRMLS_CC
     );
 
     zend_declare_class_constant_long(
-        php_mapnik_map_ce,
+        map_ce,
         "RESPECT",
         sizeof("RESPECT") - 1,
         mapnik::Map::RESPECT TSRMLS_CC
     );
     
-    memcpy(&php_mapnik_map_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
-    php_mapnik_map_object_handlers.offset = XtOffsetOf(struct php_mapnik_map_object, std);
-    php_mapnik_map_object_handlers.free_obj = &php_mapnik_map_free_storage;
-    php_mapnik_map_object_handlers.clone_obj = NULL;
+    memcpy(&map_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
+    map_object_handlers.offset = XtOffsetOf(struct map_object, std);
+    map_object_handlers.free_obj = &map_free_storage;
+    map_object_handlers.clone_obj = NULL;
 }

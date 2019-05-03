@@ -2,21 +2,21 @@
 #define PHP_MAPNIK_BOX2D_H
 
 #include "php_mapnik.h"
-#include <mapnik/map.hpp>
+#include <mapnik/box2d.hpp>
 
-extern zend_class_entry *php_mapnik_box2d_ce;
+extern zend_class_entry *box2d_ce;
 
-struct php_mapnik_box2d_object {
+struct box2d_object {
     mapnik::box2d<double> *box2d;
     zend_object std;
 };
 
-static inline php_mapnik_box2d_object * php_mapnik_box2d_fetch_object(zend_object *obj) {
-    return (php_mapnik_box2d_object *)((char *)obj - XtOffsetOf(struct php_mapnik_box2d_object, std));
+static inline box2d_object * box2d_fetch_object(zend_object *obj) {
+    return (box2d_object *)((char *)obj - XtOffsetOf(struct box2d_object, std));
 }
 
-#define Z_PHP_MAPNIK_BOX2D_P(zv) php_mapnik_box2d_fetch_object(Z_OBJ_P(zv));
+#define Z_PHP_MAPNIK_BOX2D_P(zv) box2d_fetch_object(Z_OBJ_P(zv));
 
-void php_mapnik_box2d_startup(INIT_FUNC_ARGS);
+void box2d_startup(INIT_FUNC_ARGS);
 
 #endif

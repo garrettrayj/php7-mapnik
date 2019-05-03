@@ -42,14 +42,14 @@ PHP_METHOD(AggRenderer, __construct)
     zval* image_zval;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 2, 2)
-        Z_PARAM_OBJECT_OF_CLASS(map_zval, php_mapnik_map_ce)
-        Z_PARAM_OBJECT_OF_CLASS(image_zval, php_mapnik_image_ce)
+        Z_PARAM_OBJECT_OF_CLASS(map_zval, map_ce)
+        Z_PARAM_OBJECT_OF_CLASS(image_zval, image_ce)
     ZEND_PARSE_PARAMETERS_END();
 
-    php_mapnik_map_object *map_obj = Z_PHP_MAPNIK_MAP_P(map_zval);
+    map_object *map_obj = Z_PHP_MAPNIK_MAP_P(map_zval);
     mapnik::Map *map = map_obj->map;
 
-    php_mapnik_image_object *image_obj = Z_PHP_MAPNIK_IMAGE_P(image_zval);
+    image_object *image_obj = Z_PHP_MAPNIK_IMAGE_P(image_zval);
     mapnik::image_rgba8 *image = image_obj->image;
 
     agg_renderer = new mapnik::agg_renderer<mapnik::image_rgba8>(*map, *image);
@@ -68,10 +68,10 @@ PHP_METHOD(AggRenderer, apply)
     try {
         agg_renderer->apply();
     } catch (const mapnik::datasource_exception & ex) {
-        php_mapnik_throw_exception(ex.what());
+        throw_mapnik_exception(ex.what());
         return;
     } catch (const std::runtime_error & ex) {
-        php_mapnik_throw_exception(ex.what());
+        throw_mapnik_exception(ex.what());
         return;
     }
 

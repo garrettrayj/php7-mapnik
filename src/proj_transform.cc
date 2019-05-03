@@ -6,29 +6,29 @@
 #include <mapnik/projection.hpp>
 #include <mapnik/proj_transform.hpp>
 
-zend_class_entry *php_mapnik_proj_transform_ce;
-zend_object_handlers php_mapnik_proj_transform_object_handlers;
+zend_class_entry *proj_transform_ce;
+zend_object_handlers proj_transform_object_handlers;
 
 // PHP object handling
 
-void php_mapnik_proj_transform_free_storage(zend_object *object TSRMLS_DC)
+void proj_transform_free_storage(zend_object *object TSRMLS_DC)
 {
-    php_mapnik_proj_transform_object *obj;
-    obj = php_mapnik_proj_transform_fetch_object(object);
+    proj_transform_object *obj;
+    obj = proj_transform_fetch_object(object);
     delete obj->proj_transform;
     zend_object_std_dtor(object TSRMLS_DC);
 }
 
-zend_object * php_mapnik_proj_transform_new(zend_class_entry *ce TSRMLS_DC) {
+zend_object * proj_transform_new(zend_class_entry *ce TSRMLS_DC) {
     // Allocate sizeof(custom) + sizeof(properties table requirements)
-    php_mapnik_proj_transform_object *intern;
-    intern = (php_mapnik_proj_transform_object*)
-        ecalloc(1, sizeof(php_mapnik_proj_transform_object) + zend_object_properties_size(ce));
+    proj_transform_object *intern;
+    intern = (proj_transform_object*)
+        ecalloc(1, sizeof(proj_transform_object) + zend_object_properties_size(ce));
 
     zend_object_std_init(&intern->std, ce TSRMLS_CC);
     object_properties_init(&intern->std, ce);
 
-    intern->std.handlers = &php_mapnik_proj_transform_object_handlers;
+    intern->std.handlers = &proj_transform_object_handlers;
 
     return &intern->std;
 }
@@ -42,7 +42,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(ProjTransform, __construct)
 {
-    php_mapnik_proj_transform_object *obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
+    proj_transform_object *obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
     mapnik::proj_transform* proj_transform = NULL;
     obj->proj_transform = NULL;
 
@@ -50,14 +50,14 @@ PHP_METHOD(ProjTransform, __construct)
     zval* destination_zval;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 2, 2)
-        Z_PARAM_OBJECT_OF_CLASS(source_zval, php_mapnik_projection_ce)
-        Z_PARAM_OBJECT_OF_CLASS(destination_zval, php_mapnik_projection_ce)
+        Z_PARAM_OBJECT_OF_CLASS(source_zval, projection_ce)
+        Z_PARAM_OBJECT_OF_CLASS(destination_zval, projection_ce)
     ZEND_PARSE_PARAMETERS_END();
 
-    php_mapnik_projection_object *source_obj = Z_PHP_MAPNIK_PROJECTION_P(source_zval);
+    projection_object *source_obj = Z_PHP_MAPNIK_PROJECTION_P(source_zval);
     mapnik::projection *source = new mapnik::projection(source_obj->projection->params());
 
-    php_mapnik_projection_object *destination_obj = Z_PHP_MAPNIK_PROJECTION_P(destination_zval);
+    projection_object *destination_obj = Z_PHP_MAPNIK_PROJECTION_P(destination_zval);
     mapnik::projection *destination = new mapnik::projection(destination_obj->projection->params());
 
     proj_transform = new mapnik::proj_transform(*source, *destination);
@@ -70,15 +70,15 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(ProjTransform, forward)
 {
-    php_mapnik_proj_transform_object *obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
+    proj_transform_object *obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
 
     zval* box2d_zval;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
-        Z_PARAM_OBJECT_OF_CLASS(box2d_zval, php_mapnik_box2d_ce)
+        Z_PARAM_OBJECT_OF_CLASS(box2d_zval, box2d_ce)
     ZEND_PARSE_PARAMETERS_END();
 
-    php_mapnik_box2d_object *box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
+    box2d_object *box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
     mapnik::box2d<double> *box2d = box2d_obj->box2d;
 
     mapnik::proj_transform *proj_transform = obj->proj_transform;
@@ -86,7 +86,7 @@ PHP_METHOD(ProjTransform, forward)
     proj_transform->forward(*box2d);
 
     // Return Box2D object
-    object_init_ex(return_value, php_mapnik_box2d_ce);
+    object_init_ex(return_value, box2d_ce);
     zval ctor;
     ZVAL_STRING(&ctor, "__construct");
     zval dummy_return_value;
@@ -123,7 +123,7 @@ PHP_METHOD(ProjTransform, forward)
         4,
         args TSRMLS_CC) == FAILURE
     ) {
-        php_mapnik_throw_exception("Creating Box2D return value failed");
+        throw_mapnik_exception("Creating Box2D return value failed");
         RETURN_FALSE;
     }
 
@@ -138,15 +138,15 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(ProjTransform, backward)
 {
-    php_mapnik_proj_transform_object *obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
+    proj_transform_object *obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
 
     zval* box2d_zval;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 1)
-        Z_PARAM_OBJECT_OF_CLASS(box2d_zval, php_mapnik_box2d_ce)
+        Z_PARAM_OBJECT_OF_CLASS(box2d_zval, box2d_ce)
     ZEND_PARSE_PARAMETERS_END();
 
-    php_mapnik_box2d_object *box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
+    box2d_object *box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
     mapnik::box2d<double> *box2d = box2d_obj->box2d;
 
     mapnik::proj_transform *proj_transform = obj->proj_transform;
@@ -154,7 +154,7 @@ PHP_METHOD(ProjTransform, backward)
     proj_transform->backward(*box2d);
 
     // Return Box2D object
-    object_init_ex(return_value, php_mapnik_box2d_ce);
+    object_init_ex(return_value, box2d_ce);
     zval ctor;
     ZVAL_STRING(&ctor, "__construct");
     zval dummy_return_value;
@@ -191,7 +191,7 @@ PHP_METHOD(ProjTransform, backward)
         4,
         args TSRMLS_CC) == FAILURE
     ) {
-        php_mapnik_throw_exception("Creating Box2D return value failed");
+        throw_mapnik_exception("Creating Box2D return value failed");
         RETURN_FALSE;
     }
 
@@ -202,7 +202,7 @@ PHP_METHOD(ProjTransform, backward)
 
 // Register methods
 
-zend_function_entry php_mapnik_proj_transform_methods[] = {
+zend_function_entry proj_transform_methods[] = {
     PHP_ME(ProjTransform, __construct, NULL, ZEND_ACC_PUBLIC)
     PHP_ME(ProjTransform, forward, NULL, ZEND_ACC_PUBLIC)
     PHP_ME(ProjTransform, backward, NULL, ZEND_ACC_PUBLIC)
@@ -211,15 +211,15 @@ zend_function_entry php_mapnik_proj_transform_methods[] = {
 
 // Extension class startup
 
-void php_mapnik_proj_transform_startup(INIT_FUNC_ARGS)
+void proj_transform_startup(INIT_FUNC_ARGS)
 {
     zend_class_entry ce;
-    INIT_NS_CLASS_ENTRY(ce, "Mapnik", "ProjTransform", php_mapnik_proj_transform_methods);
-    php_mapnik_proj_transform_ce = zend_register_internal_class(&ce TSRMLS_CC);
-    php_mapnik_proj_transform_ce->create_object = php_mapnik_proj_transform_new;
+    INIT_NS_CLASS_ENTRY(ce, "Mapnik", "ProjTransform", proj_transform_methods);
+    proj_transform_ce = zend_register_internal_class(&ce TSRMLS_CC);
+    proj_transform_ce->create_object = proj_transform_new;
 
-    memcpy(&php_mapnik_proj_transform_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
-    php_mapnik_proj_transform_object_handlers.offset = XtOffsetOf(struct php_mapnik_proj_transform_object, std);
-    php_mapnik_proj_transform_object_handlers.free_obj = &php_mapnik_proj_transform_free_storage;
-    php_mapnik_proj_transform_object_handlers.clone_obj = NULL;
+    memcpy(&proj_transform_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
+    proj_transform_object_handlers.offset = XtOffsetOf(struct proj_transform_object, std);
+    proj_transform_object_handlers.free_obj = &proj_transform_free_storage;
+    proj_transform_object_handlers.clone_obj = NULL;
 }

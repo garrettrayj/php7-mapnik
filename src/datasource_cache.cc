@@ -7,7 +7,7 @@
 #include <boost/foreach.hpp>
 #include <mapnik/datasource_cache.hpp>
 
-zend_class_entry *php_mapnik_datasource_cache_ce;
+zend_class_entry *datasource_cache_ce;
 
 // Class Method: Mapnik\DatasourceCache::registerDatasources
 
@@ -43,7 +43,7 @@ PHP_METHOD(DatasourceCache, getPluginNames)
 
 // Register methods
 
-zend_function_entry php_mapnik_datasource_cache_methods[] = {
+zend_function_entry datasource_cache_methods[] = {
     PHP_ME(DatasourceCache, registerDatasources, argInfo_datasourceCache_registerDatasources, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_ME(DatasourceCache, getPluginNames, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     { NULL, NULL, NULL }
@@ -51,9 +51,9 @@ zend_function_entry php_mapnik_datasource_cache_methods[] = {
 
 // Extension class startup
 
-void php_mapnik_datasource_cache_startup(INIT_FUNC_ARGS)
+void datasource_cache_startup(INIT_FUNC_ARGS)
 {
     zend_class_entry ce;
-    INIT_NS_CLASS_ENTRY(ce, "Mapnik", "DatasourceCache", php_mapnik_datasource_cache_methods);
-    php_mapnik_datasource_cache_ce = zend_register_internal_class(&ce TSRMLS_CC);
+    INIT_NS_CLASS_ENTRY(ce, "Mapnik", "DatasourceCache", datasource_cache_methods);
+    datasource_cache_ce = zend_register_internal_class(&ce TSRMLS_CC);
 }

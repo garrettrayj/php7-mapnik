@@ -3,12 +3,12 @@
 
 #include "php_mapnik.h"
 
-extern zend_class_entry *php_mapnik_exception_ce;
+extern zend_class_entry *exception_ce;
 
-void php_mapnik_exception_startup(INIT_FUNC_ARGS);
+void exception_startup(INIT_FUNC_ARGS);
 
-void php_mapnik_throw_exception_with_message(const char *message, int code TSRMLS_DC);
+void throw_mapnik_exception_with_message(const char *message, int code TSRMLS_DC);
 
-#define php_mapnik_throw_exception(message) php_mapnik_throw_exception_with_message(message, 0)
+#define throw_mapnik_exception(message) throw_mapnik_exception_with_message(message, 0)
 
 #endif

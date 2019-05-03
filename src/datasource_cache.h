@@ -5,6 +5,6 @@
 
 extern zend_class_entry *datasource_cache_ce;
 
-void datasource_cache_startup(INIT_FUNC_ARGS);
+void init_datasource_cache(INIT_FUNC_ARGS);
 
 #endif

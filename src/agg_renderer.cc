@@ -9,28 +9,6 @@
 zend_class_entry *agg_renderer_ce;
 zend_object_handlers agg_renderer_object_handlers;
 
-// PHP object handling
-
-void free_agg_renderer(zend_object *object TSRMLS_DC)
-{
-    agg_renderer_object *obj;
-    obj = agg_renderer_fetch_object(object);
-    delete obj->agg_renderer;
-    zend_object_std_dtor(object TSRMLS_DC);
-}
-
-zend_object * create_agg_renderer(zend_class_entry *ce TSRMLS_DC) {
-    agg_renderer_object *intern;
-    intern = (agg_renderer_object*) ecalloc(1, sizeof(agg_renderer_object) + zend_object_properties_size(ce));
-
-    zend_object_std_init(&intern->std, ce TSRMLS_CC);
-    object_properties_init(&intern->std, ce);
-
-    intern->std.handlers = &agg_renderer_object_handlers;
-
-    return &intern->std;
-}
-
 // Class methods
 
 PHP_METHOD(AggRenderer, __construct)
@@ -78,7 +56,7 @@ PHP_METHOD(AggRenderer, apply)
     RETURN_TRUE;
 }
 
-// Argument(s) reflection info
+// Reflection info
 
 ZEND_BEGIN_ARG_INFO_EX(argInfo_aggRenderer_construct, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 2)
     ZEND_ARG_OBJ_INFO(0, map, Mapnik\\Map, 0)
@@ -92,6 +70,28 @@ zend_function_entry agg_renderer_methods[] = {
     PHP_ME(AggRenderer, apply, NULL, ZEND_ACC_PUBLIC)
     {NULL, NULL, NULL}
 };
+
+// Internal object handling
+
+void free_agg_renderer(zend_object *object TSRMLS_DC)
+{
+    agg_renderer_object *obj;
+    obj = fetch_agg_renderer_object(object);
+    delete obj->agg_renderer;
+    zend_object_std_dtor(object TSRMLS_DC);
+}
+
+zend_object * create_agg_renderer(zend_class_entry *ce TSRMLS_DC) {
+    agg_renderer_object *intern;
+    intern = (agg_renderer_object*) ecalloc(1, sizeof(agg_renderer_object) + zend_object_properties_size(ce));
+
+    zend_object_std_init(&intern->std, ce TSRMLS_CC);
+    object_properties_init(&intern->std, ce);
+
+    intern->std.handlers = &agg_renderer_object_handlers;
+
+    return &intern->std;
+}
 
 // Extension class initializer
 

@@ -10,6 +10,7 @@
       <w>emalloc</w>
       <w>mapnik</w>
       <w>maxx</w>
+      <w>memcpy</w>
       <w>minit</w>
       <w>passthru</w>
       <w>proj</w>

@@ -11,12 +11,12 @@ struct box2d_object {
     zend_object std;
 };
 
-static inline box2d_object * box2d_fetch_object(zend_object *obj) {
+static inline box2d_object * fetch_box2d_object(zend_object *obj) {
     return (box2d_object *)((char *)obj - XtOffsetOf(struct box2d_object, std));
 }
 
-#define Z_PHP_MAPNIK_BOX2D_P(zv) box2d_fetch_object(Z_OBJ_P(zv));
+#define Z_PHP_MAPNIK_BOX2D_P(zv) fetch_box2d_object(Z_OBJ_P(zv));
 
-void box2d_startup(INIT_FUNC_ARGS);
+void init_box2d(INIT_FUNC_ARGS);
 
 #endif

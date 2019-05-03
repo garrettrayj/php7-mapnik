@@ -5,7 +5,7 @@
 
 extern zend_class_entry *exception_ce;
 
-void exception_startup(INIT_FUNC_ARGS);
+void init_exception(INIT_FUNC_ARGS);
 
 void throw_mapnik_exception_with_message(const char *message, int code TSRMLS_DC);
 

@@ -11,12 +11,12 @@ struct projection_object {
     zend_object std;
 };
 
-static inline projection_object * projection_fetch_object(zend_object *obj) {
+static inline projection_object * fetch_projection_object(zend_object *obj) {
     return (projection_object *)((char *)obj - XtOffsetOf(struct projection_object, std));
 }
 
-#define Z_PHP_MAPNIK_PROJECTION_P(zv) projection_fetch_object(Z_OBJ_P(zv));
+#define Z_PHP_MAPNIK_PROJECTION_P(zv) fetch_projection_object(Z_OBJ_P(zv));
 
-void projection_startup(INIT_FUNC_ARGS);
+void init_projection(INIT_FUNC_ARGS);
 
 #endif

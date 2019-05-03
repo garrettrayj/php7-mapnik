@@ -12,11 +12,11 @@ struct agg_renderer_object {
     zend_object std;
 };
 
-static inline agg_renderer_object * agg_renderer_fetch_object(zend_object *obj) {
+static inline agg_renderer_object * fetch_agg_renderer_object(zend_object *obj) {
     return (agg_renderer_object *)((char *)obj - XtOffsetOf(agg_renderer_object, std));
 }
 
-#define Z_PHP_MAPNIK_AGG_RENDERER_P(zv) agg_renderer_fetch_object(Z_OBJ_P(zv));
+#define Z_PHP_MAPNIK_AGG_RENDERER_P(zv) fetch_agg_renderer_object(Z_OBJ_P(zv));
 
 void init_agg_renderer(INIT_FUNC_ARGS);
 

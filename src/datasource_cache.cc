@@ -9,11 +9,7 @@
 
 zend_class_entry *datasource_cache_ce;
 
-// Class Method: Mapnik\DatasourceCache::registerDatasources
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_datasourceCache_registerDatasources, 0, 0, 1)
-    ZEND_ARG_INFO(0, path)
-ZEND_END_ARG_INFO()
+// Class methods
 
 PHP_METHOD(DatasourceCache, registerDatasources)
 {
@@ -29,8 +25,6 @@ PHP_METHOD(DatasourceCache, registerDatasources)
     RETURN_TRUE;
 }
 
-// Class Method: Mapnik\DatasourceCache::getPluginNames
-
 PHP_METHOD(DatasourceCache, getPluginNames)
 {
     std::vector<std::string> all_plugin_names = mapnik::datasource_cache::instance().plugin_names();
@@ -41,17 +35,23 @@ PHP_METHOD(DatasourceCache, getPluginNames)
     }
 }
 
+// Reflection info
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_datasourceCache_registerDatasources, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, path)
+ZEND_END_ARG_INFO()
+
 // Register methods
 
 zend_function_entry datasource_cache_methods[] = {
-    PHP_ME(DatasourceCache, registerDatasources, argInfo_datasourceCache_registerDatasources, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
-    PHP_ME(DatasourceCache, getPluginNames, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+    PHP_ME(DatasourceCache, registerDatasources, argInfo_datasourceCache_registerDatasources, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+    PHP_ME(DatasourceCache, getPluginNames, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
     { NULL, NULL, NULL }
 };
 
-// Extension class startup
+// Extension class initializer
 
-void datasource_cache_startup(INIT_FUNC_ARGS)
+void init_datasource_cache(INIT_FUNC_ARGS)
 {
     zend_class_entry ce;
     INIT_NS_CLASS_ENTRY(ce, "Mapnik", "DatasourceCache", datasource_cache_methods);

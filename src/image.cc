@@ -1,4 +1,3 @@
-#include "php.h"
 #include "exception.h"
 #include "image.h"
 #include <mapnik/image.hpp>
@@ -7,35 +6,7 @@
 zend_class_entry *image_ce;
 zend_object_handlers image_object_handlers;
 
-// PHP object handling
-
-void image_free_storage(zend_object *object TSRMLS_DC)
-{
-    image_object *obj;
-    obj = image_fetch_object(object);
-    delete obj->image;
-    zend_object_std_dtor(object TSRMLS_DC);
-}
-
-zend_object * image_new(zend_class_entry *ce TSRMLS_DC) {
-    // Allocate sizeof(custom) + sizeof(properties table requirements)
-    image_object *intern;
-    intern = (image_object*) ecalloc(1, sizeof(image_object) + zend_object_properties_size(ce));
-
-    zend_object_std_init(&intern->std, ce TSRMLS_CC);
-    object_properties_init(&intern->std, ce);
-
-    intern->std.handlers = &image_object_handlers;
-
-    return &intern->std;
-}
-
-// Class Method: Mapnik\Image::__construct
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_image_construct, 0, 0, 2)
-    ZEND_ARG_INFO(0, width)
-    ZEND_ARG_INFO(0, height)
-ZEND_END_ARG_INFO()
+// Class methods
 
 PHP_METHOD(Image, __construct)
 {
@@ -49,13 +20,6 @@ PHP_METHOD(Image, __construct)
 
     obj->image = new mapnik::image_rgba8(width, height);
 }
-
-// Class Method: Mapnik\Image::saveToFile
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_image_saveToFile, 0, 0, 1)
-    ZEND_ARG_INFO(0, file)
-    ZEND_ARG_INFO(0, format)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Image, saveToFile)
 {
@@ -88,12 +52,6 @@ PHP_METHOD(Image, saveToFile)
     RETURN_TRUE;
 }
 
-// Class Method: Mapnik\Image::saveToString
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_image_saveToString, 0, 0, 0)
-    ZEND_ARG_INFO(0, format)
-ZEND_END_ARG_INFO()
-
 PHP_METHOD(Image, saveToString)
 {
     image_object *obj = Z_PHP_MAPNIK_IMAGE_P(getThis());
@@ -122,6 +80,22 @@ PHP_METHOD(Image, saveToString)
     RETURN_STRINGL(image_str.c_str(), image_str.size());
 }
 
+// Reflection info
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_image_construct, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 2)
+    ZEND_ARG_INFO(0, width)
+    ZEND_ARG_INFO(0, height)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_image_saveToFile, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, file)
+    ZEND_ARG_INFO(0, format)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_image_saveToString, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 0)
+    ZEND_ARG_INFO(0, format)
+ZEND_END_ARG_INFO()
+
 // Register methods
 
 zend_function_entry image_methods[] = {
@@ -131,17 +105,39 @@ zend_function_entry image_methods[] = {
     {NULL, NULL, NULL}
 };
 
-// Extension class startup
+// Internal object handling
 
-void image_startup(INIT_FUNC_ARGS)
+void free_image(zend_object *object TSRMLS_DC)
+{
+    image_object *obj;
+    obj = fetch_image_object(object);
+    delete obj->image;
+    zend_object_std_dtor(object TSRMLS_DC);
+}
+
+zend_object * create_image(zend_class_entry *ce TSRMLS_DC) {
+    image_object *intern;
+    intern = (image_object*) ecalloc(1, sizeof(image_object) + zend_object_properties_size(ce));
+
+    zend_object_std_init(&intern->std, ce TSRMLS_CC);
+    object_properties_init(&intern->std, ce);
+
+    intern->std.handlers = &image_object_handlers;
+
+    return &intern->std;
+}
+
+// Extension class initializer
+
+void init_image(INIT_FUNC_ARGS)
 {
     zend_class_entry ce;
     INIT_NS_CLASS_ENTRY(ce, "Mapnik", "Image", image_methods);
     image_ce = zend_register_internal_class(&ce TSRMLS_CC);
-    image_ce->create_object = image_new;
+    image_ce->create_object = create_image;
 
     memcpy(&image_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
     image_object_handlers.offset = XtOffsetOf(struct image_object, std);
-    image_object_handlers.free_obj = &image_free_storage;
+    image_object_handlers.free_obj = &free_image;
     image_object_handlers.clone_obj = NULL;
 }

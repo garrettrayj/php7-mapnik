@@ -1,4 +1,3 @@
-#include "php.h"
 #include "exception.h"
 #include "box2d.h"
 #include "projection.h"
@@ -9,36 +8,7 @@
 zend_class_entry *proj_transform_ce;
 zend_object_handlers proj_transform_object_handlers;
 
-// PHP object handling
-
-void proj_transform_free_storage(zend_object *object TSRMLS_DC)
-{
-    proj_transform_object *obj;
-    obj = proj_transform_fetch_object(object);
-    delete obj->proj_transform;
-    zend_object_std_dtor(object TSRMLS_DC);
-}
-
-zend_object * proj_transform_new(zend_class_entry *ce TSRMLS_DC) {
-    // Allocate sizeof(custom) + sizeof(properties table requirements)
-    proj_transform_object *intern;
-    intern = (proj_transform_object*)
-        ecalloc(1, sizeof(proj_transform_object) + zend_object_properties_size(ce));
-
-    zend_object_std_init(&intern->std, ce TSRMLS_CC);
-    object_properties_init(&intern->std, ce);
-
-    intern->std.handlers = &proj_transform_object_handlers;
-
-    return &intern->std;
-}
-
 // Class Methods
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_projTransform_construct, 0, ZEND_RETURN_VALUE, 2)
-    ZEND_ARG_INFO(0, source)
-    ZEND_ARG_INFO(0, destination)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(ProjTransform, __construct)
 {
@@ -63,10 +33,6 @@ PHP_METHOD(ProjTransform, __construct)
     proj_transform = new mapnik::proj_transform(*source, *destination);
     obj->proj_transform = proj_transform;
 }
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_projTransform_forward, 0, 0, 1)
-    ZEND_ARG_INFO(0, box2d)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(ProjTransform, forward)
 {
@@ -132,10 +98,6 @@ PHP_METHOD(ProjTransform, forward)
     efree(args);
 }
 
-ZEND_BEGIN_ARG_INFO_EX(argInfo_projTransform_backward, 0, 0, 1)
-    ZEND_ARG_INFO(0, box2d)
-ZEND_END_ARG_INFO()
-
 PHP_METHOD(ProjTransform, backward)
 {
     proj_transform_object *obj = Z_PHP_MAPNIK_PROJ_TRANSFORM_P(getThis());
@@ -200,26 +162,63 @@ PHP_METHOD(ProjTransform, backward)
     efree(args);
 }
 
+// Reflection info
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_projTransform_construct, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 2)
+    ZEND_ARG_INFO(0, source)
+    ZEND_ARG_INFO(0, destination)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_projTransform_forward, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, box2d)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_projTransform_backward, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, box2d)
+ZEND_END_ARG_INFO()
+
 // Register methods
 
 zend_function_entry proj_transform_methods[] = {
-    PHP_ME(ProjTransform, __construct, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(ProjTransform, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
     PHP_ME(ProjTransform, forward, NULL, ZEND_ACC_PUBLIC)
     PHP_ME(ProjTransform, backward, NULL, ZEND_ACC_PUBLIC)
     {NULL, NULL, NULL}
 };
 
-// Extension class startup
+// Internal object handling
 
-void proj_transform_startup(INIT_FUNC_ARGS)
+void free_proj_transform(zend_object *object TSRMLS_DC)
+{
+    proj_transform_object *obj;
+    obj = fetch_proj_transform_object(object);
+    delete obj->proj_transform;
+    zend_object_std_dtor(object TSRMLS_DC);
+}
+
+zend_object * create_proj_transform(zend_class_entry *ce TSRMLS_DC) {
+    proj_transform_object *intern;
+    intern = (proj_transform_object*) ecalloc(1, sizeof(proj_transform_object) + zend_object_properties_size(ce));
+
+    zend_object_std_init(&intern->std, ce TSRMLS_CC);
+    object_properties_init(&intern->std, ce);
+
+    intern->std.handlers = &proj_transform_object_handlers;
+
+    return &intern->std;
+}
+
+// Extension class initializer
+
+void init_proj_transform(INIT_FUNC_ARGS)
 {
     zend_class_entry ce;
     INIT_NS_CLASS_ENTRY(ce, "Mapnik", "ProjTransform", proj_transform_methods);
     proj_transform_ce = zend_register_internal_class(&ce TSRMLS_CC);
-    proj_transform_ce->create_object = proj_transform_new;
+    proj_transform_ce->create_object = create_proj_transform;
 
     memcpy(&proj_transform_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
     proj_transform_object_handlers.offset = XtOffsetOf(struct proj_transform_object, std);
-    proj_transform_object_handlers.free_obj = &proj_transform_free_storage;
+    proj_transform_object_handlers.free_obj = &free_proj_transform;
     proj_transform_object_handlers.clone_obj = NULL;
 }

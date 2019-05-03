@@ -11,12 +11,12 @@ struct map_object {
     zend_object std;
 };
 
-static inline map_object * map_fetch_object(zend_object *obj) {
+static inline map_object * fetch_map_object(zend_object *obj) {
     return (map_object *)((char *)obj - XtOffsetOf(map_object, std));
 }
 
-#define Z_PHP_MAPNIK_MAP_P(zv) map_fetch_object(Z_OBJ_P(zv));
+#define Z_PHP_MAPNIK_MAP_P(zv) fetch_map_object(Z_OBJ_P(zv));
 
-void map_startup(INIT_FUNC_ARGS);
+void init_map(INIT_FUNC_ARGS);
 
 #endif

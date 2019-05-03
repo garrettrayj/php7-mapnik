@@ -1,4 +1,3 @@
-#include "php.h"
 #include "exception.h"
 #include "projection.h"
 #include <mapnik/projection.hpp>
@@ -6,35 +5,7 @@
 zend_class_entry *projection_ce;
 zend_object_handlers projection_object_handlers;
 
-// PHP object handling
-
-void projection_free_storage(zend_object *object TSRMLS_DC)
-{
-    projection_object *obj;
-    obj = projection_fetch_object(object);
-    delete obj->projection;
-    zend_object_std_dtor(object TSRMLS_DC);
-}
-
-zend_object * projection_new(zend_class_entry *ce TSRMLS_DC) {
-    // Allocate sizeof(custom) + sizeof(properties table requirements)
-    projection_object *intern;
-    intern = (projection_object*)
-        ecalloc(1, sizeof(projection_object) + zend_object_properties_size(ce));
-
-    zend_object_std_init(&intern->std, ce TSRMLS_CC);
-    object_properties_init(&intern->std, ce);
-
-    intern->std.handlers = &projection_object_handlers;
-
-    return &intern->std;
-}
-
 // Class Methods
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_projection_construct, 0, 0, 1)
-    ZEND_ARG_INFO(0, parameters)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Projection, __construct)
 {
@@ -61,24 +32,53 @@ PHP_METHOD(Projection, __construct)
     obj->projection = projection;
 }
 
+// Reflection info
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_projection_construct, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, parameters)
+ZEND_END_ARG_INFO()
+
 // Register methods
 
 zend_function_entry projection_methods[] = {
-    PHP_ME(Projection, __construct, argInfo_projection_construct, ZEND_ACC_PUBLIC)
+    PHP_ME(Projection, __construct, argInfo_projection_construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
     {NULL, NULL, NULL}
 };
 
-// Extension class startup
+// Internal object handling
 
-void projection_startup(INIT_FUNC_ARGS)
+void free_projection(zend_object *object TSRMLS_DC)
+{
+    projection_object *obj;
+    obj = fetch_projection_object(object);
+    delete obj->projection;
+    zend_object_std_dtor(object TSRMLS_DC);
+}
+
+zend_object * create_projection(zend_class_entry *ce TSRMLS_DC) {
+    projection_object *intern;
+    intern = (projection_object*)
+        ecalloc(1, sizeof(projection_object) + zend_object_properties_size(ce));
+
+    zend_object_std_init(&intern->std, ce TSRMLS_CC);
+    object_properties_init(&intern->std, ce);
+
+    intern->std.handlers = &projection_object_handlers;
+
+    return &intern->std;
+}
+
+// Extension class initializer
+
+void init_projection(INIT_FUNC_ARGS)
 {
     zend_class_entry ce;
     INIT_NS_CLASS_ENTRY(ce, "Mapnik", "Projection", projection_methods);
     projection_ce = zend_register_internal_class(&ce TSRMLS_CC);
-    projection_ce->create_object = projection_new;
+    projection_ce->create_object = create_projection;
 
     memcpy(&projection_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
     projection_object_handlers.offset = XtOffsetOf(struct projection_object, std);
-    projection_object_handlers.free_obj = &projection_free_storage;
+    projection_object_handlers.free_obj = &free_projection;
     projection_object_handlers.clone_obj = NULL;
 }

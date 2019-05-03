@@ -1,10 +1,9 @@
-#include "php.h"
 #include "exception.h"
 #include <zend_exceptions.h>
 
 zend_class_entry *exception_ce;
 
-void exception_startup(INIT_FUNC_ARGS)
+void init_exception(INIT_FUNC_ARGS)
 {
     zend_class_entry ce;
     INIT_NS_CLASS_ENTRY(ce, "Mapnik", "Exception", NULL);

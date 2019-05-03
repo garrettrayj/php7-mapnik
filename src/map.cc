@@ -1,4 +1,3 @@
-#include "php.h"
 #include "exception.h"
 #include "box2d.h"
 #include "map.h"
@@ -10,37 +9,7 @@
 zend_class_entry *map_ce;
 zend_object_handlers map_object_handlers;
 
-// PHP object handling
-
-void map_free_storage(zend_object *object TSRMLS_DC)
-{
-    map_object *obj;
-    obj = map_fetch_object(object);
-    delete obj->map;
-    zend_object_std_dtor(object TSRMLS_DC);
-}
-
-zend_object * map_new(zend_class_entry *ce TSRMLS_DC)
-{
-    // Allocate sizeof(custom) + sizeof(properties table requirements)
-    map_object *intern;
-    intern = (map_object*) ecalloc(1, sizeof(map_object) + zend_object_properties_size(ce));
-
-    zend_object_std_init(&intern->std, ce TSRMLS_CC);
-    object_properties_init(&intern->std, ce);
-
-    intern->std.handlers = &map_object_handlers;
-
-    return &intern->std;
-}
-
-// Class Method: Mapnik\Map::__construct
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_construct, 0, 0, 3)
-    ZEND_ARG_INFO(0, width)
-    ZEND_ARG_INFO(0, height)
-    ZEND_ARG_INFO(0, srs)
-ZEND_END_ARG_INFO()
+// Class methods
 
 PHP_METHOD(Map, __construct)
 {
@@ -76,14 +45,6 @@ PHP_METHOD(Map, __construct)
     obj->map = map;
 }
 
-// Class Method: Mapnik\Map::loadXmlString
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_loadXmlString, 0, 0, 3)
-    ZEND_ARG_INFO(0, xml)
-    ZEND_ARG_INFO(0, strict)
-    ZEND_ARG_INFO(0, basePath)
-ZEND_END_ARG_INFO()
-
 PHP_METHOD(Map, loadXmlString)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
@@ -112,14 +73,6 @@ PHP_METHOD(Map, loadXmlString)
         throw_mapnik_exception("Unknown exception thrown while loading XML string.");
     }
 }
-
-// Class Method: Mapnik\Map::loadXmlFile
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_loadXmlFile, 0, 0, 3)
-    ZEND_ARG_INFO(0, filename)
-    ZEND_ARG_INFO(0, strict)
-    ZEND_ARG_INFO(0, basePath)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, loadXmlFile)
 {
@@ -150,12 +103,6 @@ PHP_METHOD(Map, loadXmlFile)
     }
 }
 
-// Class Method: Mapnik\Map::zoom
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_zoom, 0, 0, 1)
-    ZEND_ARG_INFO(0, zoom)
-ZEND_END_ARG_INFO()
-
 PHP_METHOD(Map, zoom)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
@@ -168,21 +115,12 @@ PHP_METHOD(Map, zoom)
     obj->map->zoom(zoom);
 }
 
-// Class Method: Mapnik\Map::zoomAll
-
 PHP_METHOD(Map, zoomAll)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     obj->map->zoom_all();
 }
-
-// Class Method: Mapnik\Map::pan
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_pan, 0, 0, 2)
-    ZEND_ARG_INFO(0, x)
-    ZEND_ARG_INFO(0, y)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, pan)
 {
@@ -196,14 +134,6 @@ PHP_METHOD(Map, pan)
 
     obj->map->pan(x, y);
 }
-
-// Class Method: Mapnik\Map::panAndZoom
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_panAndZoom, 0, 0, 3)
-    ZEND_ARG_INFO(0, x)
-    ZEND_ARG_INFO(0, y)
-    ZEND_ARG_INFO(0, zoom)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, panAndZoom)
 {
@@ -220,12 +150,6 @@ PHP_METHOD(Map, panAndZoom)
     obj->map->pan_and_zoom(x, y, zoom);
 }
 
-// Class Method: Mapnik\Map::zoomToBox
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_zoomToBox, 0, 0, 1)
-    ZEND_ARG_OBJ_INFO(0, box2d, Mapnik\\Box2D, 0)
-ZEND_END_ARG_INFO()
-
 PHP_METHOD(Map, zoomToBox)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
@@ -239,12 +163,6 @@ PHP_METHOD(Map, zoomToBox)
     box2d_obj = Z_PHP_MAPNIK_BOX2D_P(box2d_zval);
     obj->map->zoom_to_box(*box2d_obj->box2d);
 }
-
-// Class Method: Mapnik\Map::registerFonts
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_registerFonts, 0, 0, 1)
-    ZEND_ARG_INFO(0, path)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, registerFonts)
 {
@@ -274,20 +192,12 @@ PHP_METHOD(Map, registerFonts)
     RETURN_FALSE;
 }
 
-// Class Method: Mapnik\Map::getBasePath
-
 PHP_METHOD(Map, getBasePath)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     RETURN_STRING(obj->map->base_path().c_str());
 }
-
-// Class Method: Mapnik\Map::setBasePath
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setBasePath, 0, 0, 1)
-    ZEND_ARG_INFO(0, path)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setBasePath)
 {
@@ -301,20 +211,12 @@ PHP_METHOD(Map, setBasePath)
     obj->map->set_base_path(path->val);
 }
 
-// Class Method: Mapnik\Map::getWidth
-
 PHP_METHOD(Map, getWidth)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     RETURN_LONG(obj->map->width());
 }
-
-// Class Method: Mapnik\Map::setWidth
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setWidth, 0, 0, 1)
-    ZEND_ARG_INFO(0, width)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setWidth)
 {
@@ -328,20 +230,12 @@ PHP_METHOD(Map, setWidth)
     obj->map->set_width(width);
 }
 
-// Class Method: Mapnik\Map::getHeight
-
 PHP_METHOD(Map, getHeight)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     RETURN_LONG(obj->map->height());
 }
-
-// Class Method: Mapnik\Map::setHeight
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setHeight, 0, 0, 1)
-    ZEND_ARG_INFO(0, height)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setHeight)
 {
@@ -354,13 +248,6 @@ PHP_METHOD(Map, setHeight)
 
     obj->map->set_height(height);
 }
-
-// Class Method: Mapnik\Map::resize
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_resize, 0, 0, 2)
-    ZEND_ARG_INFO(0, width)
-    ZEND_ARG_INFO(0, height)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, resize)
 {
@@ -375,20 +262,12 @@ PHP_METHOD(Map, resize)
     obj->map->resize(width, height);
 }
 
-// Class Method: Mapnik\Map::getSrs
-
 PHP_METHOD(Map, getSrs)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     RETURN_STRING(obj->map->srs().c_str());
 }
-
-// Class Method: Mapnik\Map::setSrs
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setSrs, 0, 0, 1)
-    ZEND_ARG_INFO(0, srs)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setSrs)
 {
@@ -402,8 +281,6 @@ PHP_METHOD(Map, setSrs)
     obj->map->set_srs(srs->val);
 }
 
-// Class Method: Mapnik\Map::getBackgroundImage
-
 PHP_METHOD(Map, getBackgroundImage)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
@@ -413,12 +290,6 @@ PHP_METHOD(Map, getBackgroundImage)
         RETURN_STRING(background_image.get().c_str());
     }
 }
-
-// Class Method: Mapnik\Map::setBackgroundImage
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setBackgroundImage, 0, 0, 1)
-    ZEND_ARG_INFO(0, filename)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setBackgroundImage)
 {
@@ -432,20 +303,12 @@ PHP_METHOD(Map, setBackgroundImage)
     obj->map->set_background_image(image_filename->val);
 }
 
-// Class Method: Mapnik\Map::getBackgroundImageOpacity
-
 PHP_METHOD(Map, getBackgroundImageOpacity)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
     RETURN_DOUBLE(obj->map->background_image_opacity());
 }
-
-// Class Method: Mapnik\Map::setBackgroundImageOpacity
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setBackgroundImageOpacity, 0, 0, 1)
-    ZEND_ARG_INFO(0, opacity)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setBackgroundImageOpacity)
 {
@@ -458,8 +321,6 @@ PHP_METHOD(Map, setBackgroundImageOpacity)
 
     obj->map->set_background_image_opacity(opacity);
 }
-
-// Class Method: Mapnik\Map::getMaximumExtent
 
 PHP_METHOD(Map, getMaximumExtent)
 {
@@ -508,12 +369,6 @@ PHP_METHOD(Map, getMaximumExtent)
     }
 }
 
-// Class Method: Mapnik\Map::setMaximumExtent
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setMaximumExtent, 0, 0, 1)
-    ZEND_ARG_OBJ_INFO(0, box2d, Mapnik\\Box2D, 0)
-ZEND_END_ARG_INFO()
-
 PHP_METHOD(Map, setMaximumExtent)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
@@ -527,15 +382,11 @@ PHP_METHOD(Map, setMaximumExtent)
     obj->map->set_maximum_extent(*box2d_obj->box2d);
 }
 
-// Class Method: Mapnik\Map::resetMaximumExtent
-
 PHP_METHOD(Map, resetMaximumExtent)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     obj->map->reset_maximum_extent();
 }
-
-// Class Method: Mapnik\Map::getCurrentExtent
 
 PHP_METHOD(Map, getCurrentExtent)
 {
@@ -582,19 +433,11 @@ PHP_METHOD(Map, getCurrentExtent)
     efree(args);
 }
 
-// Class Method: Mapnik\Map::getBufferSize
-
 PHP_METHOD(Map, getBufferSize)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     RETURN_LONG(obj->map->buffer_size());
 }
-
-// Class Method: Mapnik\Map::setBufferSize
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setBufferSize, 0, 0, 1)
-    ZEND_ARG_INFO(0, bufferSize)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setBufferSize)
 {
@@ -607,8 +450,6 @@ PHP_METHOD(Map, setBufferSize)
 
     obj->map->set_buffer_size(buffer_size);
 }
-
-// Class Method: Mapnik\Map::getBufferedExtent
 
 PHP_METHOD(Map, getBufferedExtent)
 {
@@ -655,15 +496,11 @@ PHP_METHOD(Map, getBufferedExtent)
     efree(args);
 }
 
-// Class Method: Mapnik\Map::getScale
-
 PHP_METHOD(Map, getScale)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     RETURN_DOUBLE(obj->map->scale());
 }
-
-// Class Method: Mapnik\Map::getScaleDenominator
 
 PHP_METHOD(Map, getScaleDenominator)
 {
@@ -671,15 +508,11 @@ PHP_METHOD(Map, getScaleDenominator)
     RETURN_DOUBLE(obj->map->scale_denominator());
 }
 
-// Class Method: Mapnik\Map::countLayers
-
 PHP_METHOD(Map, countLayers)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     RETURN_LONG(obj->map->layer_count());
 }
-
-// Class Method: Mapnik\Map::removeStyle
 
 PHP_METHOD(Map, removeStyle)
 {
@@ -694,27 +527,17 @@ PHP_METHOD(Map, removeStyle)
     obj->map->remove_style(style->val);
 }
 
-// Class Method: Mapnik\Map::removeAll
-
 PHP_METHOD(Map, removeAll)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     obj->map->remove_all();
 }
 
-// Class Method: Mapnik\Map::getAspectFixMode
-
 PHP_METHOD(Map, getAspectFixMode)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     RETURN_LONG(obj->map->get_aspect_fix_mode());
 }
-
-// Class Method: Mapnik\Map::setAspectFixMode
-
-ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setAspectFixMode, 0, 0, 1)
-    ZEND_ARG_INFO(0, aspectFixMode)
-ZEND_END_ARG_INFO()
 
 PHP_METHOD(Map, setAspectFixMode)
 {
@@ -732,6 +555,90 @@ PHP_METHOD(Map, setAspectFixMode)
 
     obj->map->set_aspect_fix_mode(mapnik::Map::aspect_fix_mode(aspect_fix_mode));
 }
+
+// Reflection info
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_construct, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, width)
+    ZEND_ARG_INFO(0, height)
+    ZEND_ARG_INFO(0, srs)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_loadXmlString, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, xml)
+    ZEND_ARG_INFO(0, strict)
+    ZEND_ARG_INFO(0, basePath)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_loadXmlFile, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, filename)
+    ZEND_ARG_INFO(0, strict)
+    ZEND_ARG_INFO(0, basePath)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_zoom, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, zoom)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_pan, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 2)
+    ZEND_ARG_INFO(0, x)
+    ZEND_ARG_INFO(0, y)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_panAndZoom, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 3)
+    ZEND_ARG_INFO(0, x)
+    ZEND_ARG_INFO(0, y)
+    ZEND_ARG_INFO(0, zoom)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_zoomToBox, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_OBJ_INFO(0, box2d, Mapnik\\Box2D, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_registerFonts, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, path)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setBasePath, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, path)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setWidth, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, width)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setHeight, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, height)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_resize, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 2)
+    ZEND_ARG_INFO(0, width)
+    ZEND_ARG_INFO(0, height)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setSrs, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, srs)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setBackgroundImage, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, filename)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setBackgroundImageOpacity, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, opacity)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setMaximumExtent, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_OBJ_INFO(0, box2d, Mapnik\\Box2D, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setBufferSize, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, bufferSize)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(argInfo_map_setAspectFixMode, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
+    ZEND_ARG_INFO(0, aspectFixMode)
+ZEND_END_ARG_INFO()
 
 // Register methods
 
@@ -775,81 +682,51 @@ zend_function_entry map_methods[] = {
     {NULL, NULL, NULL}
 };
 
+// Internal object handling
+
+void free_map(zend_object *object TSRMLS_DC)
+{
+    map_object *obj;
+    obj = fetch_map_object(object);
+    delete obj->map;
+    zend_object_std_dtor(object TSRMLS_DC);
+}
+
+zend_object * create_map(zend_class_entry *ce TSRMLS_DC)
+{
+    map_object *intern;
+    intern = (map_object*) ecalloc(1, sizeof(map_object) + zend_object_properties_size(ce));
+
+    zend_object_std_init(&intern->std, ce TSRMLS_CC);
+    object_properties_init(&intern->std, ce);
+
+    intern->std.handlers = &map_object_handlers;
+
+    return &intern->std;
+}
+
 // Extension class startup
 
-void map_startup(INIT_FUNC_ARGS)
+void init_map(INIT_FUNC_ARGS)
 {
     zend_class_entry ce;
     INIT_NS_CLASS_ENTRY(ce, "Mapnik", "Map", map_methods);
 
     map_ce = zend_register_internal_class(&ce TSRMLS_CC);
-    map_ce->create_object = map_new;
+    map_ce->create_object = create_map;
 
-    zend_declare_class_constant_long(
-        map_ce,
-        "GROW_BBOX",
-        sizeof("GROW_BBOX") - 1,
-        mapnik::Map::GROW_BBOX TSRMLS_CC
-    );
-
-    zend_declare_class_constant_long(
-        map_ce,
-        "GROW_CANVAS",
-        sizeof("GROW_CANVAS") - 1,
-        mapnik::Map::GROW_CANVAS TSRMLS_CC
-    );
-
-    zend_declare_class_constant_long(
-        map_ce,
-        "SHRINK_BBOX",
-        sizeof("SHRINK_BBOX") - 1,
-        mapnik::Map::SHRINK_BBOX TSRMLS_CC
-    );
-
-    zend_declare_class_constant_long(
-        map_ce,
-        "SHRINK_CANVAS",
-        sizeof("SHRINK_CANVAS") - 1,
-        mapnik::Map::SHRINK_CANVAS TSRMLS_CC
-    );
-
-    zend_declare_class_constant_long(
-        map_ce,
-        "ADJUST_BBOX_WIDTH",
-        sizeof("ADJUST_BBOX_WIDTH") - 1,
-        mapnik::Map::ADJUST_BBOX_WIDTH TSRMLS_CC
-    );
-
-    zend_declare_class_constant_long(
-        map_ce,
-        "ADJUST_BBOX_HEIGHT",
-        sizeof("ADJUST_BBOX_HEIGHT") - 1,
-        mapnik::Map::ADJUST_BBOX_HEIGHT TSRMLS_CC
-    );
-
-    zend_declare_class_constant_long(
-        map_ce,
-        "ADJUST_CANVAS_WIDTH",
-        sizeof("ADJUST_CANVAS_WIDTH") - 1,
-        mapnik::Map::ADJUST_CANVAS_WIDTH TSRMLS_CC
-    );
-
-    zend_declare_class_constant_long(
-        map_ce,
-        "ADJUST_CANVAS_HEIGHT",
-        sizeof("ADJUST_CANVAS_HEIGHT") - 1,
-        mapnik::Map::ADJUST_CANVAS_HEIGHT TSRMLS_CC
-    );
-
-    zend_declare_class_constant_long(
-        map_ce,
-        "RESPECT",
-        sizeof("RESPECT") - 1,
-        mapnik::Map::RESPECT TSRMLS_CC
-    );
+    zend_declare_class_constant_long(map_ce, "GROW_BBOX", sizeof("GROW_BBOX") - 1, mapnik::Map::GROW_BBOX TSRMLS_CC);
+    zend_declare_class_constant_long(map_ce, "GROW_CANVAS", sizeof("GROW_CANVAS") - 1, mapnik::Map::GROW_CANVAS TSRMLS_CC);
+    zend_declare_class_constant_long(map_ce, "SHRINK_BBOX", sizeof("SHRINK_BBOX") - 1, mapnik::Map::SHRINK_BBOX TSRMLS_CC);
+    zend_declare_class_constant_long(map_ce, "SHRINK_CANVAS", sizeof("SHRINK_CANVAS") - 1, mapnik::Map::SHRINK_CANVAS TSRMLS_CC);
+    zend_declare_class_constant_long(map_ce, "ADJUST_BBOX_WIDTH", sizeof("ADJUST_BBOX_WIDTH") - 1, mapnik::Map::ADJUST_BBOX_WIDTH TSRMLS_CC);
+    zend_declare_class_constant_long(map_ce, "ADJUST_BBOX_HEIGHT", sizeof("ADJUST_BBOX_HEIGHT") - 1, mapnik::Map::ADJUST_BBOX_HEIGHT TSRMLS_CC);
+    zend_declare_class_constant_long(map_ce, "ADJUST_CANVAS_WIDTH", sizeof("ADJUST_CANVAS_WIDTH") - 1, mapnik::Map::ADJUST_CANVAS_WIDTH TSRMLS_CC);
+    zend_declare_class_constant_long(map_ce, "ADJUST_CANVAS_HEIGHT", sizeof("ADJUST_CANVAS_HEIGHT") - 1, mapnik::Map::ADJUST_CANVAS_HEIGHT TSRMLS_CC);
+    zend_declare_class_constant_long(map_ce, "RESPECT", sizeof("RESPECT") - 1, mapnik::Map::RESPECT TSRMLS_CC);
     
     memcpy(&map_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
     map_object_handlers.offset = XtOffsetOf(struct map_object, std);
-    map_object_handlers.free_obj = &map_free_storage;
+    map_object_handlers.free_obj = &free_map;
     map_object_handlers.clone_obj = NULL;
 }

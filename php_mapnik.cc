@@ -11,14 +11,13 @@
 PHP_MINIT_FUNCTION(mapnik)
 {
     init_agg_renderer(INIT_FUNC_ARGS_PASSTHRU);
-
-    exception_startup(INIT_FUNC_ARGS_PASSTHRU);
-    box2d_startup(INIT_FUNC_ARGS_PASSTHRU);
-    map_startup(INIT_FUNC_ARGS_PASSTHRU);
-    image_startup(INIT_FUNC_ARGS_PASSTHRU);
-    datasource_cache_startup(INIT_FUNC_ARGS_PASSTHRU);
-    projection_startup(INIT_FUNC_ARGS_PASSTHRU);
-    proj_transform_startup(INIT_FUNC_ARGS_PASSTHRU);
+    init_box2d(INIT_FUNC_ARGS_PASSTHRU);
+    init_datasource_cache(INIT_FUNC_ARGS_PASSTHRU);
+    init_exception(INIT_FUNC_ARGS_PASSTHRU);
+    init_image(INIT_FUNC_ARGS_PASSTHRU);
+    init_map(INIT_FUNC_ARGS_PASSTHRU);
+    init_proj_transform(INIT_FUNC_ARGS_PASSTHRU);
+    init_projection(INIT_FUNC_ARGS_PASSTHRU);
 
     return SUCCESS;
 }

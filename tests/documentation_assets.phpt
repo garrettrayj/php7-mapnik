@@ -5,8 +5,6 @@ Header Graphic
 --FILE--
 <?php
 
-// Just a fun test to give the project a header graphic...
-
 declare(strict_types=1);
 
 require_once('util/test_case.php');
@@ -26,7 +24,7 @@ class DocumentationAssetsTest extends MapnikTestCase
         $map->registerFonts($fontConfigOutput[0]);
 
         $basePath = realpath(__DIR__ . '/data');
-        $map->loadXmlFile($basePath . '/header_graphic.xml', false, $basePath);
+        $map->loadXmlFile($basePath . '/readme_header.xml', false, $basePath);
 
         $box = new \Mapnik\Box2D(-134, -25, 174, 67);
         $map->zoomToBox($box);
@@ -35,10 +33,38 @@ class DocumentationAssetsTest extends MapnikTestCase
         $renderer = new \Mapnik\AggRenderer($map, $image);
         $renderer->apply();
 
-        $imageFile = realpath(__DIR__ . '/../docs/assets') . '/header_graphic.png';
+        $imageFile = realpath(__DIR__ . '/../docs/assets') . '/readme_header.png';
         $image->saveToFile($imageFile, 'png8');
 
-        assert(file_exists($imageFile) === true, 'Header graphic does not exist.');
+        assert(file_exists($imageFile) === true, 'Header graphic was not generated.');
+    }
+
+    public function testSocialPreviewImage()
+    {
+        $pluginConfigOutput = [];
+        exec('mapnik-config --input-plugins', $pluginConfigOutput);
+        \Mapnik\DatasourceCache::registerDatasources($pluginConfigOutput[0]);
+
+        $map = new \Mapnik\Map(1280, 640);
+
+        $fontConfigOutput = [];
+        exec('mapnik-config --fonts', $fontConfigOutput);
+        $map->registerFonts($fontConfigOutput[0]);
+
+        $basePath = realpath(__DIR__ . '/data');
+        $map->loadXmlFile($basePath . '/social_preview.xml', false, $basePath);
+
+        $box = new \Mapnik\Box2D(-134, -25, 174, 67);
+        $map->zoomToBox($box);
+
+        $image = new \Mapnik\Image(1280, 640);
+        $renderer = new \Mapnik\AggRenderer($map, $image);
+        $renderer->apply();
+
+        $imageFile = realpath(__DIR__ . '/../docs/assets') . '/social_preview.png';
+        $image->saveToFile($imageFile, 'png8');
+
+        assert(file_exists($imageFile) === true, 'Social preview graphic was not generated.');
     }
 
     public function testDocsIndexBackground()
@@ -54,7 +80,7 @@ class DocumentationAssetsTest extends MapnikTestCase
         $map->registerFonts($fontConfigOutput[0]);
 
         $basePath = realpath(__DIR__ . '/data');
-        $map->loadXmlFile($basePath . '/docs_index_background.xml', false, $basePath);
+        $map->loadXmlFile($basePath . '/documentation_index.xml', false, $basePath);
 
         $box = new \Mapnik\Box2D(-180, -70, 180, 85);
         $map->zoomToBox($box);
@@ -63,10 +89,10 @@ class DocumentationAssetsTest extends MapnikTestCase
         $renderer = new \Mapnik\AggRenderer($map, $image);
         $renderer->apply();
 
-        $imageFile = realpath(__DIR__ . '/../docs/assets') . '/docs_index_background.png';
+        $imageFile = realpath(__DIR__ . '/../docs/assets') . '/documentation_index.png';
         $image->saveToFile($imageFile, 'png8');
 
-        assert(file_exists($imageFile) === true, 'Docs index background does not exist.');
+        assert(file_exists($imageFile) === true, 'Documentation index background was not generated.');
     }
 }
 

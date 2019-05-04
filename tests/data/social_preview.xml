@@ -1,4 +1,4 @@
-<Map background-color="darkslateblue" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+<Map background-color="slateblue" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
     <Style name="title_style">
         <Rule>
             <TextSymbolizer
@@ -14,8 +14,8 @@
     </Style>
     <Style name="world_style">
         <Rule>
-            <PolygonSymbolizer fill="slateblue" />
-            <LineSymbolizer stroke="rgba(255,255,255,0.5)" stroke-width="0.2" />
+            <PolygonSymbolizer fill="darkslateblue" />
+            <LineSymbolizer stroke="mediumslateblue" stroke-width="0.2" />
         </Rule>
     </Style>
 
@@ -30,7 +30,7 @@
         <StyleName>title_style</StyleName>
         <Datasource>
             <Parameter name="type">csv</Parameter>
-            <Parameter name="file">header_graphic.csv</Parameter>
+            <Parameter name="file">social_preview.csv</Parameter>
         </Datasource>
     </Layer>
 </Map>

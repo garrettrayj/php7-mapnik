@@ -49,9 +49,9 @@ script:
     - ./mem_test.sh
 
 after_success:
-    - tail -n 1000 tests/*.log
-    - find . -name *.mem | xargs cat
+    - find ./tests -name "*.log" | xargs tail -n 1000
+    - find . -name "*.mem" | xargs cat
 
 after_failure:
-    - tail -n 1000 tests/*.log
-    - find . -name *.mem | xargs cat
+    - find ./tests -name "*.log" | xargs tail -n 1000
+    - find . -name "*.mem" | xargs cat

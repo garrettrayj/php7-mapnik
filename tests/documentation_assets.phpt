@@ -17,10 +17,6 @@ class DocumentationAssetsTest extends MapnikTestCase
         exec('mapnik-config --input-plugins', $pluginConfigOutput);
         \Mapnik\DatasourceCache::registerDatasources($pluginConfigOutput[0]);
 
-        // Travis build machine does not have CSV plugin due to incompatible Boost version.
-        // Just return early if CSV isn't available.
-        if (!in_array('csv', \Mapnik\DatasourceCache::getPluginNames())) return;
-
         $map = new \Mapnik\Map(1280, 320);
 
         $fontConfigOutput = [];

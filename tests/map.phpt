@@ -7,6 +7,8 @@ if (!extension_loaded("mapnik")) print "skip"; ?>
 --FILE--
 <?php
 
+declare(strict_types=1);
+
 require_once('util/test_case.php');
 
 class MapTest extends MapnikTestCase
@@ -38,7 +40,7 @@ class MapTest extends MapnikTestCase
         } catch (\Throwable $e) {
             assert(
                 $e instanceof TypeError,
-                'Instantiating \Mapnik\Map with bad arguments did not throw exception.'
+                'Instantiating \Mapnik\Map with bad arguments did not throw TypeError.'
             );
         }
 
@@ -215,12 +217,11 @@ class MapTest extends MapnikTestCase
         try {
             $this->exampleMap->resize('foo', 'bar');
         } catch (\Throwable $e) {
-
+            assert(
+                $e instanceof TypeError,
+                'Calling Map->resize() with bad arguments did not throw Mapnik exception.'
+            );
         }
-        assert(
-            $e instanceof TypeError,
-            'Calling Map->resize() with bad arguments did not throw Mapnik exception.'
-        );
     }
 
     public function testGetSrs()

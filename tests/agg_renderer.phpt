@@ -5,6 +5,8 @@
 --FILE--
 <?php
 
+declare(strict_types=1);
+
 require_once('util/test_case.php');
 
 class AggRendererTest extends MapnikTestCase

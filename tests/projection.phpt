@@ -7,6 +7,8 @@ if (!extension_loaded("mapnik")) print "skip"; ?>
 --FILE--
 <?php
 
+declare(strict_types=1);
+
 require_once('util/test_case.php');
 
 class ProjectionTest extends MapnikTestCase

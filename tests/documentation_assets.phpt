@@ -7,6 +7,8 @@ Header Graphic
 
 // Just a fun test to give the project a header graphic...
 
+declare(strict_types=1);
+
 require_once('util/test_case.php');
 
 class DocumentationAssetsTest extends MapnikTestCase

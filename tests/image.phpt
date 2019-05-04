@@ -3,7 +3,11 @@
 --EXTENSIONS--
 gd
 --SKIPIF--
-<?php if (!extension_loaded("mapnik")) print "skip"; ?>
+<?php
+    if (!extension_loaded("mapnik")) print "skip";
+    // Unsuccessful in attempts to get GD extension to load in dev image... just skip if unavailable.
+    if (!extension_loaded("gd")) print "skip";
+?>
 --FILE--
 <?php
 

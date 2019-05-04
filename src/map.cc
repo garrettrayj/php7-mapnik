@@ -49,7 +49,8 @@ PHP_METHOD(Map, loadXmlString)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
-    zend_string *xml, *base_path;
+    zend_string *xml;
+    zend_string *base_path;
     zend_bool strict = false;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 3)
@@ -59,10 +60,15 @@ PHP_METHOD(Map, loadXmlString)
         Z_PARAM_STR(base_path)
     ZEND_PARSE_PARAMETERS_END();
 
+    std::string xml_str(ZSTR_VAL(xml), ZSTR_LEN(xml));
+
     try {
-        std::string xml_str(ZSTR_VAL(xml), ZSTR_LEN(xml));
-        std::string base_path_str(ZSTR_VAL(base_path), ZSTR_LEN(base_path));
-        mapnik::load_map_string(*obj->map, xml_str, strict, base_path_str);
+        if (ZEND_NUM_ARGS() > 2) {
+            std::string base_path_str(ZSTR_VAL(base_path), ZSTR_LEN(base_path));
+            mapnik::load_map_string(*obj->map, xml_str, strict, base_path_str);
+        } else {
+            mapnik::load_map_string(*obj->map, xml_str, strict);
+        }
     } catch (const mapnik::proj_init_error & ex) {
         throw_mapnik_exception(ex.what());
     } catch (const std::runtime_error & ex) {
@@ -78,7 +84,8 @@ PHP_METHOD(Map, loadXmlFile)
 {
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
 
-    zend_string *filename, *base_path;
+    zend_string *filename;
+    zend_string *base_path;
     zend_bool strict = false;
 
     ZEND_PARSE_PARAMETERS_START_EX(ZEND_PARSE_PARAMS_THROW, 1, 3)
@@ -88,10 +95,15 @@ PHP_METHOD(Map, loadXmlFile)
         Z_PARAM_STR(base_path)
     ZEND_PARSE_PARAMETERS_END();
 
+    std::string filename_str(ZSTR_VAL(filename), ZSTR_LEN(filename));
+
     try {
-        std::string filename_str(ZSTR_VAL(filename), ZSTR_LEN(filename));
-        std::string base_path_str(ZSTR_VAL(base_path), ZSTR_LEN(base_path));
-        mapnik::load_map(*obj->map, filename_str, strict, base_path_str);
+        if (ZEND_NUM_ARGS() > 2) {
+            std::string base_path_str(ZSTR_VAL(base_path), ZSTR_LEN(base_path));
+            mapnik::load_map(*obj->map, filename_str, false, base_path_str);
+        } else {
+            mapnik::load_map(*obj->map, filename_str, strict);
+        }
     } catch (const mapnik::proj_init_error & ex) {
         throw_mapnik_exception(ex.what());
     } catch (const std::runtime_error & ex) {

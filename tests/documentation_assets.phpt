@@ -39,7 +39,6 @@ class DocumentationAssetsTest extends MapnikTestCase
         assert(file_exists($imageFile) === true, 'Header graphic does not exist.');
     }
 
-
     public function testDocsIndexBackground()
     {
         $pluginConfigOutput = [];
@@ -67,7 +66,6 @@ class DocumentationAssetsTest extends MapnikTestCase
 
         assert(file_exists($imageFile) === true, 'Docs index background does not exist.');
     }
-
 }
 
 new DocumentationAssetsTest();

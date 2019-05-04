@@ -1,7 +1,9 @@
 --TEST--
 \Mapnik\ProjTransform
 --SKIPIF--
-<?php if (!extension_loaded("mapnik")) print "skip"; ?>
+<?php
+
+if (!extension_loaded("mapnik")) print "skip"; ?>
 --FILE--
 <?php
 
@@ -14,12 +16,11 @@ class ProjectionTest extends MapnikTestCase
         try {
             $projection = new \Mapnik\Projection("foo bar");
         } catch (\Exception $e) {
-
+            assert(
+                $e instanceof \Mapnik\Exception,
+                'Instantiating \Mapnik\Projection with bad parameters did not throw exception.'
+            );
         }
-        assert(
-            $e instanceof \Mapnik\Exception,
-            'Instantiating \Mapnik\Projection with bad parameters did not throw exception.'
-        );
 
         $projection = new \Mapnik\Projection("+init=epsg:4326");
         assert($projection instanceof \Mapnik\Projection, 'Instantiating \Mapnik\Projection failed.');

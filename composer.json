@@ -1,5 +1,6 @@
 {
     "require": {
+        "ext-gd": "*",
         "sami/sami": "^4.0"
     },
     "scripts": {

@@ -88,20 +88,22 @@ class Map
     /**
      * Load map XML from string.
      *
-     * @param string $xml Mapnik XML
+     * @param string $xml
+     * @param bool|null $strict
+     * @param string|null $basePath
      * @see https://github.com/mapnik/mapnik/wiki/XMLConfigReference Mapnik XML config reference
      */
-    public function loadXmlString(string $xml) {}
+    public function loadXmlString(string $xml, bool $strict = null, string $basePath = null) {}
 
     /**
      * Load XML map file.
      *
      * @param string $file Path to Mapnik XML file
-     * @param bool $strict Enable or disable strict map parsing
-     * @param string $basePath Path to directory with map assets
+     * @param bool|null $strict Enable or disable strict map parsing
+     * @param string|null $basePath Path to directory with map assets
      * @see https://github.com/mapnik/mapnik/wiki/XMLConfigReference Mapnik XML config reference
      */
-    public function loadXmlFile(string $file, bool $strict, string $basePath) {}
+    public function loadXmlFile(string $file, bool $strict = null, string $basePath = null) {}
 
     /**
      * Zoom in or out by a given factor. Positive number zooms in, negative number zooms out.

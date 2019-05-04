@@ -14,12 +14,11 @@ class ProjTransformTest extends MapnikTestCase
         try {
             $projTransform = new \Mapnik\ProjTransform('foo', 'bar');
         } catch (\Throwable $e) {
-
+            assert(
+                $e instanceof TypeError,
+                'Instantiating \Mapnik\ProjTransform with bad arguments did not throw exception.'
+            );
         }
-        assert(
-            $e instanceof TypeError,
-            'Instantiating \Mapnik\ProjTransform with bad arguments did not throw exception.'
-        );
 
         $projTransform = new \Mapnik\ProjTransform(
             new \Mapnik\Projection("+init=epsg:4326"),

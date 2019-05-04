@@ -1,7 +1,9 @@
 --TEST--
 \Mapnik\Map
 --SKIPIF--
-<?php if (!extension_loaded("mapnik")) print "skip"; ?>
+<?php use \Mapnik\Exception;
+
+if (!extension_loaded("mapnik")) print "skip"; ?>
 --FILE--
 <?php
 
@@ -11,6 +13,9 @@ class MapTest extends MapnikTestCase
 {
     private $basePath;
 
+    /**
+     * @var \Mapnik\Map
+     */
     private $exampleMap;
 
     public function setup()
@@ -31,12 +36,11 @@ class MapTest extends MapnikTestCase
         try {
             $map = new \Mapnik\Map('foo', 'bar');
         } catch (\Throwable $e) {
-
+            assert(
+                $e instanceof TypeError,
+                'Instantiating \Mapnik\Map with bad arguments did not throw exception.'
+            );
         }
-        assert(
-            $e instanceof \TypeError,
-            'Instantiating \Mapnik\Map with bad arguments did not throw exception.'
-        );
 
         $map = new \Mapnik\Map(640, 480);
         assert($map instanceof \Mapnik\Map, 'Instantiating \Mapnik\Map failed.');
@@ -54,9 +58,8 @@ class MapTest extends MapnikTestCase
         try {
             $this->exampleMap->loadXmlString($xml);
         } catch (\Exception $e) {
-
+            assert($e instanceof \Mapnik\Exception, 'Loading XML with bad projection did not throw Mapnik exception.');
         }
-        assert($e instanceof \Mapnik\Exception, 'Loading XML with bad projection did not throw Mapnik exception.');
     }
 
     public function testLoadXmlFile()
@@ -72,9 +75,8 @@ class MapTest extends MapnikTestCase
         try {
             $this->exampleMap->loadXmlFile($this->basePath . "/world-not-there.xml", false, $this->basePath);
         } catch (\Exception $e) {
-
+            assert($e instanceof \Mapnik\Exception, 'Loading non-existent XML file did not throw Mapnik exception.');
         }
-        assert($e instanceof \Mapnik\Exception, 'Loading non-existent XML file did not throw Mapnik exception.');
     }
 
     public function testZoom()
@@ -87,9 +89,7 @@ class MapTest extends MapnikTestCase
 
         $extent = $this->exampleMap->getCurrentExtent();
         assert(
-            floor($extent->minX()) === -160.0 && floor($extent->minY()) === -110.0 &&
-            floor($extent->maxX()) === -100.0 && floor($extent->maxY()) === -50.0
-            ,
+            floor($extent->minX()) === -160.0 && floor($extent->minY()) === -110.0 && floor($extent->maxX()) === -100.0 && floor($extent->maxY()) === -50.0,
             'Map->zoom() failed.'
         );
     }
@@ -103,9 +103,7 @@ class MapTest extends MapnikTestCase
         $extent = $this->exampleMap->getCurrentExtent();
 
         assert(
-            $extent->minX() === -140.0 && $extent->minY() === -90.0 &&
-            $extent->maxX() === -120.0 && $extent->maxY() === -70.0
-            ,
+            $extent->minX() === -140.0 && $extent->minY() === -90.0 && $extent->maxX() === -120.0 && $extent->maxY() === -70.0,
             'Map->zoomAll() failed.'
         );
     }
@@ -120,9 +118,7 @@ class MapTest extends MapnikTestCase
 
         $extent = $this->exampleMap->getCurrentExtent();
         assert(
-            floor($extent->minX()) === -151.0 && floor($extent->minY()) === -83.0 &&
-            floor($extent->maxX()) === -131.0 && floor($extent->maxY()) === -63.0
-            ,
+            floor($extent->minX()) === -151.0 && floor($extent->minY()) === -83.0 && floor($extent->maxX()) === -131.0 && floor($extent->maxY()) === -63.0,
             'Map->pan() failed.'
         );
     }
@@ -138,9 +134,7 @@ class MapTest extends MapnikTestCase
         $extent = $this->exampleMap->getCurrentExtent();
 
         assert(
-            floor($extent->minX()) === -161.0 && floor($extent->minY()) === -93.0 &&
-            floor($extent->maxX()) === -121.0 && floor($extent->maxY()) === -53.0
-            ,
+            floor($extent->minX()) === -161.0 && floor($extent->minY()) === -93.0 && floor($extent->maxX()) === -121.0 && floor($extent->maxY()) === -53.0,
             'Map->panAndZoom() failed.'
         );
     }
@@ -153,9 +147,7 @@ class MapTest extends MapnikTestCase
 
         $extent = $this->exampleMap->getCurrentExtent();
         assert(
-            $extent->minX() === -140.0 && $extent->minY() === -90.0 &&
-            $extent->maxX() === -120.0 && $extent->maxY() === -70.0
-            ,
+            $extent->minX() === -140.0 && $extent->minY() === -90.0 && $extent->maxX() === -120.0 && $extent->maxY() === -70.0,
             'Map->zoomToBox() failed.'
         );
     }
@@ -187,12 +179,11 @@ class MapTest extends MapnikTestCase
         try {
             $this->exampleMap->setWidth('foo');
         } catch (\Throwable $e) {
-
+            assert(
+                $e instanceof TypeError,
+                'Calling Map->setWidth() with bad argument did not throw Mapnik exception.'
+            );
         }
-        assert(
-            $e instanceof \TypeError,
-            'Calling Map->setWidth() with bad argument did not throw Mapnik exception.'
-        );
     }
 
     public function testGetHeight()
@@ -208,12 +199,11 @@ class MapTest extends MapnikTestCase
         try {
             $this->exampleMap->setHeight('foo');
         } catch (\Throwable $e) {
-
+            assert(
+                $e instanceof TypeError,
+                'Calling Map->setHeight() with bad argument did not throw Mapnik exception.'
+            );
         }
-        assert(
-            $e instanceof \TypeError,
-            'Calling Map->setHeight() with bad argument did not throw Mapnik exception.'
-        );
     }
 
     public function testResize()
@@ -312,9 +302,7 @@ class MapTest extends MapnikTestCase
     {
         $extent = $this->exampleMap->getCurrentExtent();
         assert(
-            floor($extent->minX()) === -180.0 && floor($extent->minY()) === -139.0 &&
-            floor($extent->maxX()) === 180.0 && floor($extent->maxY()) === 131.0
-            ,
+            floor($extent->minX()) === -180.0 && floor($extent->minY()) === -139.0 && floor($extent->maxX()) === 180.0 && floor($extent->maxY()) === 131.0,
             'Map->getCurrentExtent() failed.'
         );
     }
@@ -335,9 +323,7 @@ class MapTest extends MapnikTestCase
     {
         $extent = $this->exampleMap->getBufferedExtent();
         assert(
-            floor($extent->minX()) === -180.0 && floor($extent->minY()) === -139.0 &&
-            floor($extent->maxX()) === 180.0 && floor($extent->maxY()) === 131.0
-            ,
+            floor($extent->minX()) === -180.0 && floor($extent->minY()) === -139.0 && floor($extent->maxX()) === 180.0 && floor($extent->maxY()) === 131.0,
             'Map->getBufferedExtent() failed.'
         );
 
@@ -345,9 +331,7 @@ class MapTest extends MapnikTestCase
         $extent = $this->exampleMap->getBufferedExtent();
 
         assert(
-            floor($extent->minX()) === -186.0 && floor($extent->minY()) === -144.0 &&
-            floor($extent->maxX()) === 185.0 && floor($extent->maxY()) === 137.0
-            ,
+            floor($extent->minX()) === -186.0 && floor($extent->minY()) === -144.0 && floor($extent->maxX()) === 185.0 && floor($extent->maxY()) === 137.0,
             'Map->getBufferedExtent() failed.'
         );
     }
@@ -445,9 +429,8 @@ class MapTest extends MapnikTestCase
         try {
             $this->exampleMap->setAspectFixMode(100);
         } catch (\Exception $e) {
-
+            assert($e instanceof \Mapnik\Exception, 'Setting invalid aspect fix mode did not throw exception.');
         }
-        assert($e instanceof \Mapnik\Exception, 'Setting invalid aspect fix mode did not throw exception.');
     }
 }
 

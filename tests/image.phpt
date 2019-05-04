@@ -33,12 +33,11 @@ class ImageTest extends MapnikTestCase
         try {
             $image = new \Mapnik\Image('foo');
         } catch (\Throwable $e) {
-
+            assert(
+                $e instanceof ArgumentCountError,
+                'Instantiating \Mapnik\Image with bad arguments did not throw exception.'
+            );
         }
-        assert(
-            $e instanceof ArgumentCountError,
-            'Instantiating \Mapnik\Image with bad arguments did not throw exception.'
-        );
 
         $image = new \Mapnik\Image(640, 480);
         assert($image instanceof \Mapnik\Image, '\Mapnik\Image instantiation failed.');

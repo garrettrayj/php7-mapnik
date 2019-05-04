@@ -31,12 +31,11 @@ class AggRendererTest extends MapnikTestCase
         try {
             $renderer = new \Mapnik\AggRenderer('foo');
         } catch (\Throwable $e) {
-
+            assert(
+                $e instanceof TypeError,
+                'Instantiating \Mapnik\AggRenderer with wrong number of arguments did not throw type error.'
+            );
         }
-        assert(
-            $e instanceof TypeError,
-            'Instantiating \Mapnik\AggRenderer with wrong number of arguments did not throw error.'
-        );
 
         $image = new \Mapnik\Image(640, 480);
         $renderer = new \Mapnik\AggRenderer($this->exampleMap, $image);

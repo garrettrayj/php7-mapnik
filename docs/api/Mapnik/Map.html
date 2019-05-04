@@ -66,9 +66,7 @@
                         <div class="namespace-breadcrumbs">
             <ol class="breadcrumb">
                 <li><span class="label label-default">class</span></li>
-                                                            <li><a href="../Mapnik.html">Mapnik</a></li>
-    
-                <li>Map</li>
+                        <li><a href="../Mapnik.html">Mapnik</a></li><li class="backslash">\</li><li>Map</li>
             </ol>
         </div>
                 <div id="page-content">
@@ -177,7 +175,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_loadXmlString">loadXmlString</a>(string $xml)
+                    <a href="#method_loadXmlString">loadXmlString</a>(string $xml, bool $strict = null, string $basePath = null)
         
                                             <p>Load map XML from string.</p>                </div>
                 <div class="col-md-2"></div>
@@ -187,7 +185,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_loadXmlFile">loadXmlFile</a>(string $file, bool $strict, string $basePath)
+                    <a href="#method_loadXmlFile">loadXmlFile</a>(string $file, bool $strict = null, string $basePath = null)
         
                                             <p>Load XML map file.</p>                </div>
                 <div class="col-md-2"></div>
@@ -540,7 +538,7 @@
     
 
                     <div class="method-description">
-                                    <p>Map constructor.</p>                                </div>
+                                    <p>Map constructor.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -571,9 +569,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_loadXmlString">
-        <div class="location">at         line 94</div>
+        <div class="location">at         line 96</div>
         <code>                    
-    <strong>loadXmlString</strong>(string $xml)
+    <strong>loadXmlString</strong>(string $xml, bool $strict = null, string $basePath = null)
         </code>
     </h3>
     <div class="details">
@@ -581,7 +579,7 @@
     
 
                     <div class="method-description">
-                                    <p>Load map XML from string.</p>                                </div>
+                                    <p>Load map XML from string.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -589,7 +587,17 @@
                     <tr>
                 <td>string</td>
                 <td>$xml</td>
-                <td>Mapnik XML</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$strict</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$basePath</td>
+                <td></td>
             </tr>
             </table>
 
@@ -600,7 +608,9 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>https://github.com/mapnik/mapnik/wiki/XMLConfigReference</td>
+                <td>
+                                            <a href="https://github.com/mapnik/mapnik/wiki/XMLConfigReference">https://github.com/mapnik/mapnik/wiki/XMLConfigReference</a>
+                                    </td>
                 <td>Mapnik XML config reference</td>
             </tr>
             </table>
@@ -611,9 +621,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_loadXmlFile">
-        <div class="location">at         line 104</div>
+        <div class="location">at         line 106</div>
         <code>                    
-    <strong>loadXmlFile</strong>(string $file, bool $strict, string $basePath)
+    <strong>loadXmlFile</strong>(string $file, bool $strict = null, string $basePath = null)
         </code>
     </h3>
     <div class="details">
@@ -621,7 +631,7 @@
     
 
                     <div class="method-description">
-                                    <p>Load XML map file.</p>                                </div>
+                                    <p>Load XML map file.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -650,7 +660,9 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>https://github.com/mapnik/mapnik/wiki/XMLConfigReference</td>
+                <td>
+                                            <a href="https://github.com/mapnik/mapnik/wiki/XMLConfigReference">https://github.com/mapnik/mapnik/wiki/XMLConfigReference</a>
+                                    </td>
                 <td>Mapnik XML config reference</td>
             </tr>
             </table>
@@ -661,7 +673,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_zoom">
-        <div class="location">at         line 111</div>
+        <div class="location">at         line 113</div>
         <code>                    
     <strong>zoom</strong>(float $zoom)
         </code>
@@ -671,7 +683,7 @@
     
 
                     <div class="method-description">
-                                    <p>Zoom in or out by a given factor. Positive number zooms in, negative number zooms out.</p>                                </div>
+                                    <p>Zoom in or out by a given factor. Positive number zooms in, negative number zooms out.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -692,7 +704,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_zoomAll">
-        <div class="location">at         line 116</div>
+        <div class="location">at         line 118</div>
         <code>                    
     <strong>zoomAll</strong>()
         </code>
@@ -702,7 +714,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set the geographical extent of the map to the combined extents of all active layers.</p>                                </div>
+                                    <p>Set the geographical extent of the map to the combined extents of all active layers.</p>                                                </div>
                 <div class="tags">
             
             
@@ -713,7 +725,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_pan">
-        <div class="location">at         line 124</div>
+        <div class="location">at         line 126</div>
         <code>                    
     <strong>pan</strong>(int $x, int $y)
         </code>
@@ -723,7 +735,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set the Map center to x,y location in the coordinates of the pixmap or map surface.</p>                                </div>
+                                    <p>Set the Map center to x,y location in the coordinates of the pixmap or map surface.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -749,7 +761,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_panAndZoom">
-        <div class="location">at         line 133</div>
+        <div class="location">at         line 135</div>
         <code>                    
     <strong>panAndZoom</strong>(int $x, int $y, float $zoom)
         </code>
@@ -759,7 +771,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set Map center to x,y location and zoom in or out.</p>                                </div>
+                                    <p>Set Map center to x,y location and zoom in or out.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -790,7 +802,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_zoomToBox">
-        <div class="location">at         line 141</div>
+        <div class="location">at         line 143</div>
         <code>                    
     <strong>zoomToBox</strong>(<a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a> $box)
         </code>
@@ -800,7 +812,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set the geographical extent of the map to Mapnik Box2D envelope.</p>                                </div>
+                                    <p>Set the geographical extent of the map to Mapnik Box2D envelope.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -819,7 +831,9 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>\Mapnik\Box2D</td>
+                <td>
+                                            <a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a>
+                                    </td>
                 <td>Bounding box object</td>
             </tr>
             </table>
@@ -830,7 +844,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_registerFonts">
-        <div class="location">at         line 148</div>
+        <div class="location">at         line 150</div>
         <code>                    
     <strong>registerFonts</strong>(string $path)
         </code>
@@ -840,7 +854,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set path to search for fonts used in map.</p>                                </div>
+                                    <p>Set path to search for fonts used in map.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -861,7 +875,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getBasePath">
-        <div class="location">at         line 155</div>
+        <div class="location">at         line 157</div>
         <code>                    string
     <strong>getBasePath</strong>()
         </code>
@@ -871,7 +885,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get base path used for loading map assets.</p>                                </div>
+                                    <p>Get base path used for loading map assets.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -891,7 +905,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setBasePath">
-        <div class="location">at         line 162</div>
+        <div class="location">at         line 164</div>
         <code>                    
     <strong>setBasePath</strong>(string $path)
         </code>
@@ -901,7 +915,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set base path used for loading map assets.</p>                                </div>
+                                    <p>Set base path used for loading map assets.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -922,7 +936,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getWidth">
-        <div class="location">at         line 169</div>
+        <div class="location">at         line 171</div>
         <code>                    int
     <strong>getWidth</strong>()
         </code>
@@ -932,7 +946,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get canvas width.</p>                                </div>
+                                    <p>Get canvas width.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -952,7 +966,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setWidth">
-        <div class="location">at         line 176</div>
+        <div class="location">at         line 178</div>
         <code>                    
     <strong>setWidth</strong>(int $width)
         </code>
@@ -962,7 +976,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set canvas width.</p>                                </div>
+                                    <p>Set canvas width.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -983,7 +997,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getHeight">
-        <div class="location">at         line 183</div>
+        <div class="location">at         line 185</div>
         <code>                    int
     <strong>getHeight</strong>()
         </code>
@@ -993,7 +1007,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get canvas height.</p>                                </div>
+                                    <p>Get canvas height.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1013,7 +1027,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setHeight">
-        <div class="location">at         line 190</div>
+        <div class="location">at         line 192</div>
         <code>                    
     <strong>setHeight</strong>(int $height)
         </code>
@@ -1023,7 +1037,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set canvas height.</p>                                </div>
+                                    <p>Set canvas height.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1044,7 +1058,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_resize">
-        <div class="location">at         line 198</div>
+        <div class="location">at         line 200</div>
         <code>                    
     <strong>resize</strong>(int $width, int $height)
         </code>
@@ -1054,7 +1068,7 @@
     
 
                     <div class="method-description">
-                                    <p>Resize the canvas to given height and width.</p>                                </div>
+                                    <p>Resize the canvas to given height and width.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1080,7 +1094,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getSrs">
-        <div class="location">at         line 206</div>
+        <div class="location">at         line 208</div>
         <code>                    string
     <strong>getSrs</strong>()
         </code>
@@ -1090,7 +1104,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get spatial reference system.</p>                                </div>
+                                    <p>Get spatial reference system.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1108,7 +1122,9 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>http://proj4.org</td>
+                <td>
+                                            <a href="http://proj4.org">http://proj4.org</a>
+                                    </td>
                 <td>proj.4 documentation</td>
             </tr>
             </table>
@@ -1119,7 +1135,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setSrs">
-        <div class="location">at         line 215</div>
+        <div class="location">at         line 217</div>
         <code>                    
     <strong>setSrs</strong>(string $srs)
         </code>
@@ -1129,7 +1145,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set spatial reference system.</p>                                </div>
+                                    <p>Set spatial reference system.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1148,11 +1164,15 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>http://proj4.org</td>
+                <td>
+                                            <a href="http://proj4.org">http://proj4.org</a>
+                                    </td>
                 <td>proj.4 documentation</td>
             </tr>
                     <tr>
-                <td>http://spatialreference.org</td>
+                <td>
+                                            <a href="http://spatialreference.org">http://spatialreference.org</a>
+                                    </td>
                 <td>Spatial reference system repository</td>
             </tr>
             </table>
@@ -1163,7 +1183,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getBackgroundImage">
-        <div class="location">at         line 222</div>
+        <div class="location">at         line 224</div>
         <code>                    string
     <strong>getBackgroundImage</strong>()
         </code>
@@ -1173,7 +1193,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get path to background image.</p>                                </div>
+                                    <p>Get path to background image.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1193,7 +1213,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setBackgroundImage">
-        <div class="location">at         line 229</div>
+        <div class="location">at         line 231</div>
         <code>                    
     <strong>setBackgroundImage</strong>(string $file)
         </code>
@@ -1203,7 +1223,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set path to background image.</p>                                </div>
+                                    <p>Set path to background image.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1224,7 +1244,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getBackgroundImageOpacity">
-        <div class="location">at         line 236</div>
+        <div class="location">at         line 238</div>
         <code>                    float
     <strong>getBackgroundImageOpacity</strong>()
         </code>
@@ -1234,7 +1254,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get background image opacity. 0 is transparent, 1 is opaque.</p>                                </div>
+                                    <p>Get background image opacity. 0 is transparent, 1 is opaque.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1254,7 +1274,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setBackgroundImageOpacity">
-        <div class="location">at         line 243</div>
+        <div class="location">at         line 245</div>
         <code>                    
     <strong>setBackgroundImageOpacity</strong>(float $opacity)
         </code>
@@ -1264,7 +1284,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set background image opacity. 0 is transparent, 1 is opaque.</p>                                </div>
+                                    <p>Set background image opacity. 0 is transparent, 1 is opaque.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1285,7 +1305,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getMaximumExtent">
-        <div class="location">at         line 251</div>
+        <div class="location">at         line 253</div>
         <code>                    <a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a>
     <strong>getMaximumExtent</strong>()
         </code>
@@ -1295,7 +1315,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get maximum extent of projected map.</p>                                </div>
+                                    <p>Get maximum extent of projected map.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1313,7 +1333,9 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>https://github.com/mapnik/mapnik/wiki/BoundsClipping</td>
+                <td>
+                                            <a href="https://github.com/mapnik/mapnik/wiki/BoundsClipping">https://github.com/mapnik/mapnik/wiki/BoundsClipping</a>
+                                    </td>
                 <td>Mapnik bounds clipping documentation</td>
             </tr>
             </table>
@@ -1324,7 +1346,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setMaximumExtent">
-        <div class="location">at         line 259</div>
+        <div class="location">at         line 261</div>
         <code>                    
     <strong>setMaximumExtent</strong>(<a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a> $box)
         </code>
@@ -1334,7 +1356,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set maximum extent of projected map.</p>                                </div>
+                                    <p>Set maximum extent of projected map.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1353,7 +1375,9 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>https://github.com/mapnik/mapnik/wiki/BoundsClipping</td>
+                <td>
+                                            <a href="https://github.com/mapnik/mapnik/wiki/BoundsClipping">https://github.com/mapnik/mapnik/wiki/BoundsClipping</a>
+                                    </td>
                 <td>Mapnik bounds clipping documentation</td>
             </tr>
             </table>
@@ -1364,7 +1388,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_resetMaximumExtent">
-        <div class="location">at         line 264</div>
+        <div class="location">at         line 266</div>
         <code>                    
     <strong>resetMaximumExtent</strong>()
         </code>
@@ -1374,7 +1398,7 @@
     
 
                     <div class="method-description">
-                                    <p>Reset maximum extent.</p>                                </div>
+                                    <p>Reset maximum extent.</p>                                                </div>
                 <div class="tags">
             
             
@@ -1385,7 +1409,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getCurrentExtent">
-        <div class="location">at         line 271</div>
+        <div class="location">at         line 273</div>
         <code>                    <a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a>
     <strong>getCurrentExtent</strong>()
         </code>
@@ -1395,7 +1419,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get current extent of projected map.</p>                                </div>
+                                    <p>Get current extent of projected map.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1415,7 +1439,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getBufferSize">
-        <div class="location">at         line 278</div>
+        <div class="location">at         line 280</div>
         <code>                    int
     <strong>getBufferSize</strong>()
         </code>
@@ -1425,7 +1449,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get map bounds buffer size.</p>                                </div>
+                                    <p>Get map bounds buffer size.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1445,7 +1469,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setBufferSize">
-        <div class="location">at         line 285</div>
+        <div class="location">at         line 287</div>
         <code>                    
     <strong>setBufferSize</strong>(int $bufferSize)
         </code>
@@ -1455,7 +1479,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set map bounds buffer. Used by placement detector to help avoid cutting labels.</p>                                </div>
+                                    <p>Set map bounds buffer. Used by placement detector to help avoid cutting labels.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1476,7 +1500,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getBufferedExtent">
-        <div class="location">at         line 292</div>
+        <div class="location">at         line 294</div>
         <code>                    <a href="../Mapnik/Box2D.html"><abbr title="Mapnik\Box2D">Box2D</abbr></a>
     <strong>getBufferedExtent</strong>()
         </code>
@@ -1486,7 +1510,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get extent of map with buffer applied.</p>                                </div>
+                                    <p>Get extent of map with buffer applied.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1506,7 +1530,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getScale">
-        <div class="location">at         line 300</div>
+        <div class="location">at         line 302</div>
         <code>                    float
     <strong>getScale</strong>()
         </code>
@@ -1516,7 +1540,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get map scale.</p>                                </div>
+                                    <p>Get map scale.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1534,7 +1558,9 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>https://github.com/mapnik/mapnik/wiki/ScaleAndPpi</td>
+                <td>
+                                            <a href="https://github.com/mapnik/mapnik/wiki/ScaleAndPpi">https://github.com/mapnik/mapnik/wiki/ScaleAndPpi</a>
+                                    </td>
                 <td>Mapnik scale and scale denominators documentation</td>
             </tr>
             </table>
@@ -1545,7 +1571,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getScaleDenominator">
-        <div class="location">at         line 308</div>
+        <div class="location">at         line 310</div>
         <code>                    float
     <strong>getScaleDenominator</strong>()
         </code>
@@ -1555,7 +1581,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get scale denominator.</p>                                </div>
+                                    <p>Get scale denominator.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1573,7 +1599,9 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>https://github.com/mapnik/mapnik/wiki/ScaleAndPpi</td>
+                <td>
+                                            <a href="https://github.com/mapnik/mapnik/wiki/ScaleAndPpi">https://github.com/mapnik/mapnik/wiki/ScaleAndPpi</a>
+                                    </td>
                 <td>Mapnik scale and scale denominators documentation</td>
             </tr>
             </table>
@@ -1584,7 +1612,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_countLayers">
-        <div class="location">at         line 315</div>
+        <div class="location">at         line 317</div>
         <code>                    int
     <strong>countLayers</strong>()
         </code>
@@ -1594,7 +1622,7 @@
     
 
                     <div class="method-description">
-                                    <p>Count number of map layers.</p>                                </div>
+                                    <p>Count number of map layers.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1614,7 +1642,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_removeStyle">
-        <div class="location">at         line 322</div>
+        <div class="location">at         line 324</div>
         <code>                    
     <strong>removeStyle</strong>(string $styleName)
         </code>
@@ -1624,7 +1652,7 @@
     
 
                     <div class="method-description">
-                                    <p>Remove a style.</p>                                </div>
+                                    <p>Remove a style.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1645,7 +1673,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_removeAll">
-        <div class="location">at         line 327</div>
+        <div class="location">at         line 329</div>
         <code>                    
     <strong>removeAll</strong>()
         </code>
@@ -1655,7 +1683,7 @@
     
 
                     <div class="method-description">
-                                    <p>Remove all styles and layers.</p>                                </div>
+                                    <p>Remove all styles and layers.</p>                                                </div>
                 <div class="tags">
             
             
@@ -1666,7 +1694,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getAspectFixMode">
-        <div class="location">at         line 335</div>
+        <div class="location">at         line 337</div>
         <code>                    int
     <strong>getAspectFixMode</strong>()
         </code>
@@ -1676,7 +1704,7 @@
     
 
                     <div class="method-description">
-                                    <p>Get aspect fix mode.</p>                                </div>
+                                    <p>Get aspect fix mode.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -1694,7 +1722,9 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>https://github.com/mapnik/mapnik/wiki/Aspect-Fix-Mode</td>
+                <td>
+                                            <a href="https://github.com/mapnik/mapnik/wiki/Aspect-Fix-Mode">https://github.com/mapnik/mapnik/wiki/Aspect-Fix-Mode</a>
+                                    </td>
                 <td>Mapnik aspect fix mode documentation</td>
             </tr>
             </table>
@@ -1705,7 +1735,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setAspectFixMode">
-        <div class="location">at         line 352</div>
+        <div class="location">at         line 354</div>
         <code>                    
     <strong>setAspectFixMode</strong>(int $aspectFixMode)
         </code>
@@ -1715,7 +1745,7 @@
     
 
                     <div class="method-description">
-                                    <p>Set aspect fix mode. See Map constants for valid values.</p>                                </div>
+                                    <p>Set aspect fix mode. See Map constants for valid values.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1734,43 +1764,63 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>https://github.com/mapnik/mapnik/wiki/Aspect-Fix-Mode</td>
+                <td>
+                                            <a href="https://github.com/mapnik/mapnik/wiki/Aspect-Fix-Mode">https://github.com/mapnik/mapnik/wiki/Aspect-Fix-Mode</a>
+                                    </td>
                 <td>Mapnik aspect fix mode documentation</td>
             </tr>
                     <tr>
-                <td>\Mapnik\Map::GROW_BBOX</td>
+                <td>
+                                            <abbr title="Mapnik\Map::GROW_BBOX">Map::GROW_BBOX</abbr>
+                                    </td>
                 <td></td>
             </tr>
                     <tr>
-                <td>\Mapnik\Map::GROW_CANVAS</td>
+                <td>
+                                            <abbr title="Mapnik\Map::GROW_CANVAS">Map::GROW_CANVAS</abbr>
+                                    </td>
                 <td></td>
             </tr>
                     <tr>
-                <td>\Mapnik\Map::SHRINK_BBOX</td>
+                <td>
+                                            <abbr title="Mapnik\Map::SHRINK_BBOX">Map::SHRINK_BBOX</abbr>
+                                    </td>
                 <td></td>
             </tr>
                     <tr>
-                <td>\Mapnik\Map::SHRINK_CANVAS</td>
+                <td>
+                                            <abbr title="Mapnik\Map::SHRINK_CANVAS">Map::SHRINK_CANVAS</abbr>
+                                    </td>
                 <td></td>
             </tr>
                     <tr>
-                <td>\Mapnik\Map::ADJUST_BBOX_WIDTH</td>
+                <td>
+                                            <abbr title="Mapnik\Map::ADJUST_BBOX_WIDTH">Map::ADJUST_BBOX_WIDTH</abbr>
+                                    </td>
                 <td></td>
             </tr>
                     <tr>
-                <td>\Mapnik\Map::ADJUST_BBOX_HEIGHT</td>
+                <td>
+                                            <abbr title="Mapnik\Map::ADJUST_BBOX_HEIGHT">Map::ADJUST_BBOX_HEIGHT</abbr>
+                                    </td>
                 <td></td>
             </tr>
                     <tr>
-                <td>\Mapnik\Map::ADJUST_CANVAS_WIDTH</td>
+                <td>
+                                            <abbr title="Mapnik\Map::ADJUST_CANVAS_WIDTH">Map::ADJUST_CANVAS_WIDTH</abbr>
+                                    </td>
                 <td></td>
             </tr>
                     <tr>
-                <td>\Mapnik\Map::ADJUST_CANVAS_HEIGHT</td>
+                <td>
+                                            <abbr title="Mapnik\Map::ADJUST_CANVAS_HEIGHT">Map::ADJUST_CANVAS_HEIGHT</abbr>
+                                    </td>
                 <td></td>
             </tr>
                     <tr>
-                <td>\Mapnik\Map::RESPECT</td>
+                <td>
+                                            <abbr title="Mapnik\Map::RESPECT">Map::RESPECT</abbr>
+                                    </td>
                 <td></td>
             </tr>
             </table>

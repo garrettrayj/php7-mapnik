@@ -89,7 +89,7 @@ available objects and methods.
 Dev Container
 -------------
 
-The included Dockerfile builds an image with all the dependencies need for extension development and testing, including testing for memory leaks.
+The included Dockerfile builds an image with all the dependencies needed for extension development and testing, including testing for memory leaks.
 
     docker build -t php7-mapnik-dev .
     docker run -it --mount type=bind,source=$(pwd),target=/opt/php7-mapnik php7-mapnik-dev:latest

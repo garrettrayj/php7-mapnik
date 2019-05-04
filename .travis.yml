@@ -46,11 +46,12 @@ compiler:
 script:
     - phpize
     - ./configure --with-mapnik
-    - make test
-    - ./tests/util/leak_test.sh
+    - ./mem_test.sh
 
 after_success:
     - tail -n 1000 tests/*.log
+    - find . -name *.mem | xargs cat
 
 after_failure:
     - tail -n 1000 tests/*.log
+    - find . -name *.mem | xargs cat

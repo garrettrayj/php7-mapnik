@@ -1,8 +1,8 @@
-<Map background-color="steelblue">
+<Map background-color="slateblue">
     <Style name="world_style">
         <Rule>
-            <PolygonSymbolizer fill="ghostwhite" />
-            <LineSymbolizer stroke="rgb(50%,50%,50%)" stroke-width="0.1" />
+            <PolygonSymbolizer fill="darkslateblue" />
+            <LineSymbolizer stroke="mediumslateblue" stroke-width="0.5" />
         </Rule>
     </Style>
 

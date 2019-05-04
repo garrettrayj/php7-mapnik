@@ -17,8 +17,8 @@ class Box2DTest extends MapnikTestCase
             $box2d = new \Mapnik\Box2D('foo');
         } catch (\Throwable $e) {
             assert(
-                $e instanceof \ArgumentCountError,
-                'Instantiating \Mapnik\Box2D with single argument did not throw exception.'
+                $e instanceof \TypeError,
+                'Instantiating \Mapnik\Box2D with single argument did not throw \TypeError.'
             );
         }
 

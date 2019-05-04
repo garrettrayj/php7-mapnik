@@ -328,44 +328,14 @@ PHP_METHOD(Map, getMaximumExtent)
     boost::optional<mapnik::box2d<double>> maximum_extent = obj->map->maximum_extent();
 
     if (maximum_extent) {
-        // Return Box2D object
-        object_init_ex(return_value, box2d_ce);
-        zval ctor;
-        ZVAL_STRING(&ctor, "__construct");
-        zval dummy_return_value;
-        zval * args = NULL;
-        args = (zval*)safe_emalloc(sizeof(zval), 4, 0);
+        zval box2d_zval = construct_box2d_zval(
+            maximum_extent.get().minx(),
+            maximum_extent.get().miny(),
+            maximum_extent.get().maxx(),
+            maximum_extent.get().maxy()
+        );
 
-        zval minX;
-        ZVAL_DOUBLE(&minX, maximum_extent.get().minx());
-        args[0] = minX;
-
-        zval minY;
-        ZVAL_DOUBLE(&minY, maximum_extent.get().miny());
-        args[1] = minY;
-
-        zval maxX;
-        ZVAL_DOUBLE(&maxX, maximum_extent.get().maxx());
-        args[2] = maxX;
-
-        zval maxY;
-        ZVAL_DOUBLE(&maxY, maximum_extent.get().maxy());
-        args[3] = maxY;
-
-        if (call_user_function(
-            NULL,
-            return_value,
-            &ctor,
-            &dummy_return_value,
-            4,
-            args TSRMLS_CC) == FAILURE
-        ) {
-            throw_mapnik_exception("Creating Box2D return value failed");
-        }
-
-        zval_ptr_dtor(&ctor);
-        zval_ptr_dtor(&dummy_return_value);
-        efree(args);
+        RETURN_ZVAL(&box2d_zval, false, false);
     }
 }
 
@@ -393,44 +363,14 @@ PHP_METHOD(Map, getCurrentExtent)
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     mapnik::box2d<double> current_extent = obj->map->get_current_extent();
 
-    // Return Box2D object
-    object_init_ex(return_value, box2d_ce);
-    zval ctor;
-    ZVAL_STRING(&ctor, "__construct");
-    zval dummy_return_value;
-    zval * args = NULL;
-    args = (zval*)safe_emalloc(sizeof(zval), 4, 0);
+    zval box2d_zval = construct_box2d_zval(
+        current_extent.minx(),
+        current_extent.miny(),
+        current_extent.maxx(),
+        current_extent.maxy()
+    );
 
-    zval minX;
-    ZVAL_DOUBLE(&minX, current_extent.minx());
-    args[0] = minX;
-
-    zval minY;
-    ZVAL_DOUBLE(&minY, current_extent.miny());
-    args[1] = minY;
-
-    zval maxX;
-    ZVAL_DOUBLE(&maxX, current_extent.maxx());
-    args[2] = maxX;
-
-    zval maxY;
-    ZVAL_DOUBLE(&maxY, current_extent.maxy());
-    args[3] = maxY;
-
-    if (call_user_function(
-        NULL,
-        return_value,
-        &ctor,
-        &dummy_return_value,
-        4,
-        args TSRMLS_CC) == FAILURE
-    ) {
-        throw_mapnik_exception("Creating Box2D return value failed");
-    }
-
-    zval_ptr_dtor(&ctor);
-    zval_ptr_dtor(&dummy_return_value);
-    efree(args);
+    RETURN_ZVAL(&box2d_zval, false, false);
 }
 
 PHP_METHOD(Map, getBufferSize)
@@ -456,44 +396,14 @@ PHP_METHOD(Map, getBufferedExtent)
     map_object *obj = Z_PHP_MAPNIK_MAP_P(getThis());
     mapnik::box2d<double> buffered_extent = obj->map->get_buffered_extent();
 
-    // Return Box2D object
-    object_init_ex(return_value, box2d_ce);
-    zval ctor;
-    ZVAL_STRING(&ctor, "__construct");
-    zval dummy_return_value;
-    zval * args = NULL;
-    args = (zval*)safe_emalloc(sizeof(zval), 4, 0);
+    zval box2d_zval = construct_box2d_zval(
+        buffered_extent.minx(),
+        buffered_extent.miny(),
+        buffered_extent.maxx(),
+        buffered_extent.maxy()
+    );
 
-    zval minX;
-    ZVAL_DOUBLE(&minX, buffered_extent.minx());
-    args[0] = minX;
-
-    zval minY;
-    ZVAL_DOUBLE(&minY, buffered_extent.miny());
-    args[1] = minY;
-
-    zval maxX;
-    ZVAL_DOUBLE(&maxX, buffered_extent.maxx());
-    args[2] = maxX;
-
-    zval maxY;
-    ZVAL_DOUBLE(&maxY, buffered_extent.maxy());
-    args[3] = maxY;
-
-    if (call_user_function(
-        NULL,
-        return_value,
-        &ctor,
-        &dummy_return_value,
-        4,
-        args TSRMLS_CC) == FAILURE
-    ) {
-        throw_mapnik_exception("Creating Box2D return value failed");
-    }
-
-    zval_ptr_dtor(&ctor);
-    zval_ptr_dtor(&dummy_return_value);
-    efree(args);
+    RETURN_ZVAL(&box2d_zval, false, false);
 }
 
 PHP_METHOD(Map, getScale)

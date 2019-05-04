@@ -18,5 +18,6 @@ static inline box2d_object * fetch_box2d_object(zend_object *obj) {
 #define Z_PHP_MAPNIK_BOX2D_P(zv) fetch_box2d_object(Z_OBJ_P(zv));
 
 void init_box2d(INIT_FUNC_ARGS);
+zval construct_box2d_zval(double minX, double minY, double maxX, double maxY);
 
 #endif

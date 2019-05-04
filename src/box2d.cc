@@ -115,3 +115,50 @@ void init_box2d(INIT_FUNC_ARGS)
     box2d_object_handlers.free_obj = &free_box2d;
     box2d_object_handlers.clone_obj = NULL;
 }
+
+// Utility functions
+
+zval construct_box2d_zval(double minX, double minY, double maxX, double maxY)
+{
+    zval box2d_zval;
+    object_init_ex(&box2d_zval, box2d_ce);
+
+    zval ctor;
+    ZVAL_STRING(&ctor, "__construct");
+    zval dummy_box2d_zval;
+    zval * args = NULL;
+    args = (zval*)safe_emalloc(sizeof(zval), 4, 0);
+
+    zval minX_zval;
+    ZVAL_DOUBLE(&minX_zval, minX);
+    args[0] = minX_zval;
+
+    zval minY_zval;
+    ZVAL_DOUBLE(&minY_zval, minY);
+    args[1] = minY_zval;
+
+    zval maxX_zval;
+    ZVAL_DOUBLE(&maxX_zval, maxX);
+    args[2] = maxX_zval;
+
+    zval maxY_zval;
+    ZVAL_DOUBLE(&maxY_zval, maxY);
+    args[3] = maxY_zval;
+
+    if (call_user_function(
+        NULL,
+        &box2d_zval,
+        &ctor,
+        &dummy_box2d_zval,
+        4,
+        args TSRMLS_CC) == FAILURE
+    ) {
+        throw_mapnik_exception("Creating Box2D return value failed");
+    }
+
+    zval_ptr_dtor(&ctor);
+    zval_ptr_dtor(&dummy_box2d_zval);
+    efree(args);
+
+    return box2d_zval;
+}

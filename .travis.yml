@@ -2,6 +2,14 @@ sudo: required
 dist: xenial
 language: php
 
+addons:
+    apt:
+        packages:
+            - python-software-properties
+            - libmapnik-dev
+            - mapnik-utils
+            - valgrind
+
 php:
     - '7.0'
     - '7.1'
@@ -35,15 +43,11 @@ compiler:
     - gcc
     - clang
 
-before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y -qq update; fi
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install python-software-properties; fi
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -y install libmapnik-dev mapnik-utils; fi
-
 script:
     - phpize
     - ./configure --with-mapnik
     - make test
+    - ./tests/util/leak_test.sh
 
 after_success:
     - tail -n 1000 tests/*.log
